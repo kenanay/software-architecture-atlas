@@ -1,0 +1,8 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const docs = await getCollection("documents", ({data}) => data.locale === "en");
+---
+<BaseLayout locale="en" title="English">
+  <div class="shell"><section class="hero"><div><div class="eyebrow">English content</div><h1>Software Architecture Atlas</h1><p class="lead">A source-grounded local documentation platform for software architectures, programming languages, frameworks, AI systems, standards, RFCs, and software development practices.</p><div class="actions"><a class="button primary" href="/catalog">Explore {docs.length} English documents</a><a class="button" href="/status">View content status</a></div></div></section></div>
+</BaseLayout>

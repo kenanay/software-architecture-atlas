@@ -9,10 +9,18 @@ categories: [guide]
 tags: [governance, terminology, sources]
 locale: tr
 translationKey: project-constitution
+canonicalId: guide.project-constitution
+translationStatus: original
+translationMethod: original
 version: 1.0.0
 lastReviewedAt: 2026-07-17
 sources: [source.iso-42010, source.swebok-v4]
 related: [architecture.modular-monolith.tr]
+contributors:
+  - personId: person.kenan-ay
+    roles: [project-owner, architecture-lead, technical-author, editor]
+qualityAttributes: [maintainability, traceability, accessibility]
+applicableDomains: [documentation]
 ---
 ## Amaç ve kapsam
 

@@ -32,5 +32,20 @@
     "accessed_at": "2026-07-17",
     "url": "https://doi.org/10.1145/3359591.3359737",
     "official_reference": false
+  },
+  {
+    "id":"source.w3c.wcag22","type":"normative_specification","title":"Web Content Accessibility Guidelines (WCAG) 2.2","publisher":"W3C","publication_date":"2024-12-12","version":"2.2","status":"recommendation","accessed_at":"2026-07-17","url":"https://www.w3.org/TR/WCAG22/","official_reference":true
+  },
+  {
+    "id":"source.nist.ai-rmf-1","type":"government_framework","title":"Artificial Intelligence Risk Management Framework 1.0","publisher":"NIST","publication_date":"2023-01","version":"1.0","status":"active-revision-in-progress","accessed_at":"2026-07-17","url":"https://airc.nist.gov/airmf-resources/airmf/5-sec-core/","official_reference":true
+  },
+  {
+    "id":"source.spdx.3","type":"normative_specification","title":"SPDX Specification 3.0","publisher":"Linux Foundation SPDX","publication_date":"2024-04","version":"3.0","status":"current","accessed_at":"2026-07-17","url":"https://spdx.dev/use/specifications/","official_reference":true
+  },
+  {
+    "id":"source.rfc-editor","type":"official_documentation","title":"RFC Editor — Official Home of RFCs","publisher":"RFC Editor","publication_date":"continuous","status":"active","accessed_at":"2026-07-17","url":"https://www.rfc-editor.org/","official_reference":true
+  },
+  {
+    "id":"source.rfc2026","type":"rfc","title":"RFC 2026: The Internet Standards Process — Revision 3","publisher":"RFC Editor","publication_date":"1996-10","status":"best-current-practice-updated","accessed_at":"2026-07-17","url":"https://www.rfc-editor.org/info/rfc2026","official_reference":true
   }
 ]

@@ -10,10 +10,15 @@ A local-first bilingual documentation platform for software architectures, progr
 - Astro Content Collections ile şema doğrulamalı Markdown içerik
 - Türkçe–İngilizce bağlantılı belge modeli ve merkezi terim sözlüğü
 - Arama, kategori ve inceleme durumu filtreleri
+- Pagefind ile üretim sonrası sunucusuz tam metin arama indeksi
 - Teknoloji/mimari karşılaştırması ve gerekçeli karar desteği
 - IndexedDB kişisel notları, yer imleri ve JSON dışa aktarma
 - PWA service worker ile çevrimdışı kullanım
 - Yapılandırılmış kaynak, terminoloji ve sınıflandırma kayıtları
+- 26 bölümlü kapsam taksonomisi ve program_info uygulama durumu panosu
+- ISO/W3C/NIST/SPDX/SWEBOK standart kayıtları ve RFC ilişki takibi
+- Çeviri sürüm farkı, katkı rolleri ve belge olgunluk durumları
+- JSON Schema dosyaları ve çapraz veri referansı doğrulaması
 
 ## Çalıştırma
 
@@ -27,6 +32,7 @@ npm run dev
 ```bash
 npm test
 npm run build
+npm run verify
 ```
 
 ## Veri sınırları
@@ -36,3 +42,5 @@ Kanonik içerik `content/` ve `data/` altında Git ile sürümlenir. Kişisel no
 ## İçerik durumu
 
 Başlangıç kayıtları platform davranışını göstermek için sınırlı bir çekirdek oluşturur. `draft` ve `review-required` belgeleri doğrulanmış bilgi olarak değerlendirilmemelidir.
+
+Uygulamadaki `/status/` sayfası araştırma kapsamını görünür kılar. Taksonomide bulunmak, bir alanın içerik araştırmasının tamamlandığı anlamına gelmez; yalnızca `reviewed` veya `verified` belgeler incelenmiş içerik sayılır.

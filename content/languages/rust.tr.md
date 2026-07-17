@@ -9,10 +9,18 @@ categories: [languages, embedded, server]
 tags: [native, static-typing, memory-safety]
 locale: tr
 translationKey: rust
+canonicalId: language.rust
+translationStatus: original
+translationMethod: original
 version: 0.1.0
 lastReviewedAt: 2026-07-17
 sources: []
 related: [architecture.modular-monolith.tr]
+contributors:
+  - personId: person.kenan-ay
+    roles: [researcher, technical-author, editor]
+qualityAttributes: [performance, memory-safety, portability]
+applicableDomains: [systems, embedded, server]
 ---
 ## Tasarım amacı
 

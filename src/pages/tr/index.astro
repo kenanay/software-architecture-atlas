@@ -1,0 +1,8 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+const docs = await getCollection("documents", ({data}) => data.locale === "tr");
+---
+<BaseLayout locale="tr" title="Türkçe">
+  <div class="shell"><section class="hero"><div><div class="eyebrow">Türkçe içerik</div><h1>Software Architecture Atlas</h1><p class="lead">Yazılım mimarileri, programlama dilleri, frameworkler, AI sistemleri, standartlar, RFC'ler ve geliştirme uygulamaları için kaynak temelli yerel dokümantasyon.</p><div class="actions"><a class="button primary" href="/catalog">{docs.length} Türkçe belgeyi keşfet</a><a class="button" href="/status">İçerik durumunu gör</a></div></div></section></div>
+</BaseLayout>

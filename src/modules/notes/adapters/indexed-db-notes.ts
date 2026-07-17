@@ -42,4 +42,12 @@ export class IndexedDbNotesRepository implements NotesRepository {
     const db = await database();
     return requestResult<UserNote[]>(db.transaction(STORE).objectStore(STORE).getAll());
   }
+  async importAll(notes: UserNote[]) {
+    const valid = notes.filter(note => note && typeof note.id === "string" && typeof note.documentId === "string" && typeof note.body === "string" && Array.isArray(note.tags) && !Number.isNaN(Date.parse(note.updatedAt)));
+    const db = await database();
+    const transaction = db.transaction(STORE, "readwrite");
+    const store = transaction.objectStore(STORE);
+    await Promise.all(valid.map(note => requestResult(store.put(note))));
+    return valid.length;
+  }
 }

@@ -1,0 +1,15 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import standards from "../../data/standards/standards.json";
+import rfcs from "../../data/rfcs/rfcs.json";
+---
+<BaseLayout title="Standartlar ve RFC Durumları">
+  <div class="shell">
+    <div class="eyebrow">Normatif ve resmî kayıtlar</div><h1>Standartlar ve RFC durumları</h1>
+    <p class="lead">Yayın durumu, sürüm, değiştirme ilişkileri ve son doğrulama tarihi ayrı alanlar olarak izlenir. RFC içeriği yayımlandıktan sonra değişmez; güncelleme, yürürlükten kaldırma ve errata metadata üzerinden takip edilir.</p>
+    <div class="section-head"><div><h2>Standart ve rehber kayıtları</h2><p class="muted">ISO, IEEE, W3C, NIST ve SPDX birincil kayıtları.</p></div><span class="tag">{standards.length} kayıt</span></div>
+    <div class="grid">{standards.map(item => <article class="card" style="transform:none"><div class="badge-group"><span class={`badge ${item.status === "withdrawn" ? "is-withdrawn" : "is-current"}`}><span class="badge-kind">Yayın</span>{item.status}</span><span class="tag">{item.organization}</span></div><h3><a href={item.url}>{item.identifier}</a></h3><p>{item.title}</p><small class="muted">Yayın: {item.publicationDate} · Doğrulama: {item.lastVerified}</small>{"notes" in item && <p class="muted">{item.notes}</p>}</article>)}</div>
+    <div class="section-head" style="margin-top:4rem"><div><h2>RFC kayıtları</h2><p class="muted">Updates, Updated by, Obsoletes ve Obsoleted by ilişkileri birlikte gösterilir.</p></div><span class="tag">{rfcs.length} kayıt</span></div>
+    <div class="grid">{rfcs.map(rfc => <article class="card" style="transform:none"><div class="badge-group"><span class="badge"><span class="badge-kind">RFC status</span>{rfc.status}</span><span class={`badge ${rfc.obsoletedBy.length ? "is-obsolete" : "is-current"}`}><span class="badge-kind">Lifecycle</span>{rfc.obsoletedBy.length ? "Obsoleted" : "Current"}</span><span class="tag">{rfc.stream}</span></div><h3><a href={rfc.url}>RFC {rfc.number}</a></h3><p>{rfc.title}</p><dl><dt>Updates</dt><dd>{rfc.updates.length ? rfc.updates.map(n => `RFC ${n}`).join(", ") : "—"}</dd><dt>Updated by</dt><dd>{rfc.updatedBy.length ? rfc.updatedBy.map(n => `RFC ${n}`).join(", ") : "—"}</dd><dt>Obsoletes</dt><dd>{rfc.obsoletes.length ? rfc.obsoletes.map(n => `RFC ${n}`).join(", ") : "—"}</dd><dt>Obsoleted by</dt><dd>{rfc.obsoletedBy.length ? rfc.obsoletedBy.map(n => `RFC ${n}`).join(", ") : "—"}</dd></dl><small class="muted">DOI: {rfc.doi} · Doğrulama: {rfc.lastVerified}</small></article>)}</div>
+  </div>
+</BaseLayout>

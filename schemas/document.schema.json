@@ -3,7 +3,7 @@
   "$id":"https://kenanay.github.io/software-architecture-atlas/schemas/document.schema.json",
   "title":"Knowledge Document",
   "type":"object",
-  "required":["id","type","title","summary","status","maturity","locale","translationKey","version","lastReviewedAt"],
-  "properties":{"id":{"type":"string","minLength":3},"type":{"type":"string"},"title":{"$ref":"#/$defs/bilingual"},"summary":{"$ref":"#/$defs/bilingual"},"status":{"enum":["draft","review-required","reviewed","verified","deprecated","historical","archived"]},"maturity":{"enum":["experimental","emerging","active","mature","maintenance","deprecated","historical"]},"locale":{"enum":["tr","en"]},"translationKey":{"type":"string"},"version":{"type":"string","pattern":"^[0-9]+\\.[0-9]+\\.[0-9]+$"},"lastReviewedAt":{"type":"string","format":"date"}},
+  "required":["id","type","title","summary","status","maturity","locale","translationKey","canonicalId","translationStatus","translationMethod","version","lastReviewedAt","contributors"],
+  "properties":{"id":{"type":"string","minLength":3},"type":{"type":"string"},"title":{"$ref":"#/$defs/bilingual"},"summary":{"$ref":"#/$defs/bilingual"},"status":{"enum":["draft","review-required","reviewed","verified","deprecated","historical","archived"]},"maturity":{"enum":["experimental","emerging","active","mature","maintenance","deprecated","historical"]},"locale":{"enum":["tr","en"]},"translationKey":{"type":"string"},"canonicalId":{"type":"string"},"translationStatus":{"enum":["original","translated","review-required","reviewed","outdated","missing"]},"translationMethod":{"enum":["original","human","ai-assisted"]},"version":{"type":"string","pattern":"^[0-9]+\\.[0-9]+\\.[0-9]+$"},"lastReviewedAt":{"type":"string","format":"date"},"contributors":{"type":"array","minItems":1}},
   "$defs":{"bilingual":{"type":"object","required":["tr","en"],"properties":{"tr":{"type":"string"},"en":{"type":"string"}},"additionalProperties":false}}
 }

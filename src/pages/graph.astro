@@ -1,0 +1,14 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import relations from "../../data/relations/relations.json";
+const nodes=[...new Set(relations.flatMap(item=>[item.from,item.to]))].sort();
+---
+<BaseLayout title="Bilgi Grafı">
+  <div class="shell"><div class="eyebrow">İzlenebilir ilişkiler</div><h1>Bilgi grafı</h1><p class="lead">Teknoloji, standart, mimari ve alan kayıtları arasındaki kanıta dayalı ilişkileri gezin.</p>
+    <div class="field"><label for="graph-filter">Düğüm veya ilişki ara</label><input id="graph-filter" type="search" placeholder="architecture, standard, defined-by…" /></div>
+    <p class="muted">{nodes.length} düğüm · {relations.length} ilişki</p><div id="graph-list" class="grid">
+      {relations.map(item=><article class="card graph-edge" data-search={`${item.from} ${item.type} ${item.to}`}><code>{item.from}</code><h3>{item.type}</h3><code>{item.to}</code><p>Kanıt: {item.evidenceSourceIds.join(", ")}</p></article>)}
+    </div>
+  </div>
+  <script is:inline>document.querySelector('#graph-filter')?.addEventListener('input',e=>{const q=e.target.value.toLowerCase();document.querySelectorAll('.graph-edge').forEach(el=>el.hidden=!el.dataset.search.toLowerCase().includes(q));});</script>
+</BaseLayout>

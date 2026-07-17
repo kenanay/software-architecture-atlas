@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import taxonomy from "../../data/taxonomy/taxonomy.json";
+import requestMap from "../../data/taxonomy/request-map.json";
+import glossary from "../../data/glossary/glossary.json";
+import sources from "../../data/sources/sources.json";
+import rfcs from "../../data/rfcs/rfcs.json";
+import relations from "../../data/relations/relations.json";
+import people from "../../data/people/people.json";
+import documentTypes from "../../data/document-types/document-types.json";
+const registries = [
+  {id:"taxonomy",label:"Taksonomi",count:taxonomy.length,description:"Kanonik bölümler, sıralama ve planlı konu profilleri."},
+  {id:"mapping",label:"Gereksinim eşlemesi",count:requestMap.length,description:"28 istek başlığının 26 kanonik bölüme dönüşümü."},
+  {id:"glossary",label:"Terminoloji",count:glossary.length,description:"Çift dilli terimler, kısaltmalar, ilişkiler ve kaynaklar."},
+  {id:"sources",label:"Kaynaklar",count:sources.length,description:"Yayın, sürüm, geçerlilik ve son erişim metadata'sı."},
+  {id:"rfcs",label:"RFC kayıtları",count:rfcs.length,description:"Status, stream, DOI ve yaşam döngüsü ilişkileri."},
+  {id:"relations",label:"Bilgi ilişkileri",count:relations.length,description:"Kanıt kaynağı zorunlu yönlü kavram ilişkileri."},
+  {id:"people",label:"Kişi ve roller",count:people.length,description:"Tekrarsız kişi kimliği ve sorumluluk rolleri."},
+  {id:"types",label:"Belge türleri",count:documentTypes.length,description:"İçerik koleksiyonunun desteklediği belge profilleri."},
+];
+const schemaFiles = ["document.schema.json","source.schema.json","rfc.schema.json","relation.schema.json","term.schema.json"];
+---
+<BaseLayout title="Veri Kayıtları">
+  <div class="shell"><div class="eyebrow">Kendi metadata'sını açıklayan atlas</div><h1>Veri kayıtları ve şemalar</h1><p class="lead">Build-time JSON dosyaları artık uygulama içinde denetlenebilir. Bu ekran kanonik kayıtların kapsamını ve ilişkilerini görünür kılar.</p>
+    <div class="grid">{registries.map(item=><a class="card" href={`#${item.id}`}><span class="tag">{item.count} kayıt</span><h3>{item.label}</h3><p>{item.description}</p></a>)}</div>
+    <section id="taxonomy"><div class="section-head"><h2>Taksonomi</h2><span class="tag">taxonomy.json</span></div><div style="overflow:auto"><table class="registry-table"><thead><tr><th>ID</th><th>Türkçe / English</th><th>Planlı konular</th></tr></thead><tbody>{taxonomy.map(item=><tr><td><code>{item.id}</code></td><td>{item.label.tr}<br/><small class="muted">{item.label.en}</small></td><td>{item.topics.join(" · ")}</td></tr>)}</tbody></table></div></section>
+    <section id="mapping"><div class="section-head"><h2>Gereksinim eşlemesi</h2><a href="/status/#taxonomy-map">Durum panosunda aç →</a></div><p>28 özgün istek başlığı; doğrudan, birleştirilmiş veya bölünmüş eşleme türleriyle 26 kanonik bölüme bağlanır.</p></section>
+    <section id="sources"><div class="section-head"><h2>Kaynak kayıtları</h2><span class="tag">sources.json</span></div><div style="overflow:auto"><table class="registry-table"><thead><tr><th>ID</th><th>Kaynak</th><th>Durum</th><th>Erişim</th></tr></thead><tbody>{sources.map(item=><tr><td><code>{item.id}</code></td><td><a href={item.url}>{item.title}</a><br/><small>{item.publisher}</small></td><td>{item.status}</td><td>{item.accessed_at}</td></tr>)}</tbody></table></div></section>
+    <section id="rfcs"><div class="section-head"><h2>RFC yaşam döngüsü</h2><span class="tag">rfcs.json</span></div><div style="overflow:auto"><table class="registry-table"><thead><tr><th>RFC</th><th>Status / Stream</th><th>Updates</th><th>Obsoletes</th><th>Obsoleted by</th></tr></thead><tbody>{rfcs.map(item=><tr><td><a href={item.url}>RFC {item.number}</a></td><td>{item.status}<br/><small>{item.stream}</small></td><td>{item.updates.join(", ")||"—"}</td><td>{item.obsoletes.join(", ")||"—"}</td><td>{item.obsoletedBy.join(", ")||"—"}</td></tr>)}</tbody></table></div></section>
+    <section id="relations"><div class="section-head"><h2>Kanıt kaynaklı ilişkiler</h2><span class="tag">relations.json</span></div><div style="overflow:auto"><table class="registry-table"><thead><tr><th>Kaynak düğüm</th><th>İlişki</th><th>Hedef düğüm</th><th>Kanıt</th></tr></thead><tbody>{relations.map(item=><tr><td><code>{item.from}</code></td><td>{item.type}</td><td><code>{item.to}</code></td><td>{item.evidenceSourceIds.map(id=><code>{id}</code>)}</td></tr>)}</tbody></table></div></section>
+    <section id="glossary"><div class="section-head"><h2>Terminoloji kayıtları</h2><span class="tag">glossary.json</span></div><p>{glossary.map(item=><span class="tag">{item.canonical_tr} · {item.canonical_en}</span>)}</p></section>
+    <section id="people"><div class="section-head"><h2>Kişi ve roller</h2><span class="tag">people.json</span></div>{people.map(item=><article class="card" style="transform:none"><h3>{item.name}</h3><p>{item.professionalTitle.tr}<br/>{item.professionalTitle.en}</p><p>{item.roles.map(role=><span class="tag">{role}</span>)}</p></article>)}</section>
+    <section id="types"><div class="section-head"><h2>Belge türleri ve şemalar</h2><span class="tag">schemas/</span></div><p>{documentTypes.map(type=><span class="tag">{type}</span>)}</p><ul>{schemaFiles.map(file=><li><code>{file}</code></li>)}</ul></section>
+  </div>
+</BaseLayout>

@@ -17,7 +17,7 @@ const categories = new Set(docs.flatMap(({ data }) => data.categories));
       <aside class="metric-panel" aria-label="Atlas durumu">
         <div class="metric"><span>Kanonik belgeler</span><strong>{docs.length}</strong></div>
         <div class="metric"><span>İncelenmiş</span><strong>{reviewed}</strong></div>
-        <div class="metric"><span>Kategoriler</span><strong>{categories.size}</strong></div>
+        <div class="metric"><span>İçerik bulunan kategoriler</span><strong>{categories.size}</strong></div>
         <div class="metric"><span>Çalışma biçimi</span><strong>Offline</strong></div>
       </aside>
     </section>

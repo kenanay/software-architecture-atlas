@@ -9,10 +9,18 @@ categories: [architectures, web, server]
 tags: [modules, boundaries, deployment]
 locale: tr
 translationKey: modular-monolith
+canonicalId: architecture.modular-monolith
+translationStatus: original
+translationMethod: original
 version: 1.0.0
 lastReviewedAt: 2026-07-17
 sources: [source.iso-42010, source.swebok-v4]
 related: [guide.project-constitution.tr, architecture.hexagonal.tr]
+contributors:
+  - personId: person.kenan-ay
+    roles: [architecture-lead, technical-author, reviewer]
+qualityAttributes: [maintainability, testability, deployability]
+applicableDomains: [web, server, desktop]
 ---
 ## Tanım
 

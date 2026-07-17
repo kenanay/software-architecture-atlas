@@ -5,14 +5,24 @@ import terms from "../../data/glossary/glossary.json";
 <BaseLayout title="Teknik Terimler Sözlüğü">
   <div class="shell"><div class="eyebrow">Merkezi terminoloji</div><h1>Teknik terimler sözlüğü</h1><p class="lead">Türkçe ve İngilizce karşılıklar, kısaltmalar, ilişkiler ve kullanım alanları tek yerde yönetilir.</p>
     <div class="searchbar"><input id="term-search" type="search" placeholder="Terim veya kısaltma ara…" /></div>
-    <div id="terms" class="grid">{terms.map(term => <button class="card term-card" data-search={`${term.canonical_tr} ${term.canonical_en} ${term.abbreviation}`.toLocaleLowerCase("tr")} data-term={JSON.stringify(term)} style="text-align:left"><span class="tag">{term.abbreviation || "TERM"}</span><h3>{term.canonical_tr}</h3><p>{term.canonical_en}</p></button>)}</div>
-    <dialog id="term-dialog"><button id="close-dialog" style="float:right" aria-label="Kapat">×</button><div id="term-detail"></div></dialog>
+    <p class="muted">Terim kartına gelin, klavyeyle odaklanın veya dokunun. Açıklama Esc tuşuyla ya da kapat düğmesiyle kapanır.</p>
+    <div id="terms" class="grid">{terms.map((term,index) => <button class="card term-card" aria-expanded="false" aria-controls="term-popover" data-index={index} data-search={`${term.canonical_tr} ${term.canonical_en} ${term.abbreviation}`.toLocaleLowerCase("tr")} style="text-align:left"><span class="tag">{term.abbreviation || "TERM"}</span><h3>{term.canonical_tr}</h3><p>{term.canonical_en}</p></button>)}</div>
+    <aside id="term-popover" class="term-popover" role="dialog" aria-modal="false" aria-label="Teknik terim açıklaması" hidden aria-live="polite"><button id="close-popover" class="popover-close" aria-label="Terim açıklamasını kapat">×</button><div id="term-detail"></div></aside>
   </div>
-  <script>
-    const dialog=document.querySelector<HTMLDialogElement>("#term-dialog")!, detail=document.querySelector("#term-detail")!;
-    const escapeHtml=(v:string)=>v.replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]||c));
-    document.querySelectorAll<HTMLElement>(".term-card").forEach(card=>card.addEventListener("click",()=>{const t=JSON.parse(card.dataset.term!);detail.innerHTML=`<div class="eyebrow">${escapeHtml(t.abbreviation||"Terminology")}</div><h2>${escapeHtml(t.canonical_tr)} <span class="muted">(${escapeHtml(t.canonical_en)})</span></h2><p>${escapeHtml(t.definition_tr)}</p><p lang="en" class="muted">${escapeHtml(t.definition_en)}</p><p><strong>İlişkili:</strong> ${t.related_terms.map(escapeHtml).join(", ")}</p><p><strong>Kullanım:</strong> ${t.usage.map(escapeHtml).join(", ")}</p><p><strong>Kaynak:</strong> ${escapeHtml(t.source)}</p>`;dialog.showModal();}));
-    document.querySelector("#close-dialog")?.addEventListener("click",()=>dialog.close());
-    document.querySelector<HTMLInputElement>("#term-search")?.addEventListener("input",e=>{const q=(e.target as HTMLInputElement).value.toLocaleLowerCase("tr");document.querySelectorAll<HTMLElement>(".term-card").forEach(card=>card.hidden=!card.dataset.search?.includes(q));});
+  <script is:inline define:vars={{ terms }}>
+    const popover=document.querySelector("#term-popover"), detail=document.querySelector("#term-detail"), close=document.querySelector("#close-popover");
+    let active=null,pinned=false,hideTimer;
+    const escapeHtml=v=>v.replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]||c));
+    function show(card,shouldPin=false){clearTimeout(hideTimer);active?.setAttribute("aria-expanded","false");active=card;pinned=shouldPin||pinned;const t=terms[Number(card.dataset.index)];detail.innerHTML=`<div class="eyebrow">${escapeHtml(t.abbreviation||"Terminology")}</div><h2>${escapeHtml(t.canonical_tr)} <span class="muted">(${escapeHtml(t.canonical_en)})</span></h2><p>${escapeHtml(t.definition_tr)}</p><p lang="en" class="muted">${escapeHtml(t.definition_en)}</p><p><strong>İlişkili:</strong> ${t.related_terms.map(escapeHtml).join(", ")}</p><p><strong>Kullanım:</strong> ${t.usage.map(escapeHtml).join(", ")}</p><p><strong>Kaynak:</strong> ${escapeHtml(t.source)}</p>`;const rect=card.getBoundingClientRect();popover.style.left=`${Math.min(rect.left,innerWidth-390)}px`;popover.style.top=`${Math.min(rect.bottom+8,innerHeight-300)}px`;popover.hidden=false;card.setAttribute("aria-expanded","true");}
+    function dismiss(){clearTimeout(hideTimer);pinned=false;popover.hidden=true;active?.setAttribute("aria-expanded","false");active=null;}
+    function schedule(){clearTimeout(hideTimer);hideTimer=setTimeout(()=>{if(!pinned&&!active?.matches(":hover,:focus")&&!popover.matches(":hover,:focus-within"))dismiss();},180);}
+    document.querySelectorAll(".term-card").forEach(card=>{card.addEventListener("pointerenter",()=>show(card));card.addEventListener("pointerleave",schedule);card.addEventListener("focus",()=>show(card));card.addEventListener("blur",schedule);card.addEventListener("click",()=>{pinned=true;show(card,true);});});
+    popover.addEventListener("pointerenter",()=>clearTimeout(hideTimer));popover.addEventListener("pointerleave",schedule);close.addEventListener("click",()=>{const trigger=active;dismiss();trigger?.focus();});document.addEventListener("keydown",event=>{if(event.key==="Escape"&&!popover.hidden){event.preventDefault();dismiss();}});document.addEventListener("pointerdown",event=>{if(pinned&&!popover.contains(event.target)&&event.target!==active)dismiss();});
+    document.querySelector("#term-search")?.addEventListener("input",e=>{const q=e.target.value.toLocaleLowerCase("tr");document.querySelectorAll(".term-card").forEach(card=>card.hidden=!card.dataset.search?.includes(q));});
   </script>
 </BaseLayout>
+
+<style>
+  .term-popover{position:fixed;z-index:50;width:min(380px,calc(100vw - 1rem));max-height:min(420px,70vh);overflow:auto;padding:1.15rem;border:1px solid var(--accent2);border-radius:1rem;background:var(--panel);box-shadow:var(--shadow)}
+  .term-popover[hidden]{display:none}.term-popover h2{font-size:1.25rem;padding-right:2rem}.popover-close{position:absolute;right:.65rem;top:.65rem;padding:.25rem .55rem}.term-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+</style>

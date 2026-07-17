@@ -1,0 +1,5 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import requirements from "../../data/requirements/requirements.json";
+---
+<BaseLayout title="Gereksinim Kaydı"><div class="shell"><div class="eyebrow">Program izlenebilirliği</div><h1>Gereksinim kaydı</h1><p class="lead">Vizyon maddelerini sahip, öncelik, durum ve kabul ölçütleriyle izleyen yaşayan kayıt.</p><div style="overflow:auto"><table class="registry-table"><thead><tr><th>Kimlik</th><th>Alan</th><th>Öncelik</th><th>Durum</th><th>Sahip</th><th>Kabul ölçütü</th></tr></thead><tbody>{requirements.map(r=><tr><td><code>{r.id}</code></td><td>{r.area}</td><td>{r.priority}</td><td><span class="badge">{r.status}</span></td><td>{r.owner}</td><td>{r.acceptance}</td></tr>)}</tbody></table></div></div></BaseLayout>

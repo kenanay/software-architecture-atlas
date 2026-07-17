@@ -9,10 +9,18 @@ categories: [ai]
 tags: [retrieval, llm, embeddings]
 locale: tr
 translationKey: rag
+canonicalId: ai.rag
+translationStatus: original
+translationMethod: original
 version: 0.1.0
 lastReviewedAt: 2026-07-17
 sources: []
 related: []
+contributors:
+  - personId: person.kenan-ay
+    roles: [researcher, technical-author, content-maintainer]
+qualityAttributes: [traceability, relevance, security]
+applicableDomains: [ai, search, documentation]
 ---
 ## Tanım
 

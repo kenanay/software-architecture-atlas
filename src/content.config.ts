@@ -8,7 +8,7 @@ const documents = defineCollection({
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./content" }),
   schema: z.object({
     id: z.string(),
-    type: z.enum(["guide", "history", "concept", "programming-language", "architecture", "framework", "platform", "algorithm", "ai-model", "standard", "rfc", "comparison", "decision-guide"]),
+    type: z.enum(["guide", "history", "concept", "programming-language", "architecture", "framework", "tool", "platform", "protocol", "standard", "rfc", "algorithm", "ai-model", "comparison", "application-domain-guide", "directory-template", "architecture-decision-record", "case-study", "academic-source-summary", "historical-event", "glossary-entry", "research-note", "unverified-draft", "decision-guide"]),
     title: bilingual,
     summary: bilingual,
     status: z.enum(["draft", "review-required", "reviewed", "verified", "deprecated", "historical", "archived"]),
@@ -17,10 +17,17 @@ const documents = defineCollection({
     tags: z.array(z.string()).default([]),
     locale: z.enum(["tr", "en"]),
     translationKey: z.string(),
+    canonicalId: z.string(),
+    translationStatus: z.enum(["original", "translated", "review-required", "reviewed", "outdated", "missing"]),
+    translationMethod: z.enum(["original", "human", "ai-assisted"]).default("original"),
+    translationReviewedBy: z.string().optional(),
     version: z.string(),
     lastReviewedAt: z.coerce.date(),
     sources: z.array(z.string()).default([]),
     related: z.array(z.string()).default([]),
+    contributors: z.array(z.object({ personId: z.string(), roles: z.array(z.string()).min(1) })).min(1),
+    qualityAttributes: z.array(z.string()).default([]),
+    applicableDomains: z.array(z.string()).default([]),
   }),
 });
 

@@ -9,10 +9,19 @@ categories: [guide]
 tags: [governance, terminology, sources]
 locale: en
 translationKey: project-constitution
+canonicalId: guide.project-constitution
+translationStatus: reviewed
+translationMethod: human
+translationReviewedBy: person.kenan-ay
 version: 1.0.0
 lastReviewedAt: 2026-07-17
 sources: [source.iso-42010, source.swebok-v4]
 related: [architecture.modular-monolith.en]
+contributors:
+  - personId: person.kenan-ay
+    roles: [project-owner, architecture-lead, translator, translation-reviewer]
+qualityAttributes: [maintainability, traceability, accessibility]
+applicableDomains: [documentation]
 ---
 ## Purpose and scope
 

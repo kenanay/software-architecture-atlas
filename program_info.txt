@@ -1,0 +1,2471 @@
+Program geliştirme, yazılım tasarımı, planlama, yazılım altyapıları ve yazılım mimarileri üzerine kapsamlı bir araştırma ve dokümantasyon çalışması yapmak istiyorum.
+
+Bu çalışma kapsamında; programlama dillerine bağlı geliştirme ortamlarını, framework yapılarını, kütüphaneleri, çalışma zamanlarını, derleyicileri, paket yöneticilerini, veri tabanlarını, test araçlarını, dağıtım yöntemlerini ve ilgili yazılım altyapılarını incelemek istiyorum. Elde edilen bilgileri güncellenebilir notlar içeren, HTML ve JavaScript tabanlı, yerel olarak çalışan bir dokümantasyon platformunda toplamak istiyorum.
+
+Platformda aşağıdaki yazılım alanlarına ait mimariler, altyapılar ve geliştirme yöntemleri ayrı kategoriler altında ele alınmalıdır:
+
+Oyun geliştirme
+Masaüstü ve yardımcı uygulamalar
+Mobil uygulamalar
+Web uygulamaları
+Gömülü sistemler
+IoT sistemleri
+Sunucu sistemleri
+Bulut ve dağıtık sistemler
+Ağ sistemleri
+Grafik, görüntü işleme ve tasarım yazılımları
+Veri tabanı ve veri işleme sistemleri
+Yapay zekâ
+Makine öğrenmesi
+Derin öğrenme
+Programlama dilleri
+Algoritmalar ve veri yapıları
+İşletim sistemleri
+Güvenlik sistemleri
+Yazılım geliştirme araçları ve ortamları
+
+Temel amacım; farklı yazılım türlerinde kullanılabilecek programlama dillerini, yazılım mimarilerini, frameworkleri, geliştirme araçlarını ve altyapı bileşenlerini kategorize ederek karşılaştırmalı bir bilgi sistemi oluşturmaktır.
+
+Dokümantasyonda bir yazılım projesinin geliştirilmesi sırasında aşağıdaki soruların cevaplanabilmesi hedeflenmelidir:
+
+Proje için hangi programlama dili kullanılabilir?
+Hangi yazılım mimarisi daha uygundur?
+Hangi framework ve kütüphaneler tercih edilebilir?
+Hangi geliştirme ortamı ve araç zinciri kullanılmalıdır?
+Projenin dosya ve dizin yapısı nasıl oluşturulmalıdır?
+Modüller, katmanlar ve bileşenler nasıl ayrılmalıdır?
+Test, güvenlik, performans ve dağıtım süreçleri nasıl planlanmalıdır?
+Yapay zekâ destekli kodlama süreçlerinde hangi mimari kurallar uygulanmalıdır?
+Projenin bakım, güncelleme ve ölçeklendirme süreci nasıl yönetilmelidir?
+
+Platform, özellikle yapay zekâ destekli yazılım geliştirme süreçlerinde kullanılabilecek bir teknik başvuru kaynağı olmalıdır. Bir yazılım oluşturulmadan önce kullanılabilecek dosya dizin sistemleri, mimari yaklaşımlar, modül sınırları, bağımlılık kuralları, test yapıları ve teknik standartlar hakkında karar vermeyi desteklemelidir.
+
+Çalışmanın başlangıç bölümünde bilgisayarların, programlama dillerinin ve yazılım teknolojilerinin tarihsel gelişimi ele alınmalıdır. Eski programlama dilleri, ilk sürümleri, gelişim süreçleri, etkiledikleri teknolojiler, günümüzdeki kullanım durumları ve yerlerini aldıkları ya da yerlerini bıraktıkları teknolojiler açıklanmalıdır.
+
+Programlama dilleri aşağıdaki açılardan incelenmelidir:
+
+Tarihçesi ve ortaya çıkış amacı
+Temel sürümleri
+Programlama paradigması
+Tip sistemi
+Bellek yönetimi
+Derleme veya yorumlama yöntemi
+Çalışma zamanı
+Paket ve bağımlılık yönetimi
+Desteklenen platformlar
+Kullanım alanları
+Uygun olduğu ve uygun olmadığı proje türleri
+Framework ve kütüphane ekosistemi
+Geliştirme ortamları
+Test ve hata ayıklama araçları
+Performans ve güvenlik özellikleri
+Örnek proje ve dosya yapıları
+Güncel gelişim ve destek durumu
+
+Yazılım mimarileri bölümünde aşağıdaki konulara yer verilmelidir:
+
+Katmanlı Mimari (Layered Architecture)
+Tek Parça Mimari (Monolithic Architecture)
+Modüler Monolit (Modular Monolith)
+Mikroservis Mimarisi (Microservices Architecture)
+Olay Güdümlü Mimari (Event-Driven Architecture)
+İstemci-Sunucu Mimarisi (Client-Server Architecture)
+Servis Odaklı Mimari (Service-Oriented Architecture)
+Altıgen Mimari (Hexagonal Architecture)
+Temiz Mimari (Clean Architecture)
+Soğan Mimarisi (Onion Architecture)
+Mikroçekirdek Mimarisi (Microkernel Architecture)
+Eklenti Tabanlı Mimari (Plugin Architecture)
+Sunucusuz Mimari (Serverless Architecture)
+Veri Odaklı Mimari (Data-Oriented Architecture)
+Varlık-Bileşen-Sistem Mimarisi (Entity-Component-System)
+CQRS
+Event Sourcing
+Actor Model
+Peer-to-Peer Architecture
+
+Her mimari için çözdüğü problem, bileşenleri, bağımlılık yönü, veri akışı, avantajları, dezavantajları, kullanım alanları, uygun olmadığı durumlar, güvenlik etkileri, performans özellikleri, test yaklaşımı, dağıtım yöntemi ve örnek dosya yapısı açıklanmalıdır.
+
+Yapay zekâ bölümünde aşağıdaki konular ayrı kategoriler altında ele alınmalıdır:
+
+Yapay zekânın tarihçesi
+Klasik yapay zekâ yöntemleri
+Arama ve planlama algoritmaları
+Uzman sistemler
+Makine öğrenmesi
+Denetimli öğrenme
+Denetimsiz öğrenme
+Pekiştirmeli öğrenme
+Derin öğrenme
+Yapay sinir ağları
+CNN, RNN, LSTM ve Transformer mimarileri
+Büyük dil modelleri
+Üretken yapay zekâ
+Model eğitimi
+Veri hazırlama ve etiketleme
+Tokenization
+Embedding
+Attention
+Fine-tuning
+Quantization
+Distillation
+Model değerlendirme
+Model serving
+MLOps
+RAG sistemleri
+AI agent sistemleri
+Vektör veri tabanları
+AI güvenliği
+Model ve veri sürümleme
+AI proje dosya yapıları
+AI platformları ve kullandıkları teknolojiler
+Algoritmaların örnek kullanım alanları
+
+Yapay zekâ modellerinin nasıl geliştirildiği, nasıl eğitildiği, hangi algoritmaları kullandığı, hangi veri yapılarına ihtiyaç duyduğu ve gerçek projelerde nasıl uygulandığı teknik ayrıntılarıyla açıklanmalıdır.
+
+Dokümantasyon yalnızca güncel teknolojileri değil, tarihsel teknolojileri ve eski standartları da kapsamalıdır. Eski ve güncel RFC belgelerine atıf yapılmalı, ilgili RFC bağlantıları verilmelidir. RFC belgelerinin güncel, yürürlükten kaldırılmış, başka bir belge tarafından değiştirilmiş veya tarihsel durumda olup olmadığı belirtilmelidir.
+
+Ayrıca aşağıdaki kaynak türlerine yer verilmelidir:
+
+Resmî dokümantasyonlar
+Uluslararası standartlar
+RFC belgeleri
+W3C standartları
+ISO, IEEE ve benzeri kurumların belgeleri
+Hakemli araştırma makaleleri
+Konferans bildirileri
+Yüksek lisans ve doktora tezleri
+Teknik raporlar
+Akademik kitaplar
+Resmî proje ve platform belgeleri
+
+Her teknik bilginin kaynağı, yayımlanma tarihi, sürümü, geçerlilik durumu ve son erişim tarihi mümkün olduğunca belirtilmelidir.
+
+Platformda Türkçe ve İngilizce dil desteği bulunmalıdır. Teknik terimler ilk kullanımda Türkçe ve İngilizce karşılıklarıyla birlikte gösterilmelidir. Örneğin:
+
+Bağımlılık Enjeksiyonu (Dependency Injection)
+
+Yerleşik ve standart bir Türkçe karşılığı bulunmayan kavramlar için sonradan üretilmiş veya yaygın kabul görmeyen karşılıklar kullanılmamalıdır. Bu tür durumlarda İngilizce terim korunmalı ve Türkçe açıklaması ayrıca verilmelidir.
+
+Terimler için merkezi bir sözlük oluşturulmalıdır. Kullanıcı bir teknik terimin üzerine geldiğinde, klavye ile odaklandığında veya dokunmatik cihazda seçtiğinde aşağıdaki bilgiler gösterilmelidir:
+
+Türkçe terim
+İngilizce terim
+Kısaltma
+Türkçe açıklama
+İngilizce açıklama
+İlgili kavramlar
+Kaynak
+Kullanım alanı
+
+Platform güncellenebilir, aranabilir, filtrelenebilir ve çevrimdışı kullanılabilir olmalıdır. Kullanıcı dokümanlara kişisel notlar ekleyebilmeli, yer imi oluşturabilmeli, içerikleri karşılaştırabilmeli ve notlarını dışa aktarabilmelidir.
+
+İçerikler doğrudan HTML dosyaları içine yazılmak yerine Markdown, YAML ve JSON gibi yapılandırılmış dosyalarda saklanmalıdır. HTML ve JavaScript uygulaması bu içerikleri okuyarak göstermelidir. Böylece içerikler kolayca güncellenebilmeli, sürümlenebilmeli ve doğrulanabilmelidir.
+
+Platformda aşağıdaki temel bölümler bulunmalıdır:
+
+Proje amacı ve kullanım rehberi
+Bilgisayar ve yazılım tarihi
+Bilgisayar biliminin temelleri
+Programlama dilleri
+Programlama paradigmaları
+Yazılım tasarım ilkeleri
+Yazılım mimarisi temelleri
+Mimari stiller ve kalıplar
+Masaüstü ve yardımcı uygulamalar
+Web uygulamaları
+Mobil uygulamalar
+Oyun sistemleri
+Gömülü sistemler ve IoT
+Sunucu, bulut ve dağıtık sistemler
+Ağ sistemleri
+Grafik, görüntü ve medya sistemleri
+Veri mimarileri
+Yapay zekâ ve makine öğrenmesi
+Geliştirme ortamları ve araç zincirleri
+Test, kalite ve güvenlik
+DevOps, MLOps ve dağıtım süreçleri
+Standartlar, RFC belgeleri ve resmî kaynaklar
+Akademik yayınlar ve tezler
+Teknoloji karşılaştırmaları
+Mimari karar rehberleri
+Örnek proje ve dosya yapıları
+AI destekli kodlama rehberi
+Teknik terimler sözlüğü
+
+Platformun temel amacı yalnızca bilgi listelemek değil; proje gereksinimlerine göre programlama dili, mimari, framework, veri sistemi, geliştirme ortamı, dosya yapısı ve dağıtım yöntemi hakkında gerekçeli değerlendirmeler sunmaktır.
+
+Dokümanlarda ve uygulamanın ilgili alanlarında aşağıdaki kimlik ve roller yer almalıdır:
+
+Yönetim ve Bilişim Sistemleri Uzmanı Kenan AY
+
+Gerekli dokümanlarda bağlama uygun olarak aşağıdaki roller kullanılmalıdır:
+
+Proje Sahibi: Kenan AY
+Geliştirici: Kenan AY
+Yazılım Mimarı: Kenan AY
+Mimari Sorumlu: Kenan AY
+Sistem Tasarımcısı: Kenan AY
+Araştırmacı: Kenan AY
+Dokümante Eden: Kenan AY
+Teknik Yazar: Kenan AY
+Düzenleyen: Kenan AY
+İnceleyen: Kenan AY
+İçerik Sorumlusu: Kenan AY
+Terminoloji Sorumlusu: Kenan AY
+Çeviren: Kenan AY
+Çeviriyi İnceleyen: Kenan AY
+
+İngilizce dokümanlarda mesleki unvan ve roller aşağıdaki şekilde kullanılmalıdır:
+
+Kenan AY — Management and Information Systems Specialist
+
+Project Owner
+Developer
+Software Architect
+Architecture Lead
+System Designer
+Researcher
+Technical Author
+Editor
+Reviewer
+Content Maintainer
+Terminology Maintainer
+Translator
+Translation Reviewer
+
+Öncelikle bu projenin ana başlıklarını, kategorilerini, alt kategorilerini, bilgi mimarisini, doküman türlerini, kaynak sistemini, terim yönetimini ve geliştirme aşamalarını değerlendir. Ardından sürdürülebilir, genişletilebilir ve teknik olarak uygulanabilir kapsamlı bir proje planı oluştur.
+
+Genel değerlendirme
+
+Tasarladığınız şey basit bir “yazılım notları sitesi” değil; doğru kurulursa şu dört işlevi birlikte yürüten yerel bir yazılım mühendisliği bilgi sistemi olur:
+
+Bilgi atlası: Programlama dilleri, mimariler, araçlar, platformlar, standartlar ve tarihçe.
+Karşılaştırma sistemi: Bir yazılım türü için hangi dil, mimari, framework ve altyapının uygun olduğunu değerlendirme.
+Karar destek sistemi: Proje gereksinimlerinden hareketle teknoloji ve mimari adayları üretme.
+AI kodlama rehberi: Yapay zekâya kod yazdırmadan önce dosya yapısı, mimari sınırlar, modüller, testler ve teknik kurallar oluşturma.
+
+Buradaki en önemli tasarım kararı şudur:
+
+Sistem, programlama dillerine göre değil; birbiriyle ilişkilendirilen çok boyutlu bir bilgi modeliyle kurulmalıdır.
+
+Çünkü “oyun”, “mobil uygulama”, “gömülü sistem”, “mikroservis”, “Python”, “React”, “Docker” ve “makine öğrenmesi” aynı seviyede kavramlar değildir.
+
+Oyun: uygulama alanı / application domain
+Mikroservis: mimari stil / architectural style
+Python: programlama dili / programming language
+React: framework veya library
+Docker: dağıtım ve çalışma ortamı teknolojisi
+Makine öğrenmesi: hesaplama ve yapay zekâ alanı
+HTTP: iletişim protokolü
+Linux: işletim sistemi ve çalışma platformu
+
+Bunların tek bir klasör ağacına karıştırılması kısa sürede tekrar, tutarsızlık ve yanlış sınıflandırma üretir.
+
+1. Sistemin temel sınıflandırma modeli
+
+Bilgi mimarisini oluştururken sıfırdan tamamen kişisel bir sınıflandırma üretmek yerine, ACM Computing Classification System gibi yerleşik bilgisayar bilimi sınıflandırmalarından yararlanmak doğru olur. ACM CCS; yazılım mühendisliği, donanım, ağlar, bilgi sistemleri, insan-bilgisayar etkileşimi ve hesaplama teorisi gibi alanları çok katmanlı biçimde sınıflandırmaktadır. Yazılım mimarisi belgeleri için ISO/IEC/IEEE 42010; mimari açıklama, bakış açısı, model ve mimari çerçeve kavramları açısından temel alınabilir. SWEBOK ise yazılım mühendisliğini gereksinimlerden tasarıma, testten bakıma kadar bilgi alanlarıyla ele alan genel iskeleti sağlar.
+
+Her içerik aşağıdaki eksenlerle etiketlenmelidir:
+
+Boyut	Örnek
+Uygulama alanı	Oyun, mobil, web, sunucu, gömülü sistem
+Mimari stil	Katmanlı, mikroservis, olay güdümlü, hexagonal
+Programlama dili	C, C++, Rust, Java, Python
+Programlama paradigması	Prosedürel, nesne yönelimli, işlevsel
+Çalışma modeli	Native, managed runtime, interpreted, VM
+Platform	Linux, Windows, Android, bare metal
+Framework / kütüphane	Web, oyun, veri, kullanıcı arayüzü araçları
+Veri modeli	İlişkisel, belge, grafik, zaman serisi
+İletişim modeli	HTTP, RPC, mesaj kuyruğu, paylaşılan bellek
+Dağıtım modeli	Yerel, istemci-sunucu, bulut, edge
+Kalite özellikleri	Performans, güvenlik, ölçeklenebilirlik
+Yaşam döngüsü	Tasarım, geliştirme, test, dağıtım, bakım
+Kaynak türü	Standart, RFC, makale, tez, resmî doküman
+Tarihsel dönem	Eski, olgun, güncel, deneysel
+Olgunluk durumu	Aktif, bakımda, terk edilmiş, tarihsel
+
+Bu yaklaşım sayesinde aynı içerik farklı yollarla bulunabilir. Örneğin Rust;
+
+programlama dilleri,
+sistem programlama,
+gömülü sistemler,
+bellek güvenliği,
+native runtime,
+oyun motorları
+
+başlıklarının tamamıyla ilişkilendirilebilir.
+
+2. Önerilen ana başlıklar
+00 — Sistem Rehberi ve Kullanım İlkeleri
+
+Bu bölüm dokümantasyonun anayasası olmalıdır.
+
+İçeriği:
+
+Projenin amacı ve kapsamı
+Sınıflandırma sistemi
+Türkçe–İngilizce terim politikası
+Kaynak kabul kuralları
+Belge şablonları
+Sürümleme politikası
+Güncellik ve geçerlilik işaretleri
+AI tarafından üretilmiş içeriklerin doğrulama kuralları
+Alıntı, lisans ve kaynak gösterme kuralları
+Kullanılan kısaltmalar
+
+Bu bölüm oluşturulmadan içerik üretimine başlanmamalıdır.
+
+01 — Bilgisayar ve Yazılım Tarihi
+
+Tarihçe yalnızca programlama dillerinin çıkış tarihlerini sıralamamalıdır. Teknolojilerin hangi ihtiyaca cevap olarak ortaya çıktığını göstermelidir.
+
+Alt başlıklar:
+
+Mekanik hesaplama ve erken hesaplama sistemleri
+Elektronik bilgisayarların gelişimi
+Makine dili ve assembly
+İlk yüksek seviyeli diller
+Derleyici ve yorumlayıcıların gelişimi
+İşletim sistemlerinin gelişimi
+Programlama paradigmalarının gelişimi
+İnternet ve ağ protokollerinin gelişimi
+Kişisel bilgisayar ve masaüstü yazılımlar
+Web teknolojilerinin gelişimi
+Mobil platformların gelişimi
+Bulut ve dağıtık sistemler
+Veri bilimi ve makine öğrenmesi
+Derin öğrenme ve üretken yapay zekâ
+AI destekli yazılım geliştirme
+
+Her tarihsel kayıt şu soruları cevaplamalıdır:
+
+Öncesinde hangi problem vardı?
+Teknoloji neyi değiştirdi?
+Hangi teknolojilerin yerini aldı?
+Bugün hâlâ nerede kullanılıyor?
+Tarihsel mi, aktif mi, yeniden yükselen bir teknoloji mi?
+02 — Bilgisayar Biliminin Temelleri
+
+Bu bölüm diğer bütün alanların kavramsal temelidir.
+
+Alt kategoriler:
+
+Algoritmalar ve veri yapıları
+Hesaplama karmaşıklığı
+Mantık ve ayrık matematik
+Sayısal yöntemler
+Otomatlar ve biçimsel diller
+Derleyici teorisi
+İşletim sistemi temelleri
+Bilgisayar mimarisi
+Bellek ve depolama
+Eşzamanlılık ve paralellik
+Ağ temelleri
+Veritabanı teorisi
+Dağıtık sistem temelleri
+Grafik hesaplama
+Kriptografi ve güvenlik
+İnsan-bilgisayar etkileşimi
+
+Bu bölümde mimarilerden önce “neden böyle çalışıyor?” sorusuna cevap verilmelidir.
+
+03 — Programlama Dilleri
+
+Programlama dilleri yalnızca alfabetik olarak sıralanmamalıdır.
+
+Sınıflandırma eksenleri
+Düşük seviyeli / yüksek seviyeli
+Derlenen / yorumlanan / hibrit
+Native / sanal makine / managed runtime
+Statik tipli / dinamik tipli
+Güçlü / zayıf tip sistemi
+Manuel / otomatik bellek yönetimi
+Genel amaçlı / alan odaklı
+Prosedürel / nesne yönelimli / işlevsel / mantıksal
+Eşzamanlılık modeli
+Güvenlik modeli
+Standartlaşma durumu
+Her dil belgesinde bulunması gerekenler
+Türkçe ve İngilizce adı
+Tarihçesi
+Tasarım amacı
+Temel sürümleri
+Dil standardı
+Sözdizimi ve anlambilim
+Tip sistemi
+Bellek modeli
+Derleme veya yorumlama süreci
+Çalışma zamanı
+Paket ve bağımlılık sistemi
+Geliştirme araçları
+Test araçları
+Hata ayıklama araçları
+Uygun kullanım alanları
+Uygun olmayan kullanım alanları
+Performans özellikleri
+Güvenlik özellikleri
+Framework ve kütüphane ekosistemi
+Örnek proje dizinleri
+Diğer dillerle birlikte çalışma
+Güncel durum ve olgunluk
+Resmî kaynaklar ve akademik kaynaklar
+04 — Programlama Paradigmaları ve Yazılım Tasarım İlkeleri
+
+Alt başlıklar:
+
+Prosedürel programlama — Procedural Programming
+Yapısal programlama — Structured Programming
+Nesne yönelimli programlama — Object-Oriented Programming
+İşlevsel programlama — Functional Programming
+Mantıksal programlama — Logic Programming
+Bildirimsel programlama — Declarative Programming
+Veri odaklı tasarım — Data-Oriented Design
+Olay güdümlü programlama — Event-Driven Programming
+Eşzamanlı programlama — Concurrent Programming
+Paralel programlama — Parallel Programming
+Reaktif programlama — Reactive Programming
+Bileşen tabanlı geliştirme — Component-Based Development
+Alan odaklı tasarım — Domain-Driven Design
+Sözleşmeye dayalı tasarım — Design by Contract
+Veri akışı programlama — Dataflow Programming
+
+Ayrıca:
+
+SOLID
+DRY
+KISS
+YAGNI
+Separation of Concerns
+Information Hiding
+Modularity
+Cohesion
+Coupling
+Dependency Inversion
+
+Bu kavramlar “kesin doğru” olarak değil, bağlamları ve sınırlarıyla anlatılmalıdır.
+
+05 — Yazılım Mimarisi Temelleri
+
+Bu bölüm projenin merkezidir.
+
+ISO/IEC/IEEE 42010 yaklaşımına uygun olarak aşağıdaki kavramlar ayrı tanımlanmalıdır:
+
+Mimari — Architecture
+Mimari açıklama — Architecture Description
+Paydaş — Stakeholder
+İlgi alanı / kaygı — Concern
+Bakış açısı — Viewpoint
+Mimari görünüm — Architecture View
+Model türü — Model Kind
+Mimari çerçeve — Architecture Framework
+Mimari açıklama dili — Architecture Description Language
+
+ISO/IEC/IEEE 42010:2022; mimari açıklamaların, bakış açılarının, model türlerinin ve mimari açıklama çerçevelerinin nasıl ele alınacağına ilişkin gereksinimler tanımlar.
+
+Alt bölümler
+Mimari gereksinimler
+İşlevsel ve işlevsel olmayan gereksinimler
+Kalite özellikleri
+Mimari kararlar
+Mimari kısıtlar
+Bileşen ve modül sınırları
+Bağımlılık yönetimi
+Veri akışı ve kontrol akışı
+Mimari değerlendirme
+Mimari borç
+Teknik borç
+Evrimsel mimari
+Referans mimariler
+Mimari görünüm ve diyagramlar
+Architecture Decision Record — ADR
+06 — Mimari Stiller ve Kalıplar
+
+Bunlar uygulama türlerinden ayrı tutulmalıdır.
+
+Temel mimari stiller
+Tek parça mimari — Monolithic Architecture
+Modüler monolit — Modular Monolith
+Katmanlı mimari — Layered Architecture
+İstemci-sunucu — Client–Server
+Boru ve filtre — Pipes and Filters
+Olay güdümlü mimari — Event-Driven Architecture
+Servis odaklı mimari — Service-Oriented Architecture
+Mikroservis mimarisi — Microservices Architecture
+Mikroçekirdek — Microkernel Architecture
+Eklenti tabanlı mimari — Plugin Architecture
+Hexagonal Architecture
+Onion Architecture
+Clean Architecture
+Model–View–Controller
+Model–View–ViewModel
+Entity–Component–System
+Blackboard Architecture
+Broker Architecture
+Peer-to-Peer Architecture
+Space-Based Architecture
+Serverless Architecture
+Data-Centric Architecture
+Data-Oriented Architecture
+Actor Model
+CQRS
+Event Sourcing
+
+Her mimari için şu karşılaştırma yapılmalıdır:
+
+Çözdüğü problem
+Temel bileşenler
+Bağımlılık yönü
+Veri ve kontrol akışı
+Avantajlar
+Dezavantajlar
+Ölçeklenebilirlik
+Test edilebilirlik
+Güvenlik
+Operasyonel karmaşıklık
+Uygun proje türleri
+Uygun olmadığı durumlar
+Örnek dosya yapısı
+Dil ve framework ilişkileri
+Alternatif mimariler
+3. Uygulama alanlarına göre mimariler
+07 — Masaüstü ve Yardımcı Uygulamalar
+Native masaüstü
+Çoklu platform masaüstü
+CLI uygulamaları
+Sistem araçları
+Arka plan servisleri
+Eklenti sistemleri
+Dosya işleme uygulamaları
+Otomasyon araçları
+08 — Web Uygulamaları
+Statik web
+Çok sayfalı uygulamalar
+Tek sayfalı uygulamalar
+Sunucu taraflı oluşturma
+İstemci taraflı oluşturma
+Hibrit web
+Progressive Web Application
+Backend for Frontend
+Web API
+Gerçek zamanlı web
+İçerik yönetimi
+Headless sistemler
+
+Web bölümünde W3C standartları temel kaynaklar arasında tutulmalıdır. W3C; HTML, CSS, erişilebilirlik ve diğer web teknolojileri için normatif standartlar ve destekleyici belgeler yayımlar.
+
+09 — Mobil Uygulamalar
+Native mobil
+Cross-platform
+Hibrit uygulamalar
+Mobil web
+Offline-first
+Local-first
+Mobil veri senkronizasyonu
+Mobil güvenlik
+Enerji ve kaynak yönetimi
+10 — Oyun ve Etkileşimli Sistemler
+Oyun döngüsü
+Entity–Component–System
+Sahne grafiği
+Fizik sistemi
+Yapay zekâ sistemi
+Ses sistemi
+Girdi sistemi
+Render pipeline
+Ağ tabanlı oyunlar
+Deterministik simülasyon
+Multiplayer sunucu mimarileri
+Veri odaklı oyun tasarımı
+Mod ve eklenti sistemleri
+Oyun motoru mimarisi
+11 — Gömülü Sistemler ve IoT
+Bare-metal
+Gerçek zamanlı işletim sistemleri
+Firmware mimarisi
+Donanım soyutlama katmanı
+Sürücü mimarileri
+Kesme tabanlı sistemler
+State machine
+Zaman kritik sistemler
+Güvenlik kritik sistemler
+Düşük güç sistemleri
+Edge AI
+IoT iletişim modelleri
+OTA güncelleme sistemleri
+12 — Sunucu, Bulut ve Dağıtık Sistemler
+API sunucuları
+Uygulama sunucuları
+Mikroservisler
+Mesajlaşma sistemleri
+Dağıtık önbellek
+Yük dengeleme
+Servis keşfi
+Replikasyon
+Bölümleme
+Tutarlılık modelleri
+Hata toleransı
+Container sistemleri
+Orkestrasyon
+Serverless
+Edge computing
+Gözlemlenebilirlik
+13 — Ağ Sistemleri
+Ağ katmanları
+TCP/IP
+Yönlendirme
+DNS
+HTTP
+TLS
+E-posta protokolleri
+Gerçek zamanlı iletişim
+RPC
+Mesaj kuyrukları
+Ağ programlama
+Yazılım tanımlı ağlar
+Dağıtık ağ sistemleri
+Ağ güvenliği
+
+RFC belgeleri yalnızca “eski dokümanlar” olarak ele alınmamalıdır. RFC serisinde İnternet standartları yanında Best Current Practice, Experimental, Informational ve Historic durumundaki belgeler de bulunur. Bu nedenle her RFC kaydında belge durumu, güncellenme ve yürürlükten kaldırılma ilişkileri gösterilmelidir.
+
+14 — Grafik, Görselleştirme ve Medya Sistemleri
+2D grafik
+3D grafik
+Render pipeline
+Rasterization
+Ray tracing
+Shader sistemleri
+GPU programlama
+Görüntü işleme
+Video işleme
+Ses işleme
+Animasyon sistemleri
+Grafik tasarım araçlarının yazılım mimarileri
+CAD ve modelleme uygulamaları
+Görselleştirme sistemleri
+
+Burada “grafik tasarım” ile “grafik programlama” ayrı fakat ilişkili kategoriler olmalıdır.
+
+4. Veri, yapay zekâ ve model sistemleri
+15 — Veri Mimarileri
+Veri modelleme
+İlişkisel veritabanları
+NoSQL sistemleri
+Belge veritabanları
+Grafik veritabanları
+Zaman serisi sistemleri
+Veri ambarı
+Veri gölü
+Lakehouse
+ETL / ELT
+Batch processing
+Stream processing
+Veri yönetişimi
+Veri kalitesi
+Metadata
+Veri soy ağacı — Data Lineage
+Vektör veritabanları
+Arama ve indeksleme
+16 — Yapay Zekâ ve Makine Öğrenmesi
+
+Bu bölüm tek başlık altında toplanmamalı; aşağıdaki katmanlara ayrılmalıdır.
+
+A. Matematiksel temeller
+Doğrusal cebir
+Olasılık
+İstatistik
+Optimizasyon
+Bilgi teorisi
+Sayısal hesaplama
+B. Klasik yapay zekâ
+Arama algoritmaları
+Planlama
+Kural tabanlı sistemler
+Uzman sistemler
+Bilgi gösterimi
+Mantıksal çıkarım
+Evrimsel algoritmalar
+Bulanık mantık
+C. Makine öğrenmesi
+Denetimli öğrenme
+Denetimsiz öğrenme
+Yarı denetimli öğrenme
+Pekiştirmeli öğrenme
+Sınıflandırma
+Regresyon
+Kümeleme
+Boyut indirgeme
+Özellik mühendisliği
+Model değerlendirme
+D. Derin öğrenme
+Yapay sinir ağları
+CNN
+RNN
+LSTM
+Transformer
+Autoencoder
+GAN
+Diffusion modelleri
+Multimodal modeller
+E. Büyük dil modelleri
+Tokenization
+Embedding
+Attention
+Pretraining
+Fine-tuning
+Instruction tuning
+Preference optimization
+Retrieval-Augmented Generation
+Tool use
+Agent sistemleri
+Inference
+Quantization
+Distillation
+Evaluation
+Hallucination
+Context management
+F. Model geliştirme yaşam döngüsü
+Veri toplama
+Veri temizleme
+Etiketleme
+Veri sürümleme
+Deney takibi
+Eğitim
+Doğrulama
+Test
+Model kayıt sistemi
+Dağıtım
+İzleme
+Drift tespiti
+Yeniden eğitim
+Emeklilik
+G. AI sistem mimarileri
+Tek model uygulamaları
+Model serving
+RAG sistemleri
+Agentic systems
+Çoklu model sistemleri
+Prompt yönetimi
+Tool orchestration
+Memory systems
+Vector search
+AI gateway
+Guardrails
+Human-in-the-loop
+Edge AI
+Federated learning
+H. AI güvenliği ve yönetişimi
+Veri gizliliği
+Model güvenliği
+Prompt injection
+Data poisoning
+Model extraction
+Bias
+Explainability
+Robustness
+Evaluation
+Audit
+Model cards
+Dataset documentation
+Risk management
+
+AI yaşam döngüsünde yalnızca algoritmaları değil, risk, yönetişim, güvenilirlik ve değerlendirmeyi de kapsamak gerekir. NIST AI RMF, AI ürün ve sistemlerinin tasarım, geliştirme, kullanım ve değerlendirme aşamalarında güvenilirlik risklerinin ele alınması için yaşam döngüsü yaklaşımı sunmaktadır.
+
+5. Geliştirme ortamları ve araç zinciri
+17 — Derleme, Geliştirme ve Çalışma Ortamları
+Metin editörleri
+IDE sistemleri
+Derleyiciler
+Yorumlayıcılar
+Linker
+Debugger
+Profiler
+Build systems
+Package managers
+Dependency managers
+Runtime environments
+Virtual machines
+SDK
+Toolchain
+Cross-compilation
+Language servers
+Static analysis
+Dynamic analysis
+Code generation
+Test runners
+Documentation generators
+
+Burada şu ayrım korunmalıdır:
+
+Dil
+Dil uygulaması / implementation
+Derleyici
+Çalışma zamanı
+SDK
+Framework
+Kütüphane
+Build tool
+Paket yöneticisi
+IDE
+
+Örneğin “Java” ile JVM, JDK, Java dili, Java standard library ve frameworkler tek kavram değildir.
+
+18 — Yazılım Yaşam Döngüsü ve Mühendislik Süreçleri
+Gereksinim mühendisliği
+Sistem analizi
+Yazılım tasarımı
+Mimari tasarım
+Kodlama
+Kod inceleme
+Test
+Entegrasyon
+Sürümleme
+Dağıtım
+Bakım
+Yeniden yapılandırma
+Teknik borç
+Konfigürasyon yönetimi
+Değişiklik yönetimi
+Proje yönetimi
+Ürün yönetimi
+DevOps
+DevSecOps
+DataOps
+MLOps
+AIOps
+SRE
+
+SWEBOK’un yazılım gereksinimleri, tasarım, geliştirme, test, bakım, süreç, kalite, güvenlik ve profesyonel uygulama gibi bilgi alanları bu bölümün kontrol listesi olarak kullanılabilir.
+
+19 — Kalite Özellikleri ve Mimari Değerlendirme
+
+Her teknoloji “iyi” veya “kötü” diye değerlendirilmemelidir. Kalite özelliklerine göre değerlendirilmelidir.
+
+Performans
+Gecikme
+Verim
+Ölçeklenebilirlik
+Kullanılabilirlik
+Güvenilirlik
+Dayanıklılık
+Güvenlik
+Gizlilik
+Bakım yapılabilirlik
+Test edilebilirlik
+Taşınabilirlik
+Birlikte çalışabilirlik
+Değiştirilebilirlik
+Gözlemlenebilirlik
+Enerji verimliliği
+Gerçek zamanlılık
+Determinizm
+Maliyet
+Geliştirici deneyimi
+20 — Güvenlik ve Yazılım Tedarik Zinciri
+Threat modeling
+Güvenli tasarım
+Kimlik doğrulama
+Yetkilendirme
+Kriptografi
+Secret management
+Güvenli kodlama
+Bağımlılık güvenliği
+Vulnerability management
+Supply chain security
+SBOM
+Lisans uyumluluğu
+İmzalama
+Reproducible builds
+Güvenlik testleri
+Incident response
+
+SPDX; yazılım bileşenleri, lisanslar, güvenlik ve yazılım malzeme listesi bilgilerinin makinece işlenebilir biçimde temsil edilmesi için kullanılan uluslararası açık standartlardan biridir. Bu nedenle ileride platformdaki paket, model, veri seti ve bağımlılık kayıtlarına SPDX uyumlu alanlar eklenebilir.
+
+6. Belge türleri
+
+Platformda bütün içeriklerin aynı belge türünde tutulması doğru değildir.
+
+Önerilen belge türleri:
+
+Kavram belgesi
+Programlama dili profili
+Mimari stil profili
+Framework profili
+Araç profili
+Platform profili
+Protokol veya standart kaydı
+Algoritma profili
+Model veya model ailesi profili
+Karşılaştırma belgesi
+Uygulama alanı rehberi
+Dosya dizini şablonu
+Mimari karar kaydı
+Örnek proje incelemesi
+Akademik kaynak özeti
+Tarihsel olay kaydı
+Terim sözlüğü kaydı
+Araştırma notu
+Doğrulanmamış taslak
+Karar rehberi
+7. Standart belge şablonu
+
+Her teknik belge aşağıdaki yapıyı kullanmalıdır:
+
+id: architecture.hexagonal
+title_tr: Altıgen Mimari
+title_en: Hexagonal Architecture
+document_type: architecture_profile
+status: reviewed
+version: 1.0.0
+last_reviewed: 2026-07-17
+
+domains:
+  - web
+  - server
+  - desktop
+
+related_languages:
+  - java
+  - csharp
+  - typescript
+  - python
+
+quality_attributes:
+  - testability
+  - maintainability
+  - replaceability
+
+source_types:
+  - official_documentation
+  - peer_reviewed_article
+
+terms:
+  - ports_and_adapters
+  - dependency_inversion
+
+Belge gövdesi:
+
+Tanım
+İngilizce ve Türkçe terimler
+Çözdüğü problem
+Tarihsel bağlam
+Temel bileşenler
+Mimari görünüm
+Veri akışı
+Kontrol akışı
+Bağımlılık yönü
+Örnek klasör yapısı
+Dil ve framework uyumluluğu
+Avantajlar
+Dezavantajlar
+Güvenlik etkileri
+Performans etkileri
+Test yaklaşımı
+Dağıtım yaklaşımı
+Uygun kullanım alanları
+Uygun olmadığı durumlar
+Alternatifler
+AI kod üretim talimatları
+Kaynaklar
+İnceleme tarihi
+Değişiklik geçmişi
+8. Türkçe–İngilizce terim sistemi
+
+Terimler için ayrı bir sözlük verisi oluşturulmalıdır:
+
+{
+  "id": "dependency_injection",
+  "canonical_en": "Dependency Injection",
+  "canonical_tr": "Bağımlılık Enjeksiyonu",
+  "abbreviation": "DI",
+  "definition_tr": "Bir bileşenin ihtiyaç duyduğu bağımlılıkların dışarıdan verilmesi yaklaşımıdır.",
+  "definition_en": "A technique in which a component receives its dependencies externally.",
+  "authority": "official_or_academic_source",
+  "translation_status": "established",
+  "related_terms": [
+    "dependency_inversion",
+    "inversion_of_control"
+  ]
+}
+
+Terim kullanım kuralları:
+
+İlk kullanım: Bağımlılık Enjeksiyonu (Dependency Injection, DI)
+Devamında: bağımlılık enjeksiyonu
+Yerleşik Türkçe karşılığı yoksa İngilizce terim korunmalıdır.
+Açıklayıcı Türkçe karşılık, “standart Türkçe terim” gibi sunulmamalıdır.
+Ticari ürün, framework ve API adları çevrilmemelidir.
+Aynı kavram için farklı Türkçe karşılıklar kontrolsüz biçimde kullanılmamalıdır.
+Eş anlamlı ve eski terimler ayrıca kaydedilmelidir.
+Terimin kaynağı ve kullanım alanı belirtilmelidir.
+
+Hover sistemi yalnızca fare üzerine gelmeye bağlı olmamalıdır. Terim açıklamaları klavye odağı, tıklama ve dokunmatik cihazlarla da açılmalıdır. WCAG 2.2, hover veya klavye odağıyla açılan ek içeriğin kapatılabilir, üzerine gidilebilir ve yeterince kalıcı olmasını ister.
+
+9. Kaynak hiyerarşisi
+
+Kaynakların türü açıkça gösterilmelidir:
+
+Normatif standart veya teknik şartname
+RFC, W3C Recommendation veya benzeri standart belgesi
+Dil veya platformun resmî dokümantasyonu
+Resmî tasarım belgesi
+Hakemli araştırma makalesi
+Doktora tezi veya yüksek lisans tezi
+Akademik kitap
+Konferans bildirisi
+Teknik rapor
+Güvenilir mühendislik incelemesi
+Topluluk belgesi
+Kişisel araştırma notu
+AI tarafından üretilmiş ve henüz doğrulanmamış içerik
+
+Her kaynak kaydında şunlar bulunmalıdır:
+
+source_type: normative_specification
+title: ...
+authors: ...
+publisher: ...
+publication_date: ...
+version: ...
+accessed_at: ...
+language: en
+status: active
+supersedes: ...
+superseded_by: ...
+related_rfc: ...
+doi: ...
+official_reference: true
+
+Özellikle RFC belgelerinde:
+
+Updates
+Updated by
+Obsoletes
+Obsoleted by
+Status
+Stream
+Publication date
+
+alanları izlenmelidir.
+
+10. Yerel web uygulaması mimarisi
+
+Doğrudan yüzlerce HTML dosyasını elle düzenlemek doğru yaklaşım değildir.
+
+En sağlıklı yapı:
+
+İçerik Markdown/JSON/YAML olarak tutulur; HTML ve JavaScript uygulaması bu içerikleri görüntüler.
+
+Başlangıç mimarisi
+Statik ve çevrimdışı çalışabilen web uygulaması
+HTML, CSS ve JavaScript arayüzü
+Markdown tabanlı içerik
+JSON tabanlı sözlük ve sınıflandırma
+Yerel tam metin arama
+Filtreleme
+Karşılaştırma ekranı
+Yer imleri
+Kullanıcı notları
+JSON dışa aktarma ve içe aktarma
+Service Worker ile çevrimdışı kullanım
+IndexedDB ile kişisel not saklama
+Git ile sürüm kontrolü
+Önerilen dizin yapısı
+software-knowledge-atlas/
+├── app/
+│   ├── index.html
+│   ├── assets/
+│   ├── styles/
+│   ├── scripts/
+│   ├── components/
+│   └── workers/
+│
+├── content/
+│   ├── 00-guide/
+│   ├── 01-history/
+│   ├── 02-foundations/
+│   ├── 03-programming-languages/
+│   ├── 04-paradigms/
+│   ├── 05-architecture-foundations/
+│   ├── 06-architecture-styles/
+│   ├── 07-desktop/
+│   ├── 08-web/
+│   ├── 09-mobile/
+│   ├── 10-games/
+│   ├── 11-embedded-iot/
+│   ├── 12-server-cloud/
+│   ├── 13-networks/
+│   ├── 14-graphics-media/
+│   ├── 15-data/
+│   ├── 16-ai-ml/
+│   ├── 17-toolchains/
+│   ├── 18-engineering-processes/
+│   ├── 19-quality/
+│   ├── 20-security/
+│   ├── 21-case-studies/
+│   └── 22-decision-guides/
+│
+├── data/
+│   ├── taxonomy.json
+│   ├── glossary.json
+│   ├── languages.json
+│   ├── architectures.json
+│   ├── frameworks.json
+│   ├── standards.json
+│   └── sources.json
+│
+├── schemas/
+│   ├── document.schema.json
+│   ├── glossary.schema.json
+│   ├── source.schema.json
+│   └── architecture.schema.json
+│
+├── templates/
+│   ├── language-profile.md
+│   ├── architecture-profile.md
+│   ├── framework-profile.md
+│   ├── standard-profile.md
+│   └── comparison.md
+│
+├── scripts/
+│   ├── build-content.js
+│   ├── build-search-index.js
+│   ├── validate-content.js
+│   ├── validate-links.js
+│   └── generate-relations.js
+│
+├── tests/
+├── exports/
+└── README.md
+11. Karar destek bölümü
+
+Platformun en değerli kısmı yalnızca bilgi sunması değil, proje kararlarını desteklemesi olacaktır.
+
+Kullanıcıdan alınacak girdiler
+Uygulama türü
+Hedef platform
+Kullanıcı sayısı
+Veri miktarı
+Gerçek zaman gereksinimi
+Gecikme sınırı
+Bellek sınırı
+Enerji sınırı
+Çevrimdışı çalışma ihtiyacı
+Güvenlik seviyesi
+Güvenlik kritik olup olmadığı
+Ekip deneyimi
+Dağıtım ortamı
+Ölçeklenme ihtiyacı
+Bakım süresi
+AI veya ML gereksinimi
+Donanım erişimi
+Lisans kısıtları
+Üretilecek sonuç
+Uygun programlama dili adayları
+Alternatif diller
+Mimari stil adayları
+Runtime modeli
+Framework kategorileri
+Veri sistemi
+İletişim yöntemi
+Test stratejisi
+Dağıtım modeli
+Önerilen klasör yapısı
+Teknik riskler
+Uygun olmayan seçenekler
+Kararın dayandığı kaynaklar
+Karar güven düzeyi
+
+Sistem “Bu proje için kesinlikle X kullanılmalıdır” dememelidir. Bunun yerine:
+
+Bu gereksinimler altında X birinci adaydır; Y daha düşük geliştirme maliyeti, Z ise daha yüksek deterministik performans sağlar.
+
+şeklinde gerekçeli sonuç üretmelidir.
+
+12. AI kodlama bölümü
+
+AI ile kod üretimi için ayrıca şu belgeler oluşturulmalıdır:
+
+Proje bağlam belgesi
+Mimari sınırlar
+Modül sorumlulukları
+Bağımlılık kuralları
+İzin verilen teknolojiler
+Yasaklanan bağımlılıklar
+Dosya ve dizin sözleşmesi
+Kodlama standardı
+Test sözleşmesi
+Hata işleme standardı
+Loglama standardı
+Güvenlik kuralları
+Performans sınırları
+Kabul kriterleri
+AI prompt şablonları
+Kod inceleme kontrol listesi
+Mimari ihlal kontrolü
+
+AI tarafından üretilen her kod çıktısı şu sorularla kontrol edilmelidir:
+
+Belirlenen mimariye uyuyor mu?
+Yanlış katmana bağımlılık ekliyor mu?
+Gereksiz framework kullanıyor mu?
+Güvenlik sınırlarını bozuyor mu?
+Test edilebilir mi?
+Resmî API ve dil sürümüne uygun mu?
+Uydurulmuş paket veya fonksiyon içeriyor mu?
+Dosya dizin sözleşmesine uyuyor mu?
+Kaynak ve lisans açısından sorunlu mu?
+Mimari karar kayıtlarıyla çelişiyor mu?
+13. Uygulama geliştirme sırası
+Aşama 0 — Proje anayasası
+Amaç
+Kapsam
+Terminoloji politikası
+Kaynak politikası
+Belge türleri
+Metadata şeması
+Sürümleme
+Güncellik işaretleri
+Aşama 1 — Sınıflandırma ve sözlük
+Ana kategoriler
+Alt kategoriler
+İlişki türleri
+Türkçe–İngilizce sözlük
+Kaynak veri modeli
+Belge şablonları
+Aşama 2 — Yerel uygulama çekirdeği
+İçerik görüntüleme
+Sol navigasyon
+Arama
+Etiket filtreleri
+Terim açıklamaları
+Kaynak görünümü
+Karanlık ve açık görünüm
+Çevrimdışı çalışma
+Aşama 3 — Tarihçe ve programlama dilleri
+
+İlk içerik grubu:
+
+Makine dili
+Assembly
+Fortran
+Lisp
+COBOL
+BASIC
+Pascal
+C
+Smalltalk
+C++
+Java
+JavaScript
+Python
+C#
+Go
+Rust
+
+Amaç bütün dilleri eklemek değil, dil ailelerini ve gelişim çizgisini kurmaktır.
+
+Aşama 4 — Mimari temeller
+Mimari kavramlar
+Modülerlik
+Katmanlama
+Bağımlılık
+Arayüz
+Sözleşme
+Veri akışı
+Kontrol akışı
+Kalite özellikleri
+Mimari kararlar
+Aşama 5 — Mimari stiller
+
+Öncelikle:
+
+Monolith
+Modular Monolith
+Layered
+Client–Server
+Event-Driven
+Microservices
+Hexagonal
+Clean Architecture
+Plugin Architecture
+Microkernel
+ECS
+Aşama 6 — Uygulama alanları
+Web
+Mobil
+Masaüstü
+Oyun
+Gömülü sistem
+Sunucu
+Ağ
+Grafik
+Veri
+Aşama 7 — AI ve makine öğrenmesi
+Matematiksel temel
+Algoritmalar
+Model aileleri
+Eğitim yaşam döngüsü
+MLOps
+Model serving
+RAG
+Agent sistemleri
+Güvenlik ve değerlendirme
+Aşama 8 — Karşılaştırma ve karar motoru
+Dil karşılaştırmaları
+Mimari karşılaştırmaları
+Teknoloji seçim matrisleri
+Proje gereksinimi formu
+Gerekçeli öneri üretimi
+Mimari karar kayıtları
+Sonuç
+
+Projenin doğru tanımı şu olabilir:
+
+Yazılım Mimarileri, Programlama Ekosistemleri ve Yapay Zekâ Sistemleri Bilgi Atlası
+
+Temel omurgası:
+
+Tarihçe
+    ↓
+Bilgisayar bilimi temelleri
+    ↓
+Programlama dilleri ve paradigmalar
+    ↓
+Yazılım mühendisliği
+    ↓
+Mimari temeller ve mimari stiller
+    ↓
+Uygulama alanları
+    ↓
+Framework, runtime ve geliştirme araçları
+    ↓
+Veri ve yapay zekâ sistemleri
+    ↓
+Güvenlik, kalite ve dağıtım
+    ↓
+Karşılaştırma ve karar desteği
+    ↓
+AI destekli proje ve kod üretimi
+
+En kritik üç karar şunlardır:
+
+İçeriği doğrudan HTML içinde yazmamak; Markdown ve yapılandırılmış veride tutmak.
+Programlama dili, uygulama alanı ve mimari stili birbirinden ayırmak.
+Her bilginin sürümünü, kaynağını, geçerlilik durumunu ve son inceleme tarihini saklamak.
+
+Bu temeller kurulmadan içerik toplamaya başlanırsa büyük fakat düzensiz bir not arşivi oluşur. Önce sınıflandırma, sözlük, belge şeması ve kaynak kuralları kurulursa sistem zamanla gerçek bir teknik başvuru ve karar destek platformuna dönüşür. 
+
+
+Bu uygulama için en uygun yaklaşım:
+
+İçerik Odaklı Modüler Monolit
+Content-Driven Modular Monolith
+
+Buna iki özellik eklenmeli:
+
+Yerel öncelikli mimari — Local-First Architecture
+Portlar ve adaptörler — Ports and Adapters / Hexagonal Architecture
+
+Yani tek uygulama ve tek kod deposu olacak; ancak arama, içerik, notlar, terimler, karşılaştırma, kaynaklar ve karar desteği birbirinden bağımsız modüller hâlinde geliştirilecek.
+
+Net teknoloji önerisi
+Astro
++ TypeScript
++ Markdown / MDX
++ YAML / JSON
++ Zod şema doğrulaması
++ Pagefind arama
++ IndexedDB yerel notlar
++ PWA çevrimdışı kullanım
++ Tauri ileride masaüstü paketleme
+
+Astro, içerik koleksiyonlarını düzenlemek ve içerik metadatasını şemalarla doğrulamak için doğrudan bir yapı sunuyor. İçerik koleksiyonlarındaki şemalar, belgelerin başlık, kategori, kaynak, sürüm ve ilişki alanlarının tutarlı tutulmasını sağlıyor. Bu nedenle salt React veya sıradan HTML dosyalarına göre bu proje için daha uygun bir temel oluşturur.
+
+1. Neden modüler monolit?
+
+Bu uygulamanın başlangıçta şunlara ihtiyacı yok:
+
+Mikroservis
+Ayrı API sunucuları
+Kubernetes
+Dağıtık veritabanı
+Mesaj kuyruğu
+Çoklu backend servisi
+
+Çünkü uygulama başlangıçta:
+
+Tek kullanıcıya yönelik,
+Yerel çalışacak,
+Büyük ölçüde belge okuyacak,
+İçeriği dosyalardan üretecek,
+İnternet olmadan kullanılacak,
+Git ile sürümlenecek.
+
+Bu nedenle mikroservis mimarisi gereksiz operasyonel yük oluşturur.
+
+Ancak “monolit” bütün kodun birbirine karıştırılması anlamına gelmemelidir. Her ana işlev kendi modülü içinde bulunmalıdır.
+
+Tek uygulama
+├── İçerik kataloğu
+├── Terimler sözlüğü
+├── Kaynak yönetimi
+├── Arama
+├── Karşılaştırma
+├── Kullanıcı notları
+├── Karar destek sistemi
+└── AI proje rehberi
+2. Önerilen mimari görünüm
+┌────────────────────────────────────────────┐
+│             Kullanıcı Arayüzü              │
+│ UI / Presentation Layer                    │
+│                                            │
+│ Sayfalar, arama, karşılaştırma, notlar     │
+└──────────────────────┬─────────────────────┘
+                       │
+┌──────────────────────▼─────────────────────┐
+│             Uygulama Katmanı               │
+│ Application Layer                          │
+│                                            │
+│ Use Cases / Kullanım Senaryoları            │
+│ Belge ara, karşılaştır, not ekle, öneri üret│
+└──────────────────────┬─────────────────────┘
+                       │
+┌──────────────────────▼─────────────────────┐
+│               Alan Çekirdeği               │
+│ Domain Core                                │
+│                                            │
+│ Document, Term, Source, Architecture,       │
+│ Language, Framework, Relation, Decision     │
+└──────────────────────┬─────────────────────┘
+                       │
+┌──────────────────────▼─────────────────────┐
+│          Portlar / Arabirimler             │
+│ Ports / Interfaces                         │
+│                                            │
+│ ContentRepository, SearchPort, NotesPort,   │
+│ ExportPort, FileSystemPort                  │
+└──────────────────────┬─────────────────────┘
+                       │
+┌──────────────────────▼─────────────────────┐
+│             Adaptörler                     │
+│ Adapters / Infrastructure                  │
+│                                            │
+│ Markdown, Pagefind, IndexedDB, JSON,        │
+│ Service Worker, Tauri, Git export           │
+└────────────────────────────────────────────┘
+
+Buradaki temel kural:
+
+Alan çekirdeği Astro, IndexedDB, Pagefind veya Tauri’nin varlığını bilmemelidir.
+
+Örneğin not kaydetme işlemi doğrudan IndexedDB çağırmamalıdır.
+
+Yanlış:
+
+function saveNote(note: Note) {
+  indexedDB.open("knowledge-atlas");
+}
+
+Doğru:
+
+export interface NotesRepository {
+  save(note: Note): Promise<void>;
+  findByDocumentId(documentId: string): Promise<Note[]>;
+  remove(noteId: string): Promise<void>;
+}
+
+IndexedDB uygulaması başka bir dosyada bulunur:
+
+export class IndexedDbNotesRepository implements NotesRepository {
+  async save(note: Note): Promise<void> {
+    // IndexedDB işlemleri
+  }
+
+  async findByDocumentId(documentId: string): Promise<Note[]> {
+    // IndexedDB sorgusu
+    return [];
+  }
+
+  async remove(noteId: string): Promise<void> {
+    // Silme işlemi
+  }
+}
+
+Böylece ileride IndexedDB yerine SQLite, dosya sistemi veya uzak sunucu kullanabilirsiniz.
+
+3. Kod yapısı
+
+Önerilen ana dizin:
+
+software-knowledge-atlas/
+├── src/
+├── content/
+├── public/
+├── schemas/
+├── scripts/
+├── tests/
+├── docs/
+├── exports/
+├── astro.config.mjs
+├── content.config.ts
+├── tsconfig.json
+├── package.json
+└── README.md
+
+Ayrıntılı yapı:
+
+software-knowledge-atlas/
+│
+├── src/
+│   ├── core/
+│   │   ├── domain/
+│   │   ├── application/
+│   │   ├── ports/
+│   │   └── shared/
+│   │
+│   ├── modules/
+│   │   ├── catalog/
+│   │   ├── glossary/
+│   │   ├── references/
+│   │   ├── search/
+│   │   ├── notes/
+│   │   ├── comparison/
+│   │   ├── decision-support/
+│   │   ├── knowledge-graph/
+│   │   ├── ai-guide/
+│   │   └── settings/
+│   │
+│   ├── adapters/
+│   │   ├── content/
+│   │   ├── database/
+│   │   ├── search/
+│   │   ├── storage/
+│   │   ├── export/
+│   │   └── desktop/
+│   │
+│   ├── components/
+│   │   ├── common/
+│   │   ├── navigation/
+│   │   ├── content/
+│   │   ├── glossary/
+│   │   ├── search/
+│   │   ├── comparison/
+│   │   └── notes/
+│   │
+│   ├── layouts/
+│   ├── pages/
+│   ├── styles/
+│   └── config/
+│
+├── content/
+│   ├── history/
+│   ├── foundations/
+│   ├── languages/
+│   ├── paradigms/
+│   ├── architectures/
+│   ├── frameworks/
+│   ├── platforms/
+│   ├── development-tools/
+│   ├── web/
+│   ├── mobile/
+│   ├── desktop/
+│   ├── games/
+│   ├── embedded/
+│   ├── server-cloud/
+│   ├── networks/
+│   ├── graphics/
+│   ├── data/
+│   ├── artificial-intelligence/
+│   ├── algorithms/
+│   ├── standards/
+│   ├── rfcs/
+│   ├── case-studies/
+│   └── decision-guides/
+│
+├── data/
+│   ├── taxonomy/
+│   ├── glossary/
+│   ├── relations/
+│   ├── sources/
+│   └── timelines/
+│
+├── schemas/
+│   ├── document.schema.ts
+│   ├── term.schema.ts
+│   ├── source.schema.ts
+│   ├── relation.schema.ts
+│   ├── architecture.schema.ts
+│   └── language.schema.ts
+│
+├── scripts/
+│   ├── validate-content.ts
+│   ├── validate-links.ts
+│   ├── generate-relations.ts
+│   ├── generate-search-index.ts
+│   ├── check-terminology.ts
+│   └── export-knowledge-base.ts
+│
+├── tests/
+│   ├── unit/
+│   ├── integration/
+│   ├── content/
+│   └── end-to-end/
+│
+└── public/
+    ├── icons/
+    ├── images/
+    ├── diagrams/
+    ├── manifest.webmanifest
+    └── references/
+4. Çekirdek alan modeli
+
+İlk aşamada gereğinden fazla sınıf oluşturmamak gerekir. Temel varlıklar şunlar olmalıdır:
+
+KnowledgeDocument
+Term
+Source
+Technology
+ProgrammingLanguage
+Architecture
+Framework
+Platform
+Standard
+Algorithm
+AIModel
+Relation
+UserNote
+DecisionRecord
+KnowledgeDocument
+
+Bütün teknik içeriklerin ortak temel modelidir.
+
+export interface KnowledgeDocument {
+  id: string;
+
+  title: {
+    tr: string;
+    en: string;
+  };
+
+  slug: string;
+  type: DocumentType;
+  summary: BilingualText;
+
+  categories: string[];
+  tags: string[];
+
+  status: DocumentStatus;
+  maturity: TechnologyMaturity;
+
+  createdAt: string;
+  updatedAt: string;
+  lastReviewedAt?: string;
+
+  sources: SourceReference[];
+  relations: KnowledgeRelation[];
+}
+Çift dilli metin
+export interface BilingualText {
+  tr: string;
+  en: string;
+}
+Belge türleri
+export type DocumentType =
+  | "history"
+  | "concept"
+  | "programming-language"
+  | "architecture"
+  | "framework"
+  | "platform"
+  | "algorithm"
+  | "ai-model"
+  | "standard"
+  | "rfc"
+  | "case-study"
+  | "comparison"
+  | "decision-guide";
+Geçerlilik durumu
+export type DocumentStatus =
+  | "draft"
+  | "review-required"
+  | "reviewed"
+  | "verified"
+  | "deprecated"
+  | "historical"
+  | "archived";
+Teknoloji olgunluğu
+export type TechnologyMaturity =
+  | "experimental"
+  | "emerging"
+  | "active"
+  | "mature"
+  | "maintenance"
+  | "deprecated"
+  | "historical";
+
+“Belge durumu” ile “teknoloji durumu” birbirine karıştırılmamalıdır.
+
+Örneğin COBOL hakkındaki belge güncel ve doğrulanmış olabilir; fakat ele aldığı teknoloji tarihsel veya bakım aşamasında sınıflandırılabilir.
+
+5. İçerik dosyalarının yapısı
+
+İçerik HTML dosyalarına gömülmemelidir.
+
+Bir mimari belgesi şöyle tutulabilir:
+
+content/architectures/hexagonal-architecture.md
+---
+id: architecture.hexagonal
+type: architecture
+
+title:
+  tr: Altıgen Mimari
+  en: Hexagonal Architecture
+
+slug: hexagonal-architecture
+
+status: reviewed
+maturity: mature
+
+categories:
+  - software-architecture
+  - application-architecture
+
+tags:
+  - ports-and-adapters
+  - dependency-inversion
+  - testability
+
+applicableDomains:
+  - web
+  - server
+  - desktop
+
+relatedLanguages:
+  - java
+  - csharp
+  - typescript
+  - python
+  - rust
+
+qualityAttributes:
+  - maintainability
+  - testability
+  - replaceability
+
+lastReviewedAt: 2026-07-17
+
+sources:
+  - source.alistair-cockburn.hexagonal
+---
+
+## Tanım
+
+Altıgen Mimari (Hexagonal Architecture), uygulama çekirdeğini dış
+teknolojilerden ayırmayı amaçlayan bir yazılım mimarisi yaklaşımıdır.
+
+## Çözdüğü problem
+
+...
+
+## Bileşenler
+
+...
+
+## Örnek dizin yapısı
+
+...
+
+Astro Content Collections, bu metadata alanlarının Zod şemalarıyla doğrulanmasını sağlar. Eksik veya yanlış türde bir alan bulunduğunda içerik derleme aşamasında reddedilebilir.
+
+6. Modül yapısı
+
+Her modül şu yapıya sahip olabilir:
+
+modules/glossary/
+├── domain/
+│   ├── term.ts
+│   ├── term-relation.ts
+│   └── glossary-rules.ts
+│
+├── application/
+│   ├── get-term.ts
+│   ├── search-terms.ts
+│   └── find-related-terms.ts
+│
+├── ports/
+│   └── glossary-repository.ts
+│
+├── adapters/
+│   └── static-glossary-repository.ts
+│
+├── ui/
+│   ├── TermTooltip.astro
+│   ├── TermPopover.astro
+│   └── GlossaryPage.astro
+│
+└── index.ts
+
+Benzer şekilde:
+
+modules/notes/
+├── domain/
+├── application/
+├── ports/
+├── adapters/
+└── ui/
+
+Bu yapı feature-based modular architecture, yani özellik tabanlı modüler mimaridir.
+
+Sadece şu biçimde bir yapı kurulmamalıdır:
+
+components/
+services/
+models/
+utils/
+helpers/
+
+Çünkü proje büyüdüğünde bütün iş alanları bu klasörlerin içinde birbirine karışır.
+
+7. Ana modüller
+Catalog Module — Katalog Modülü
+
+Görevleri:
+
+Belgeleri listelemek
+Kategorilere ayırmak
+Etiketlemek
+Filtrelemek
+İlişkili belgeleri bulmak
+Glossary Module — Terimler Sözlüğü Modülü
+
+Görevleri:
+
+Türkçe ve İngilizce terimleri tutmak
+Hover, focus ve tıklama açıklamalarını göstermek
+Eş anlamlıları yönetmek
+Eski ve yeni terimleri ilişkilendirmek
+Standart olmayan çevirileri işaretlemek
+References Module — Kaynaklar Modülü
+
+Görevleri:
+
+RFC
+Standart
+Resmî dokümantasyon
+Akademik makale
+Tez
+Teknik rapor
+DOI ve sürüm bilgileri
+Güncelleyen veya yürürlükten kaldıran belgeler
+Search Module — Arama Modülü
+
+Görevleri:
+
+Tam metin arama
+Türkçe–İngilizce arama
+Başlık arama
+Terim arama
+Kategori filtreleme
+Kaynak türüne göre filtreleme
+
+Pagefind, statik olarak üretilmiş sitenin sayfalarını derleme sonrasında indeksleyerek istemci tarafında kullanılabilecek bir JavaScript arama paketi üretir. Bu nedenle ilk sürümde ayrı arama sunucusu veya Elasticsearch kullanmaya gerek yoktur.
+
+Notes Module — Notlar Modülü
+
+Görevleri:
+
+Belgeye özel not eklemek
+Notları etiketlemek
+Önemli alanları işaretlemek
+Yer imi eklemek
+Notları JSON olarak dışa aktarmak
+Yedekten içe aktarmak
+
+IndexedDB, tarayıcı içinde büyük miktarda yapılandırılmış veriyi kalıcı biçimde saklamak ve indekslemek için tasarlanmıştır. Bu nedenle kullanıcı notları, işaretlemeler, kişisel etiketler ve okuma geçmişi için uygundur.
+
+Comparison Module — Karşılaştırma Modülü
+
+Görevleri:
+
+Dilleri karşılaştırmak
+Mimarileri karşılaştırmak
+Frameworkleri karşılaştırmak
+Kalite özelliklerini yan yana göstermek
+Farklı kullanım senaryolarına göre puanlamak
+Decision Support Module — Karar Destek Modülü
+
+Görevleri:
+
+Proje gereksinimlerini almak
+Uygun dil adaylarını belirlemek
+Mimari adaylarını belirlemek
+Framework kategorilerini önermek
+Riskleri listelemek
+Sonucu Architecture Decision Record olarak kaydetmek
+Knowledge Graph Module — Bilgi Grafiği Modülü
+
+Görevleri:
+
+Diller ile frameworkler arasındaki ilişkileri göstermek
+Mimari–uygulama alanı ilişkilerini göstermek
+RFC ve standart bağlantılarını göstermek
+Teknolojilerin tarihsel gelişimlerini göstermek
+8. İlişki modeli
+
+Bilgiler yalnızca kategori ağacında tutulmamalıdır. Kavramlar arasında açık ilişkiler bulunmalıdır.
+
+export type RelationType =
+  | "uses"
+  | "implements"
+  | "extends"
+  | "depends-on"
+  | "runs-on"
+  | "compiled-by"
+  | "interpreted-by"
+  | "defined-by"
+  | "standardized-by"
+  | "suitable-for"
+  | "alternative-to"
+  | "influenced-by"
+  | "supersedes"
+  | "obsoletes"
+  | "related-to";
+
+Örnek:
+
+{
+  "from": "language.typescript",
+  "type": "transpiles-to",
+  "to": "language.javascript"
+}
+{
+  "from": "framework.astro",
+  "type": "uses",
+  "to": "language.typescript"
+}
+{
+  "from": "architecture.microservices",
+  "type": "suitable-for",
+  "to": "domain.distributed-systems"
+}
+
+Bu ilişki yapısı ileride bilgi grafiği ve AI tabanlı öneri sistemi için temel oluşturur.
+
+9. Okuma verisi ile kullanıcı verisini ayırın
+
+Bu sistemde iki farklı veri sınıfı bulunmalıdır.
+
+A. Kanonik içerik — Canonical Content
+Markdown
+YAML
+JSON
+Git
+
+Burada tutulacaklar:
+
+Programlama dilleri
+Mimariler
+Terimler
+Standartlar
+RFC kayıtları
+Akademik kaynaklar
+Frameworkler
+Algoritmalar
+AI modelleri
+
+Bunlar doğrudan tarayıcı veritabanında tutulmamalıdır. Kaynak dosyaları Git içinde sürümlenmelidir.
+
+B. Kullanıcı verisi — User Data
+IndexedDB
+
+Burada tutulacaklar:
+
+Kişisel notlar
+Yer imleri
+Okuma geçmişi
+Kişisel etiketler
+Karşılaştırma listeleri
+Taslak karar kayıtları
+Arayüz ayarları
+
+Bu ayrım kritik önemdedir.
+
+Resmî bilgi              → Git ve içerik dosyaları
+Kişisel çalışma verileri → IndexedDB
+10. Uygulamanın veri akışı
+Markdown / YAML / JSON
+          │
+          ▼
+Şema doğrulaması
+Schema Validation
+          │
+          ▼
+İlişki ve kaynak kontrolleri
+          │
+          ▼
+Astro statik sayfa üretimi
+          │
+          ├─────────────► Pagefind arama indeksi
+          │
+          ▼
+HTML + CSS + JavaScript
+          │
+          ▼
+Service Worker önbelleği
+          │
+          ▼
+Çevrimdışı yerel uygulama
+          │
+          ▼
+IndexedDB kişisel notları
+
+PWA ve service worker yapısı, uygulama kaynaklarının önbelleğe alınarak çevrimdışı çalıştırılmasını sağlar. Ancak içerik önbelleği ile kullanıcı verileri ayrı yönetilmelidir.
+
+11. Astro içinde arayüz yaklaşımı
+
+Bütün uygulamayı büyük bir React SPA hâline getirmeyi önermiyorum.
+
+Daha doğru yapı:
+
+Statik belge sayfaları    → Astro
+Arama                     → TypeScript bileşeni
+Karşılaştırma             → Etkileşimli island
+Not editörü               → Etkileşimli island
+Bilgi grafiği             → Etkileşimli island
+Karar formu               → Etkileşimli island
+
+Astro, içerik sayfalarını varsayılan olarak statik HTML şeklinde üretebilir; yalnızca etkileşim gereken parçalar JavaScript ile çalıştırılır. Bu, belge ağırlıklı bir uygulamada tüm sayfayı istemci taraflı uygulama hâline getirmekten daha doğru bir dağılımdır.
+
+İlk sürümde:
+
+Astro + Vanilla TypeScript
+
+yeterlidir.
+
+React, Vue veya Svelte ancak şu bölümler karmaşıklaşırsa eklenmelidir:
+
+Görsel bilgi grafiği
+Sürükle-bırak düzenleme
+Gelişmiş karşılaştırma ekranı
+Çok aşamalı karar formu
+Görsel mimari tasarım aracı
+12. Tauri ne zaman eklenmeli?
+
+Tauri ilk aşamada kullanılmamalıdır.
+
+Önce uygulama tarayıcıda çalışan PWA olarak tamamlanmalıdır. Daha sonra şu ihtiyaçlar oluşursa Tauri eklenebilir:
+
+Markdown dosyalarını uygulama içinden düzenleme
+Yerel klasör açma
+Dosya sistemine doğrudan yazma
+Yerel SQLite kullanma
+PDF dışa aktarma
+Yerel AI modeli çalıştırma
+Sistem tepsisi entegrasyonu
+Masaüstü kurulum paketi oluşturma
+
+Tauri, HTML, JavaScript ve CSS tabanlı ön yüzlerin masaüstü ve mobil uygulama olarak paketlenmesine izin verir ve ön yüz frameworkünden bağımsız çalışabilir.
+
+Gelişim sırası:
+
+1. Astro statik uygulama
+2. PWA ve çevrimdışı kullanım
+3. IndexedDB not sistemi
+4. İçerik editörü
+5. Tauri masaüstü paketi
+6. Gerekirse SQLite
+7. Yerel AI entegrasyonu
+13. Backend ne zaman gerekli olur?
+
+İlk sürümde backend oluşturulmamalıdır.
+
+Backend ancak şu ihtiyaçlardan biri ortaya çıkarsa eklenmelidir:
+
+Birden fazla kullanıcı
+Kullanıcı hesapları
+Cihazlar arasında senkronizasyon
+Ortak belge düzenleme
+Yetkilendirme
+Merkezi AI servisi
+Uzaktan içerik yönetimi
+Sunucu taraflı kaynak taraması
+Otomatik RFC ve dokümantasyon güncellemesi
+
+O durumda yapı şöyle genişleyebilir:
+
+apps/
+├── web/
+├── desktop/
+└── api/
+
+packages/
+├── domain/
+├── application/
+├── schemas/
+├── content-engine/
+└── shared/
+
+Ancak başlangıçta bu yapıya geçmek gereksizdir.
+
+14. Nihai mimari kararı
+
+Ben bu proje için şu kararı öneriyorum:
+
+Architecture:
+Content-Driven Local-First Modular Monolith
+
+Internal Structure:
+Feature-Based Modules
++ Ports and Adapters
+
+Frontend:
+Astro + TypeScript
+
+Canonical Content:
+Markdown + YAML + JSON
+
+Validation:
+Astro Content Collections + Zod
+
+Static Search:
+Pagefind
+
+Personal Data:
+IndexedDB
+
+Offline Operation:
+Progressive Web Application
+
+Version Control:
+Git
+
+Future Desktop Packaging:
+Tauri
+
+Future Local Database:
+SQLite
+Mimari karar cümlesi
+
+Uygulama; içerik odaklı, yerel öncelikli ve çevrimdışı çalışabilen modüler monolit olarak geliştirilecek; alan modelleri frameworklerden bağımsız tutulacak, depolama, arama, dışa aktarma ve dosya sistemi işlemleri portlar ve adaptörler üzerinden bağlanacaktır.
+
+Bu yapı, uygulamanın ilk sürümünü gereksiz derecede karmaşıklaştırmaz; fakat ileride masaüstü uygulamasına, yerel AI sistemine, SQLite veritabanına veya sunuculu çok kullanıcılı yapıya dönüşmesini engellemez.
+
+Bunu projenin kalıcı içerik ve kimliklendirme standardı olarak ekliyorum.
+
+1. Zorunlu çift dil desteği
+
+Uygulamanın hem arayüzü hem de dokümanları Türkçe ve İngilizce olmalıdır:
+
+Türkçe   → /tr/
+İngilizce → /en/
+
+Her içerik kaydında iki dil ayrı alanlarda tutulmalıdır:
+
+title:
+  tr: Altıgen Mimari
+  en: Hexagonal Architecture
+
+summary:
+  tr: Uygulama çekirdeğini dış teknolojilerden ayıran mimari yaklaşımdır.
+  en: An architectural approach that isolates the application core from external technologies.
+
+Uzun dokümanlarda önerilen yapı:
+
+content/
+├── tr/
+│   ├── architectures/
+│   ├── languages/
+│   └── artificial-intelligence/
+└── en/
+    ├── architectures/
+    ├── languages/
+    └── artificial-intelligence/
+
+Türkçe ve İngilizce belgeler aynı kimliği paylaşmalıdır:
+
+id: architecture.hexagonal
+language: tr
+translation_of: architecture.hexagonal
+id: architecture.hexagonal
+language: en
+translation_of: architecture.hexagonal
+2. Dil durumunun izlenmesi
+
+Her dokümanda çeviri durumu bulunmalıdır:
+
+export type TranslationStatus =
+  | "original"
+  | "translated"
+  | "review-required"
+  | "reviewed"
+  | "outdated"
+  | "missing";
+
+Örnek:
+
+language: tr
+translation_status: original
+
+language: en
+translation_status: reviewed
+
+Bir dilde güncellenen içerik diğer dilde eski kalırsa sistem uyarı vermelidir:
+
+Türkçe belge sürümü: 1.4.0
+İngilizce belge sürümü: 1.2.0
+Durum: Translation update required
+
+AI çevirisi doğrudan doğrulanmış içerik sayılmamalıdır:
+
+translation_method: ai-assisted
+translation_reviewed_by: Kenan AY
+translation_status: reviewed
+3. Kenan AY kimliklendirme standardı
+
+Dokümanlarda temel mesleki unvan şu şekilde kullanılmalıdır:
+
+Yönetim ve Bilişim Sistemleri Uzmanı Kenan AY
+
+Bu ifade proje kimliğinin ana tanımıdır.
+
+Dokümanın niteliğine göre aşağıdaki roller kullanılmalıdır:
+
+Türkçe rol	İngilizce karşılığı
+Geliştirici	Developer
+Baş Geliştirici	Lead Developer
+Yazılım Mimarı	Software Architect
+Mimari Sorumlu	Architecture Lead
+Sistem Tasarımcısı	System Designer
+Proje Sahibi	Project Owner
+Dokümante Eden	Documented by
+Teknik Yazar	Technical Author
+Düzenleyen	Editor
+İnceleyen	Reviewer
+Çeviren	Translator
+Çeviriyi İnceleyen	Translation Reviewer
+Araştırmacı	Researcher
+İçerik Sorumlusu	Content Maintainer
+Terminoloji Sorumlusu	Terminology Maintainer
+4. Doküman metadata yapısı
+
+Her dokümanda katkı ve sorumluluk alanları bulunmalıdır:
+
+author:
+  name: Kenan AY
+  professional_title:
+    tr: Yönetim ve Bilişim Sistemleri Uzmanı
+    en: Management and Information Systems Specialist
+
+roles:
+  - role:
+      tr: Mimari Sorumlu
+      en: Architecture Lead
+    person: Kenan AY
+
+  - role:
+      tr: Dokümante Eden
+      en: Technical Author
+    person: Kenan AY
+
+  - role:
+      tr: Düzenleyen
+      en: Editor
+    person: Kenan AY
+
+Daha kapsamlı model:
+
+contributors:
+  - person_id: person.kenan-ay
+    name: Kenan AY
+    professional_title:
+      tr: Yönetim ve Bilişim Sistemleri Uzmanı
+      en: Management and Information Systems Specialist
+    roles:
+      - developer
+      - architecture_lead
+      - technical_author
+      - editor
+
+Kişi bilgisi tekrar tekrar yazılmaması için ayrı bir kayıt oluşturulmalıdır:
+
+{
+  "id": "person.kenan-ay",
+  "name": "Kenan AY",
+  "professionalTitle": {
+    "tr": "Yönetim ve Bilişim Sistemleri Uzmanı",
+    "en": "Management and Information Systems Specialist"
+  },
+  "roles": [
+    "project-owner",
+    "developer",
+    "software-architect",
+    "architecture-lead",
+    "researcher",
+    "technical-author",
+    "editor",
+    "content-maintainer"
+  ]
+}
+5. Belge türüne göre kullanılacak roller
+Programlama dili belgeleri
+Araştıran: Yönetim ve Bilişim Sistemleri Uzmanı Kenan AY
+Dokümante Eden: Kenan AY
+Düzenleyen: Kenan AY
+
+İngilizce:
+
+Researcher: Kenan AY, Management and Information Systems Specialist
+Technical Author: Kenan AY
+Editor: Kenan AY
+Yazılım mimarisi belgeleri
+Mimari Sorumlu: Yönetim ve Bilişim Sistemleri Uzmanı Kenan AY
+Dokümante Eden: Kenan AY
+İnceleyen: Kenan AY
+Uygulama geliştirme belgeleri
+Geliştirici: Yönetim ve Bilişim Sistemleri Uzmanı Kenan AY
+Yazılım Mimarı: Kenan AY
+Sistem Tasarımcısı: Kenan AY
+AI ve makine öğrenmesi belgeleri
+Araştırmacı: Yönetim ve Bilişim Sistemleri Uzmanı Kenan AY
+Teknik Dokümantasyon: Kenan AY
+İçerik Sorumlusu: Kenan AY
+Çeviri belgeleri
+Çeviren: Kenan AY
+Çeviriyi İnceleyen: Kenan AY
+Terminoloji Sorumlusu: Kenan AY
+Proje ana sayfası
+Proje Sahibi ve Geliştirici
+Yönetim ve Bilişim Sistemleri Uzmanı
+Kenan AY
+
+İngilizce:
+
+Project Owner and Developer
+Management and Information Systems Specialist
+Kenan AY
+6. Doküman üzerinde görünür gösterim
+
+Her dokümanın üst kısmında kısa kimlik bilgisi bulunmalıdır:
+
+Mimari Sorumlu: Kenan AY
+Dokümante Eden: Kenan AY
+Son Düzenleme: 17 Temmuz 2026
+
+Alt bölümde ayrıntılı katkı bilgisi gösterilebilir:
+
+Hazırlayan
+Yönetim ve Bilişim Sistemleri Uzmanı Kenan AY
+
+Roller
+Geliştirici · Yazılım Mimarı · Mimari Sorumlu · Teknik Yazar · Düzenleyen
+
+İngilizce sayfada:
+
+Prepared by
+Kenan AY
+Management and Information Systems Specialist
+
+Roles
+Developer · Software Architect · Architecture Lead · Technical Author · Editor
+7. Uygulama arayüzündeki kimlik alanları
+
+Kenan AY bilgisi şu alanlarda yer almalıdır:
+
+Ana sayfa
+Hakkında sayfası
+Proje bilgileri
+Her dokümanın metadata alanı
+Doküman alt bilgisi
+PDF ve yazdırma çıktıları
+Dışa aktarılan Markdown belgeleri
+JSON ve veri dışa aktarımları
+Mimari Karar Kayıtları
+Sürüm notları
+README dosyası
+Lisans veya katkı bilgileri
+Teknik raporlar
+Karşılaştırma sonuçları
+
+Ancak her paragrafta tekrar edilmemelidir. Kimlik bilgisi belge düzeyinde açık ve düzenli biçimde gösterilmelidir.
+
+8. Kaynak kodundaki proje bilgisi
+export const projectIdentity = {
+  projectName: {
+    tr: "Yazılım Bilgi ve Mimari Atlası",
+    en: "Software Knowledge and Architecture Atlas",
+  },
+
+  owner: {
+    name: "Kenan AY",
+    professionalTitle: {
+      tr: "Yönetim ve Bilişim Sistemleri Uzmanı",
+      en: "Management and Information Systems Specialist",
+    },
+  },
+
+  roles: {
+    tr: [
+      "Proje Sahibi",
+      "Geliştirici",
+      "Yazılım Mimarı",
+      "Mimari Sorumlu",
+      "Araştırmacı",
+      "Dokümante Eden",
+      "Düzenleyen",
+    ],
+    en: [
+      "Project Owner",
+      "Developer",
+      "Software Architect",
+      "Architecture Lead",
+      "Researcher",
+      "Technical Author",
+      "Editor",
+    ],
+  },
+};
+9. Güncellenmiş mimari tanımı
+
+Projenin mimari kararı şu şekilde genişletilmelidir:
+
+Architecture:
+Bilingual Content-Driven Local-First Modular Monolith
+
+Languages:
+Turkish and English
+
+Content Strategy:
+Separate but linked bilingual documents
+
+Internal Structure:
+Feature-Based Modules
++ Ports and Adapters
++ Centralized Terminology Management
+
+Project Owner:
+Kenan AY
+
+Professional Title:
+Yönetim ve Bilişim Sistemleri Uzmanı
+Management and Information Systems Specialist
+
+Primary Roles:
+Developer
+Software Architect
+Architecture Lead
+Researcher
+Technical Author
+Editor
+Content Maintainer
+
+Proje boyunca kullanılacak ana imza:
+
+Yönetim ve Bilişim Sistemleri Uzmanı Kenan AY
+Proje Sahibi · Geliştirici · Yazılım Mimarı · Mimari Sorumlu · Dokümante Eden · Düzenleyen
+
+İngilizce karşılığı:
+
+Kenan AY — Management and Information Systems Specialist
+Project Owner · Developer · Software Architect · Architecture Lead · Technical Author · Editor

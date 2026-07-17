@@ -1,0 +1,24 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+const docs = (await getCollection("documents", ({ data }) => data.locale === "tr")).sort((a,b) => a.data.title.tr.localeCompare(b.data.title.tr, "tr"));
+const payload = docs.map(d => ({ id:d.data.id, title:d.data.title.tr, en:d.data.title.en, summary:d.data.summary.tr, categories:d.data.categories, tags:d.data.tags, type:d.data.type, status:d.data.status }));
+---
+<BaseLayout title="Katalog">
+  <div class="shell">
+    <div class="eyebrow">Katalog</div><h1>Bilgi tabanını keşfedin</h1><p class="lead">Başlık, İngilizce karşılık, etiket ve özet içinde arayın; belge türüne veya durumuna göre daraltın.</p>
+    <div class="searchbar"><input id="search" type="search" placeholder="Örn. Rust, modüler, RAG…" autocomplete="off" /></div>
+    <div class="form-grid">
+      <div class="field"><label for="category">Kategori</label><select id="category"><option value="">Tüm kategoriler</option><option value="guide">Sistem rehberi</option><option value="languages">Programlama dilleri</option><option value="architectures">Mimari stiller</option><option value="ai">Yapay zekâ</option></select></div>
+      <div class="field"><label for="status">Belge durumu</label><select id="status"><option value="">Tüm durumlar</option><option value="reviewed">İncelenmiş</option><option value="review-required">İnceleme gerekli</option><option value="draft">Taslak</option></select></div>
+    </div>
+    <p id="count" class="muted"></p><div id="results" class="grid"></div>
+  </div>
+  <script is:inline define:vars={{ payload }}>
+    const q = document.querySelector("#search"), category = document.querySelector("#category"), status = document.querySelector("#status"), results = document.querySelector("#results"), count = document.querySelector("#count");
+    const params = new URLSearchParams(location.search); category.value = params.get("category") || "";
+    const escapeHtml = value => value.replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[char]);
+    function render(){ const term=q.value.toLocaleLowerCase("tr").trim(); const filtered=payload.filter(d => (!term || `${d.title} ${d.en} ${d.summary} ${d.tags.join(" ")}`.toLocaleLowerCase("tr").includes(term)) && (!category.value || d.categories.includes(category.value)) && (!status.value || d.status===status.value)); count.textContent=`${filtered.length} belge gösteriliyor`; results.innerHTML=filtered.length?filtered.map(d=>`<a class="card" href="/docs/${encodeURIComponent(d.id)}/"><span class="status ${d.status}">${escapeHtml(d.status)}</span><span class="tag">${escapeHtml(d.type)}</span><h3>${escapeHtml(d.title)}</h3><p>${escapeHtml(d.summary)}</p></a>`).join(""):`<div class="empty" style="grid-column:1/-1">Bu ölçütlerle eşleşen belge bulunamadı.</div>`; }
+    [q,category,status].forEach(el=>el.addEventListener("input",render)); render();
+  </script>
+</BaseLayout>

@@ -1,0 +1,17 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+const docs = (await getCollection("documents", ({data}) => data.locale === "tr" && ["architecture","programming-language","concept"].includes(data.type))).map(d=>({id:d.data.id,title:d.data.title.tr,summary:d.data.summary.tr,type:d.data.type,status:d.data.status,maturity:d.data.maturity,categories:d.data.categories,tags:d.data.tags}));
+---
+<BaseLayout title="Teknoloji Karşılaştırması">
+  <div class="shell"><div class="eyebrow">Yan yana değerlendirme</div><h1>Bilgi profillerini karşılaştırın</h1><p class="lead">Aynı türde veya farklı eksenlerdeki iki belgeyi metadata düzeyinde karşılaştırın.</p>
+    <div class="form-grid"><div><label for="left">Birinci profil</label><select id="left">{docs.map(d=><option value={d.id}>{d.title}</option>)}</select></div><div><label for="right">İkinci profil</label><select id="right">{docs.map((d,i)=><option value={d.id} selected={i===1}>{d.title}</option>)}</select></div></div>
+    <div id="comparison" class="grid" style="grid-template-columns:1fr 1fr;margin-top:2rem"></div>
+  </div>
+  <script is:inline define:vars={{ docs }}>
+    const left=document.querySelector("#left"),right=document.querySelector("#right"),out=document.querySelector("#comparison");
+    const esc=v=>String(v).replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[c]);
+    const card=d=>`<article class="card" style="transform:none"><span class="status ${esc(d.status)}">${esc(d.status)}</span><h2>${esc(d.title)}</h2><p>${esc(d.summary)}</p><h3>Profil</h3><p><strong>Tür:</strong> ${esc(d.type)}<br><strong>Olgunluk:</strong> ${esc(d.maturity)}</p><h3>Kategoriler</h3><p>${d.categories.map(x=>`<span class="tag">${esc(x)}</span>`).join("")}</p><h3>Etiketler</h3><p>${d.tags.map(x=>`<span class="tag">${esc(x)}</span>`).join("")}</p><a href="/docs/${encodeURIComponent(d.id)}/">Belgeyi aç →</a></article>`;
+    function render(){out.innerHTML=[left.value,right.value].map(id=>card(docs.find(d=>d.id===id))).join("");}[left,right].forEach(el=>el.addEventListener("change",render));render();
+  </script>
+</BaseLayout>

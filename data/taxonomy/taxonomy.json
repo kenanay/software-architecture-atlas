@@ -1,0 +1,10 @@
+[
+  { "id": "guide", "label": { "tr": "Sistem Rehberi", "en": "System Guide" }, "order": 0 },
+  { "id": "history", "label": { "tr": "Bilgisayar ve Yazılım Tarihi", "en": "Computing History" }, "order": 1 },
+  { "id": "foundations", "label": { "tr": "Bilgisayar Bilimi Temelleri", "en": "CS Foundations" }, "order": 2 },
+  { "id": "languages", "label": { "tr": "Programlama Dilleri", "en": "Programming Languages" }, "order": 3 },
+  { "id": "architectures", "label": { "tr": "Mimari Stiller", "en": "Architecture Styles" }, "order": 6 },
+  { "id": "ai", "label": { "tr": "Yapay Zekâ ve ML", "en": "AI and ML" }, "order": 16 },
+  { "id": "standards", "label": { "tr": "Standartlar ve RFC'ler", "en": "Standards and RFCs" }, "order": 20 },
+  { "id": "decision-guides", "label": { "tr": "Karar Rehberleri", "en": "Decision Guides" }, "order": 22 }
+]

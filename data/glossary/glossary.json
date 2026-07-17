@@ -1,0 +1,35 @@
+[
+  {
+    "id": "dependency-injection",
+    "canonical_tr": "Bağımlılık Enjeksiyonu",
+    "canonical_en": "Dependency Injection",
+    "abbreviation": "DI",
+    "definition_tr": "Bir bileşenin bağımlılıklarını oluşturmak yerine dışarıdan alması yaklaşımıdır.",
+    "definition_en": "A technique where a component receives its dependencies externally.",
+    "related_terms": ["dependency-inversion", "inversion-of-control"],
+    "source": "source.swebok-v4",
+    "usage": ["software-design", "testing"]
+  },
+  {
+    "id": "modular-monolith",
+    "canonical_tr": "Modüler Monolit",
+    "canonical_en": "Modular Monolith",
+    "abbreviation": "",
+    "definition_tr": "Tek dağıtım birimi içinde açık ve denetlenebilir modül sınırları kullanan mimari yaklaşımdır.",
+    "definition_en": "An architecture with explicit, enforceable module boundaries inside one deployment unit.",
+    "related_terms": ["monolith", "bounded-context"],
+    "source": "source.iso-42010",
+    "usage": ["software-architecture"]
+  },
+  {
+    "id": "local-first",
+    "canonical_tr": "Yerel Öncelikli",
+    "canonical_en": "Local-First",
+    "abbreviation": "",
+    "definition_tr": "Kullanıcı verisinin ve temel işlevlerin ağ bağlantısından bağımsız çalışmasını önceleyen yaklaşımdır.",
+    "definition_en": "An approach prioritizing local data ownership and core operation without network access.",
+    "related_terms": ["offline-first", "synchronization"],
+    "source": "source.local-first-paper",
+    "usage": ["application-architecture", "data"]
+  }
+]

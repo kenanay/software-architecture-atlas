@@ -1,0 +1,41 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import sources from "../../../data/sources/sources.json";
+export async function getStaticPaths() {
+  const docs = await getCollection("documents");
+  return docs.map(doc => ({ params: { id: doc.data.id }, props: { doc, allDocs: docs } }));
+}
+const { doc, allDocs } = Astro.props;
+const { Content, headings } = await render(doc);
+const locale = doc.data.locale;
+const sourceRecords = sources.filter(source => doc.data.sources.includes(source.id));
+const translation = allDocs.find((candidate:any) => candidate.data.translationKey === doc.data.translationKey && candidate.data.locale !== locale);
+---
+<BaseLayout title={doc.data.title[locale]} description={doc.data.summary[locale]} locale={locale}>
+  <div class="shell page-grid">
+    <aside class="sidebar">
+      <div class="eyebrow">{locale === "tr" ? "Bu belgede" : "On this page"}</div>
+      {headings.filter((h:any) => h.depth <= 3).map((h:any) => <a href={`#${h.slug}`}>{h.text}</a>)}
+      {translation && <a href={`/docs/${translation.data.id}/`} style="margin-top:1rem">{locale === "tr" ? "English version →" : "Türkçe sürüm →"}</a>}
+    </aside>
+    <article class="content" data-document-id={doc.data.id}>
+      <div class="eyebrow">{doc.data.type}</div><h1>{doc.data.title[locale]}</h1><p class="lead">{doc.data.summary[locale]}</p>
+      <div class="metadata"><span class={`status ${doc.data.status}`}>{doc.data.status}</span><span class="tag">v{doc.data.version}</span><span class="tag">{doc.data.maturity}</span><span class="tag">{doc.data.lastReviewedAt.toLocaleDateString(locale === "tr" ? "tr-TR" : "en-US")}</span></div>
+      <Content />
+      {sourceRecords.length > 0 && <section><h2>{locale === "tr" ? "Kaynaklar" : "Sources"}</h2><ol>{sourceRecords.map(source => <li><a href={source.url} rel="noreferrer">{source.title}</a> — {source.publisher}, {source.publication_date}</li>)}</ol></section>}
+      <section class="card" style="margin-top:3rem"><div class="eyebrow">{locale === "tr" ? "Belge sorumluluğu" : "Document responsibility"}</div><h3>Kenan AY</h3><p>{locale === "tr" ? "Yönetim ve Bilişim Sistemleri Uzmanı · Teknik Yazar · İnceleyen" : "Management and Information Systems Specialist · Technical Author · Reviewer"}</p></section>
+      <section id="personal-notes" style="margin-top:3rem"><h2>{locale === "tr" ? "Kişisel notlar" : "Personal notes"}</h2><p class="muted">{locale === "tr" ? "Notlar yalnızca bu tarayıcıda saklanır." : "Notes are stored only in this browser."}</p><textarea id="note-body" rows="4" placeholder="Notunuzu yazın…"></textarea><div class="actions"><button class="primary" id="save-note">Notu kaydet</button><button id="bookmark">☆ Yer imi</button><button id="export-notes">JSON dışa aktar</button></div><div id="notes-list"></div></section>
+    </article>
+  </div>
+  <script>
+    import { IndexedDbNotesRepository } from "../../modules/notes/adapters/indexed-db-notes";
+    const repo = new IndexedDbNotesRepository(); const documentId = document.querySelector("article")?.dataset.documentId || ""; const list = document.querySelector("#notes-list");
+    const escapeHtml = (value:string) => value.replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[char] || char));
+    async function refresh(){const notes=await repo.findByDocumentId(documentId);list!.innerHTML=notes.map(n=>`<div class="card" style="margin-top:1rem"><p>${escapeHtml(n.body)}</p><button data-remove="${n.id}">Sil</button></div>`).join("");}
+    document.querySelector("#save-note")?.addEventListener("click",async()=>{const field=document.querySelector<HTMLTextAreaElement>("#note-body");if(!field?.value.trim())return;const now=new Date().toISOString();await repo.save({id:crypto.randomUUID(),documentId,body:field.value.trim(),tags:[],createdAt:now,updatedAt:now});field.value="";await refresh();});
+    list?.addEventListener("click",async e=>{const id=(e.target as HTMLElement).dataset.remove;if(id){await repo.remove(id);await refresh();}});
+    document.querySelector("#bookmark")?.addEventListener("click",e=>{const key=`bookmark:${documentId}`;const next=localStorage.getItem(key)!=="true";localStorage.setItem(key,String(next));(e.currentTarget as HTMLElement).textContent=next?"★ Yer imi":"☆ Yer imi";});
+    document.querySelector("#export-notes")?.addEventListener("click",async()=>{const blob=new Blob([JSON.stringify({exportedAt:new Date().toISOString(),documentId,notes:await repo.exportAll()},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="atlas-notes.json";a.click();URL.revokeObjectURL(a.href);}); refresh();
+  </script>
+</BaseLayout>

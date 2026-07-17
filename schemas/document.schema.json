@@ -1,0 +1,9 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"https://kenanay.github.io/software-architecture-atlas/schemas/document.schema.json",
+  "title":"Knowledge Document",
+  "type":"object",
+  "required":["id","type","title","summary","status","maturity","locale","translationKey","version","lastReviewedAt"],
+  "properties":{"id":{"type":"string","minLength":3},"type":{"type":"string"},"title":{"$ref":"#/$defs/bilingual"},"summary":{"$ref":"#/$defs/bilingual"},"status":{"enum":["draft","review-required","reviewed","verified","deprecated","historical","archived"]},"maturity":{"enum":["experimental","emerging","active","mature","maintenance","deprecated","historical"]},"locale":{"enum":["tr","en"]},"translationKey":{"type":"string"},"version":{"type":"string","pattern":"^[0-9]+\\.[0-9]+\\.[0-9]+$"},"lastReviewedAt":{"type":"string","format":"date"}},
+  "$defs":{"bilingual":{"type":"object","required":["tr","en"],"properties":{"tr":{"type":"string"},"en":{"type":"string"}},"additionalProperties":false}}
+}

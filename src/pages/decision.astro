@@ -1,0 +1,24 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+<BaseLayout title="Mimari Karar Desteği">
+  <div class="shell"><div class="eyebrow">Gerekçeli değerlendirme</div><h1>Proje karar desteği</h1><p class="lead">Bu araç kesin hüküm vermez; gereksinimlerinize göre adayları, ödünleşimleri ve riskleri görünür kılar.</p>
+    <div class="page-grid" style="grid-template-columns:minmax(0,1fr) minmax(320px,.8fr)">
+      <form id="decision-form" class="card" style="transform:none">
+        <div class="form-grid"><div class="field"><label for="domain">Uygulama alanı</label><select id="domain"><option value="web">Web</option><option value="mobile">Mobil</option><option value="desktop">Masaüstü</option><option value="embedded">Gömülü sistem</option><option value="ai">Yapay zekâ</option></select></div><div class="field"><label for="scale">Ölçek</label><select id="scale"><option value="small">Küçük</option><option value="medium">Orta</option><option value="large">Büyük</option></select></div><div class="field"><label for="experience">Ekip deneyimi</label><select id="experience"><option value="beginner">Başlangıç</option><option value="mixed" selected>Karma</option><option value="expert">Uzman</option></select></div></div>
+        <label><input style="width:auto" id="offline" type="checkbox" /> Çevrimdışı çalışma gerekli</label><label><input style="width:auto" id="realtime" type="checkbox" /> Gerçek zaman gereksinimi var</label><label><input style="width:auto" id="safety" type="checkbox" /> Güvenlik kritik sistem</label>
+        <div class="actions"><button class="primary" type="submit">Adayları değerlendir</button><button id="download-adr" type="button" disabled>ADR indir</button></div>
+      </form>
+      <div id="decision-result" class="card" style="transform:none"><div class="eyebrow">Sonuç alanı</div><h2>Girdilerinizi değerlendirin</h2><p class="muted">Öneriler, kapsamlı mühendislik incelemesinin yerini almaz.</p></div>
+    </div>
+  </div>
+  <script>
+    import { evaluateDecision } from "../modules/decision-support/domain/evaluate";
+    import type { DecisionInput } from "../core/domain/models";
+    let latest:any;
+    const form=document.querySelector<HTMLFormElement>("#decision-form")!, result=document.querySelector("#decision-result")!, download=document.querySelector<HTMLButtonElement>("#download-adr")!;
+    const val=(id:string)=>(document.querySelector<HTMLSelectElement>(`#${id}`)!).value;
+    form.addEventListener("submit",e=>{e.preventDefault();const input:DecisionInput={domain:val("domain") as any,scale:val("scale") as any,teamExperience:val("experience") as any,offline:(document.querySelector<HTMLInputElement>("#offline")!).checked,realtime:(document.querySelector<HTMLInputElement>("#realtime")!).checked,safetyCritical:(document.querySelector<HTMLInputElement>("#safety")!).checked};latest={input,output:evaluateDecision(input),createdAt:new Date().toISOString()};const o=latest.output;result.innerHTML=`<div class="eyebrow">Güven: ${o.confidence}</div><h2>Dil adayları</h2><p>${o.languages.join(" · ")}</p><h2>Mimari adayları</h2><p>${o.architectures.join(" · ")}</p><h3>Gerekçe</h3><ul>${o.rationale.map((x:string)=>`<li>${x}</li>`).join("")}</ul><h3>Riskler</h3>${o.risks.length?`<ul>${o.risks.map((x:string)=>`<li>${x}</li>`).join("")}</ul>`:"<p>Ön değerlendirmede özel risk eklenmedi.</p>"}`;download.disabled=false;});
+    download.addEventListener("click",()=>{const text=`# ADR: Teknoloji ve Mimari Ön Değerlendirmesi\n\nTarih: ${latest.createdAt}\nDurum: Taslak\nHazırlayan: Kenan AY\n\n## Girdiler\n\n\`\`\`json\n${JSON.stringify(latest.input,null,2)}\n\`\`\`\n\n## Aday diller\n\n${latest.output.languages.join(", ")}\n\n## Aday mimariler\n\n${latest.output.architectures.join(", ")}\n\n## Gerekçe\n\n${latest.output.rationale.map((x:string)=>`- ${x}`).join("\n")}\n\n## Riskler\n\n${latest.output.risks.map((x:string)=>`- ${x}`).join("\n")||"- Ayrıntılı risk analizi gerekli."}`;const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type:"text/markdown"}));a.download="architecture-decision-record.md";a.click();URL.revokeObjectURL(a.href);});
+  </script>
+</BaseLayout>

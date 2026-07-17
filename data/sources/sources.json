@@ -1,0 +1,36 @@
+[
+  {
+    "id": "source.iso-42010",
+    "type": "normative_specification",
+    "title": "ISO/IEC/IEEE 42010:2022 — Architecture description",
+    "publisher": "ISO/IEC/IEEE",
+    "publication_date": "2022-11",
+    "status": "active",
+    "accessed_at": "2026-07-17",
+    "url": "https://www.iso.org/standard/74393.html",
+    "official_reference": true
+  },
+  {
+    "id": "source.swebok-v4",
+    "type": "official_guide",
+    "title": "Guide to the Software Engineering Body of Knowledge v4.0",
+    "publisher": "IEEE Computer Society",
+    "publication_date": "2024",
+    "version": "4.0",
+    "status": "active",
+    "accessed_at": "2026-07-17",
+    "url": "https://www.computer.org/education/bodies-of-knowledge/software-engineering",
+    "official_reference": true
+  },
+  {
+    "id": "source.local-first-paper",
+    "type": "peer_reviewed_article",
+    "title": "Local-First Software: You Own Your Data, in spite of the Cloud",
+    "publisher": "ACM",
+    "publication_date": "2019",
+    "status": "active",
+    "accessed_at": "2026-07-17",
+    "url": "https://doi.org/10.1145/3359591.3359737",
+    "official_reference": false
+  }
+]

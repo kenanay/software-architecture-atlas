@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import terms from "../../data/glossary/glossary.json";
+---
+<BaseLayout title="Teknik Terimler Sözlüğü">
+  <div class="shell"><div class="eyebrow">Merkezi terminoloji</div><h1>Teknik terimler sözlüğü</h1><p class="lead">Türkçe ve İngilizce karşılıklar, kısaltmalar, ilişkiler ve kullanım alanları tek yerde yönetilir.</p>
+    <div class="searchbar"><input id="term-search" type="search" placeholder="Terim veya kısaltma ara…" /></div>
+    <div id="terms" class="grid">{terms.map(term => <button class="card term-card" data-search={`${term.canonical_tr} ${term.canonical_en} ${term.abbreviation}`.toLocaleLowerCase("tr")} data-term={JSON.stringify(term)} style="text-align:left"><span class="tag">{term.abbreviation || "TERM"}</span><h3>{term.canonical_tr}</h3><p>{term.canonical_en}</p></button>)}</div>
+    <dialog id="term-dialog"><button id="close-dialog" style="float:right" aria-label="Kapat">×</button><div id="term-detail"></div></dialog>
+  </div>
+  <script>
+    const dialog=document.querySelector<HTMLDialogElement>("#term-dialog")!, detail=document.querySelector("#term-detail")!;
+    const escapeHtml=(v:string)=>v.replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]||c));
+    document.querySelectorAll<HTMLElement>(".term-card").forEach(card=>card.addEventListener("click",()=>{const t=JSON.parse(card.dataset.term!);detail.innerHTML=`<div class="eyebrow">${escapeHtml(t.abbreviation||"Terminology")}</div><h2>${escapeHtml(t.canonical_tr)} <span class="muted">(${escapeHtml(t.canonical_en)})</span></h2><p>${escapeHtml(t.definition_tr)}</p><p lang="en" class="muted">${escapeHtml(t.definition_en)}</p><p><strong>İlişkili:</strong> ${t.related_terms.map(escapeHtml).join(", ")}</p><p><strong>Kullanım:</strong> ${t.usage.map(escapeHtml).join(", ")}</p><p><strong>Kaynak:</strong> ${escapeHtml(t.source)}</p>`;dialog.showModal();}));
+    document.querySelector("#close-dialog")?.addEventListener("click",()=>dialog.close());
+    document.querySelector<HTMLInputElement>("#term-search")?.addEventListener("input",e=>{const q=(e.target as HTMLInputElement).value.toLocaleLowerCase("tr");document.querySelectorAll<HTMLElement>(".term-card").forEach(card=>card.hidden=!card.dataset.search?.includes(q));});
+  </script>
+</BaseLayout>

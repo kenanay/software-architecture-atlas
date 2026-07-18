@@ -1,0 +1,337 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: "tr" } },
+    { params: { locale: "en" } },
+    { params: { locale: "es" } },
+  ];
+}
+
+const { locale } = Astro.params as { locale: "tr" | "en" | "es" };
+
+const copy = {
+  tr: {
+    eyebrow: "Gerekçeli değerlendirme",
+    title: "Proje karar desteği",
+    lead: "Bu araç kesin hüküm vermez; gereksinimlerinize göre adayları, ödünleşimleri ve riskleri görünür kılar.",
+    formTitle: "Proje Girdileri",
+    lblDomain: "Uygulama alanı",
+    lblScale: "Kullanıcı/işlem ölçeği",
+    lblExperience: "Ekip deneyimi",
+    lblDataVolume: "Veri hacmi",
+    lblLatency: "Gecikme sınırı",
+    lblDeployment: "Dağıtım ortamı",
+    lblSecurityLevel: "Güvenlik seviyesi",
+    lblLicense: "Lisans kısıtı",
+    chkOffline: "Çevrimdışı çalışma gerekli",
+    chkRealtime: "Gerçek zaman gereksinimi var",
+    chkSafety: "Güvenlik kritik sistem",
+    chkAi: "AI/ML bileşeni gerekli",
+    chkHardware: "Donanıma doğrudan erişim gerekli",
+    legendWeights: "Karar ağırlıkları",
+    lblPerformance: "Performans",
+    lblSecurity: "Güvenlik",
+    lblMaintainability: "Bakım",
+    lblScalability: "Ölçeklenebilirlik",
+    lblCost: "Maliyet",
+    btnSubmit: "Adayları değerlendir",
+    btnDownload: "ADR indir",
+    resultsPlaceholderTitle: "Girdilerinizi değerlendirin",
+    resultsPlaceholderDesc: "Öneriler, kapsamlı mühendislik incelemesinin yerini almaz."
+  },
+  en: {
+    eyebrow: "Reasoned Evaluation",
+    title: "Project decision support",
+    lead: "This tool does not make final decisions; it highlights candidates, trade-offs, and risks based on your requirements.",
+    formTitle: "Project Inputs",
+    lblDomain: "Application domain",
+    lblScale: "User/transaction scale",
+    lblExperience: "Team experience",
+    lblDataVolume: "Data volume",
+    lblLatency: "Latency limit",
+    lblDeployment: "Deployment environment",
+    lblSecurityLevel: "Security level",
+    lblLicense: "License constraint",
+    chkOffline: "Offline operation required",
+    chkRealtime: "Real-time requirement",
+    chkSafety: "Safety-critical system",
+    chkAi: "AI/ML component required",
+    chkHardware: "Direct hardware access required",
+    legendWeights: "Decision weights",
+    lblPerformance: "Performance",
+    lblSecurity: "Security",
+    lblMaintainability: "Maintainability",
+    lblScalability: "Scalability",
+    lblCost: "Cost",
+    btnSubmit: "Evaluate candidates",
+    btnDownload: "Download ADR",
+    resultsPlaceholderTitle: "Evaluate your inputs",
+    resultsPlaceholderDesc: "Recommendations do not replace a comprehensive engineering review."
+  },
+  es: {
+    eyebrow: "Evaluación razonada",
+    title: "Soporte de decisiones del proyecto",
+    lead: "Esta herramienta no toma decisiones finales; expone candidatos, compensaciones (trade-offs) y riesgos según sus requisitos.",
+    formTitle: "Entradas del proyecto",
+    lblDomain: "Dominio de aplicación",
+    lblScale: "Escala de usuarios/transacciones",
+    lblExperience: "Experiencia del equipo",
+    lblDataVolume: "Volumen de datos",
+    lblLatency: "Límite de latencia",
+    lblDeployment: "Entorno de despliegue",
+    lblSecurityLevel: "Nivel de seguridad",
+    lblLicense: "Restricción de licencia",
+    chkOffline: "Operación fuera de línea requerida",
+    chkRealtime: "Requisito de tiempo real",
+    chkSafety: "Sistema crítico de seguridad",
+    chkAi: "Componente de IA/ML requerido",
+    chkHardware: "Acceso directo a hardware requerido",
+    legendWeights: "Pesos de decisión",
+    lblPerformance: "Rendimiento",
+    lblSecurity: "Seguridad",
+    lblMaintainability: "Mantenibilidad",
+    lblScalability: "Escalabilidad",
+    lblCost: "Costo",
+    btnSubmit: "Evaluar candidatos",
+    btnDownload: "Descargar ADR",
+    resultsPlaceholderTitle: "Evalúe sus entradas",
+    resultsPlaceholderDesc: "Las recomendaciones no reemplazan una revisión de ingeniería exhaustiva."
+  }
+}[locale];
+
+const selectOptions = {
+  domain: {
+    tr: [["web", "Web"], ["mobile", "Mobil"], ["desktop", "Masaüstü"], ["embedded", "Gömülü sistem ve IoT"], ["ai", "Yapay zekâ"], ["games", "Oyun sistemleri"], ["networks", "Ağ sistemleri"], ["server-cloud", "Sunucu, bulut ve dağıtık"], ["data", "Veri sistemleri"], ["graphics", "Grafik ve medya"], ["security", "Güvenlik sistemleri"]],
+    en: [["web", "Web"], ["mobile", "Mobile"], ["desktop", "Desktop"], ["embedded", "Embedded and IoT"], ["ai", "Artificial Intelligence"], ["games", "Game Systems"], ["networks", "Network Systems"], ["server-cloud", "Server, Cloud & Distributed"], ["data", "Data Systems"], ["graphics", "Graphics & Media"], ["security", "Security Systems"]],
+    es: [["web", "Web"], ["mobile", "Móvil"], ["desktop", "Escritorio"], ["embedded", "Sistemas Embebidos e IoT"], ["ai", "Inteligencia Artificial"], ["games", "Sistemas de Videojuegos"], ["networks", "Sistemas de Redes"], ["server-cloud", "Servidor, Nube y Distribuidos"], ["data", "Sistemas de Datos"], ["graphics", "Gráficos y Medios"], ["security", "Sistemas de Seguridad"]]
+  }[locale],
+  scale: {
+    tr: [["small", "Küçük"], ["medium", "Orta"], ["large", "Büyük"]],
+    en: [["small", "Small"], ["medium", "Medium"], ["large", "Large"]],
+    es: [["small", "Pequeño"], ["medium", "Medio"], ["large", "Grande"]]
+  }[locale],
+  experience: {
+    tr: [["beginner", "Başlangıç"], ["mixed", "Karma"], ["expert", "Uzman"]],
+    en: [["beginner", "Beginner"], ["mixed", "Mixed"], ["expert", "Expert"]],
+    es: [["beginner", "Principiante"], ["mixed", "Mixto"], ["expert", "Experto"]]
+  }[locale],
+  data: {
+    tr: [["low", "Düşük"], ["medium", "Orta"], ["high", "Yüksek"]],
+    en: [["low", "Low"], ["medium", "Medium"], ["high", "High"]],
+    es: [["low", "Bajo"], ["medium", "Medio"], ["high", "Alto"]]
+  }[locale],
+  latency: {
+    tr: [["relaxed", "Esnek"], ["interactive", "Etkileşimli"], ["realtime", "Gerçek zamanlı"]],
+    en: [["relaxed", "Relaxed"], ["interactive", "Interactive"], ["realtime", "Real-time"]],
+    es: [["relaxed", "Relajado"], ["interactive", "Interactivo"], ["realtime", "Tiempo real"]]
+  }[locale],
+  deployment: {
+    tr: [["local", "Yerel"], ["on-premise", "On-premise"], ["cloud", "Bulut"], ["edge", "Edge"]],
+    en: [["local", "Local"], ["on-premise", "On-Premise"], ["cloud", "Cloud"], ["edge", "Edge"]],
+    es: [["local", "Local"], ["on-premise", "Local físico (On-premise)"], ["cloud", "Nube"], ["edge", "Borde (Edge)"]]
+  }[locale],
+  security: {
+    tr: [["standard", "Standart"], ["high", "Yüksek"], ["regulated", "Düzenlemeye tabi"]],
+    en: [["standard", "Standard"], ["high", "High"], ["regulated", "Regulated"]],
+    es: [["standard", "Estándar"], ["high", "Alto"], ["regulated", "Regulado"]]
+  }[locale],
+  license: {
+    tr: [["none", "Yok"], ["permissive-only", "Yalnızca izin verici"], ["commercial-allowed", "Ticari uygun"]],
+    en: [["none", "None"], ["permissive-only", "Permissive only"], ["commercial-allowed", "Commercial allowed"]],
+    es: [["none", "Ninguna"], ["permissive-only", "Solo permisivas"], ["commercial-allowed", "Comercial permitido"]]
+  }[locale]
+};
+---
+<BaseLayout title={copy.title} locale={locale}>
+  <div class="shell">
+    <div class="eyebrow">{copy.eyebrow}</div>
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.lead}</p>
+    <div class="page-grid" style="grid-template-columns:minmax(0,1fr) minmax(320px,.8fr)">
+      <form id="decision-form" class="card" style="transform:none">
+        <div class="form-grid">
+          <div class="field">
+            <label for="domain">{copy.lblDomain}</label>
+            <select id="domain">
+              {selectOptions.domain.map(([val, label]) => <option value={val}>{label}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="scale">{copy.lblScale}</label>
+            <select id="scale">
+              {selectOptions.scale.map(([val, label]) => <option value={val}>{label}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="experience">{copy.lblExperience}</label>
+            <select id="experience" JSON-selected="mixed">
+              {selectOptions.experience.map(([val, label]) => <option value={val} selected={val === "mixed"}>{label}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="data-volume">{copy.lblDataVolume}</label>
+            <select id="data-volume">
+              {selectOptions.data.map(([val, label]) => <option value={val}>{label}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="latency">{copy.lblLatency}</label>
+            <select id="latency">
+              {selectOptions.latency.map(([val, label]) => <option value={val}>{label}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="deployment">{copy.lblDeployment}</label>
+            <select id="deployment">
+              {selectOptions.deployment.map(([val, label]) => <option value={val}>{label}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="security-level">{copy.lblSecurityLevel}</label>
+            <select id="security-level">
+              {selectOptions.security.map(([val, label]) => <option value={val}>{label}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="license">{copy.lblLicense}</label>
+            <select id="license">
+              {selectOptions.license.map(([val, label]) => <option value={val}>{label}</option>)}
+            </select>
+          </div>
+        </div>
+        
+        <label><input style="width:auto" id="offline" type="checkbox" /> {copy.chkOffline}</label>
+        <label><input style="width:auto" id="realtime" type="checkbox" /> {copy.chkRealtime}</label>
+        <label><input style="width:auto" id="safety" type="checkbox" /> {copy.chkSafety}</label>
+        <label><input style="width:auto" id="ai-required" type="checkbox" /> {copy.chkAi}</label>
+        <label><input style="width:auto" id="hardware" type="checkbox" /> {copy.chkHardware}</label>
+        
+        <fieldset>
+          <legend>{copy.legendWeights}</legend>
+          <div class="form-grid">
+            <div><label for="weight-performance">{copy.lblPerformance}</label><input id="weight-performance" type="range" min="1" max="5" value="3" /></div>
+            <div><label for="weight-security">{copy.lblSecurity}</label><input id="weight-security" type="range" min="1" max="5" value="3" /></div>
+            <div><label for="weight-maintainability">{copy.lblMaintainability}</label><input id="weight-maintainability" type="range" min="1" max="5" value="3" /></div>
+            <div><label for="weight-scalability">{copy.lblScalability}</label><input id="weight-scalability" type="range" min="1" max="5" value="3" /></div>
+            <div><label for="weight-cost">{copy.lblCost}</label><input id="weight-cost" type="range" min="1" max="5" value="3" /></div>
+          </div>
+        </fieldset>
+        <div class="actions">
+          <button class="primary" type="submit">{copy.btnSubmit}</button>
+          <button id="download-adr" type="button" disabled>{copy.btnDownload}</button>
+        </div>
+      </form>
+      <div id="decision-result" class="card" style="transform:none">
+        <div class="eyebrow">Result</div>
+        <h2>{copy.resultsPlaceholderTitle}</h2>
+        <p class="muted">{copy.resultsPlaceholderDesc}</p>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    import { evaluateDecision } from "../../modules/decision-support/domain/evaluate";
+    import type { DecisionInput } from "../../core/domain/models";
+    import sources from "../../../data/sources/sources.json";
+    let latest: any;
+    
+    const form = document.querySelector<HTMLFormElement>("#decision-form")!;
+    const result = document.querySelector("#decision-result")!;
+    const download = document.querySelector<HTMLButtonElement>("#download-adr")!;
+    const locale = document.documentElement.lang;
+    
+    const val = (id: string) => (document.querySelector<HTMLSelectElement>(`#${id}`)!).value;
+    
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      const checked = (id: string) => (document.querySelector<HTMLInputElement>(`#${id}`)!).checked;
+      const weight = (id: string) => Number((document.querySelector<HTMLInputElement>(`#weight-${id}`)!).value);
+      
+      const input: DecisionInput = {
+        domain: val("domain") as any,
+        scale: val("scale") as any,
+        teamExperience: val("experience") as any,
+        dataVolume: val("data-volume") as any,
+        latency: val("latency") as any,
+        deployment: val("deployment") as any,
+        securityLevel: val("security-level") as any,
+        licenseConstraint: val("license") as any,
+        offline: checked("offline"),
+        realtime: checked("realtime"),
+        safetyCritical: checked("safety"),
+        aiRequired: checked("ai-required"),
+        hardwareAccess: checked("hardware"),
+        weights: {
+          performance: weight("performance"),
+          security: weight("security"),
+          maintainability: weight("maintainability"),
+          scalability: weight("scalability"),
+          cost: weight("cost")
+        }
+      };
+      
+      latest = { input, output: evaluateDecision(input), createdAt: new Date().toISOString() };
+      const o = latest.output;
+      
+      // Localized result text variables
+      const lblConfidence = locale === "tr" ? "Güven" : locale === "es" ? "Confianza" : "Confidence";
+      const lblScoredLangs = locale === "tr" ? "Puanlı dil adayları" : locale === "es" ? "Lenguajes candidatos puntuados" : "Scored language candidates";
+      const lblScoredArchs = locale === "tr" ? "Puanlı mimari adayları" : locale === "es" ? "Arquitecturas candidatas puntuadas" : "Scored architecture candidates";
+      const lblAltConditions = locale === "tr" ? "Alternatif koşulları" : locale === "es" ? "Condiciones alternativas" : "Alternative conditions";
+      const lblDataDeploy = locale === "tr" ? "Veri ve dağıtım" : locale === "es" ? "Datos y despliegue" : "Data and deployment";
+      const lblTestStrategy = locale === "tr" ? "Test stratejisi" : locale === "es" ? "Estrategia de pruebas" : "Testing strategy";
+      const lblRationale = locale === "tr" ? "Gerekçe" : locale === "es" ? "Justificación" : "Rationale";
+      const lblEvidence = locale === "tr" ? "Kanıt ve kalite öznitelikleri" : locale === "es" ? "Evidencia y atributos de calidad" : "Evidence and quality attributes";
+      const lblRisks = locale === "tr" ? "Riskler" : locale === "es" ? "Riesgos" : "Risks";
+      const lblUnsuitable = locale === "tr" ? "Uygun olmayan seçenekler" : locale === "es" ? "Opciones no recomendadas" : "Unsuitable options";
+      
+      const evidence = o.evidence.map((item: any) => {
+        const source = sources.find((candidate: any) => candidate.id === item.sourceId);
+        return `<li>${item.claim}<br><small>Quality: ${item.qualityAttributes.join(", ")} · <a href="${source?.url || "#"}">${source?.title || item.sourceId}</a></small></li>`;
+      }).join("");
+      
+      const ranked = (items: any[]) => `<ol>${items.map(x => `<li><strong>${x.name}: ${x.score}/100</strong><br><small>${x.reasons.join(" · ")}</small></li>`).join("")}</ol>`;
+      
+      result.innerHTML = `
+        <div class="eyebrow">${lblConfidence}: ${o.confidence}</div>
+        <p class="muted">${o.confidenceReason}</p>
+        <h2>${lblScoredLangs}</h2>
+        ${ranked(o.scoredLanguages)}
+        <h2>${lblScoredArchs}</h2>
+        ${ranked(o.scoredArchitectures)}
+        <h3>${lblAltConditions}</h3>
+        <ul>${o.alternatives.map((x: any) => `<li><strong>${x.option}:</strong> ${x.preferWhen}</li>`).join("")}</ul>
+        <h3>${lblDataDeploy}</h3>
+        <p>${o.dataSystems.join(" · ")}<br>Deployment: ${o.deploymentModel}</p>
+        <h3>${lblTestStrategy}</h3>
+        <ul>${o.testStrategy.map((x: string) => `<li>${x}</li>`).join("")}</ul>
+        <h3>${lblRationale}</h3>
+        <ul>${o.rationale.map((x: string) => `<li>${x}</li>`).join("")}</ul>
+        <h3>${lblEvidence}</h3>
+        <ul>${evidence}</ul>
+        <h3>${lblRisks}</h3>
+        ${o.risks.length ? `<ul>${o.risks.map((x: string) => `<li>${x}</li>`).join("")}</ul>` : `<p>No special risks added in preliminary evaluation.</p>`}
+        <h3>${lblUnsuitable}</h3>
+        ${o.unsuitableOptions.length ? `<ul>${o.unsuitableOptions.map((x: string) => `<li>${x}</li>`).join("")}</ul>` : `<p>No excluded options produced.</p>`}
+      `;
+      download.disabled = false;
+    });
+    
+    download.addEventListener("click", () => {
+      const o = latest.output;
+      const adrTitle = locale === "tr" ? "ADR: Teknoloji ve Mimari Ön Değerlendirmesi" : locale === "es" ? "ADR: Pre-evaluación de Tecnología y Arquitectura" : "ADR: Technology and Architecture Pre-Evaluation";
+      const lblInputs = locale === "tr" ? "Girdiler" : locale === "es" ? "Entradas" : "Inputs";
+      const lblLangs = locale === "tr" ? "Aday diller" : locale === "es" ? "Lenguajes candidatos" : "Candidate languages";
+      const lblArchs = locale === "tr" ? "Aday mimariler" : locale === "es" ? "Arquitecturas candidatas" : "Candidate architectures";
+      
+      const text = `# ${adrTitle}\n\nDate: ${latest.createdAt}\nStatus: Draft\nAuthor: Kenan AY\nConfidence: ${o.confidence} — ${o.confidenceReason}\n\n## ${lblInputs}\n\n\`\`\`json\n${JSON.stringify(latest.input, null, 2)}\n\`\`\`\n\n## ${lblLangs}\n\n${o.languages.join(", ")}\n\n## ${lblArchs}\n\n${o.architectures.join(", ")}\n\n## Alternatives\n\n${o.alternatives.map((x: any) => `- **${x.option}:** ${x.preferWhen}`).join("\n")}\n\n## Rationale\n\n${o.rationale.map((x: string) => `- ${x}`).join("\n")}\n\n## Evidence\n\n${o.evidence.map((x: any) => `- ${x.claim} — ${x.sourceId} — ${x.qualityAttributes.join(", ")}`).join("\n")}\n\n## Test Strategy\n\n${o.testStrategy.map((x: string) => `- ${x}`).join("\n")}\n\n## Risks\n\n${o.risks.map((x: string) => `- ${x}`).join("\n") || "- Detailed risk analysis required."}`;
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(new Blob([text], { type: "text/markdown" }));
+      a.download = "architecture-decision-record.md";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+  </script>
+</BaseLayout>

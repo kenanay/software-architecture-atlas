@@ -1,0 +1,15 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"Evidence-backed Claim",
+  "type":"object",
+  "required":["id","documentCanonicalId","statement","confidence","evidence"],
+  "properties":{
+    "id":{"type":"string","pattern":"^claim\\."},
+    "documentCanonicalId":{"type":"string"},
+    "statement":{"type":"object","required":["tr","en"],"properties":{"tr":{"type":"string"},"en":{"type":"string"},"es":{"type":"string"}},"additionalProperties":false},
+    "confidence":{"enum":["preliminary","supported","strong"]},
+    "status":{"enum":["draft","reviewed","disputed"]},
+    "evidence":{"type":"array","minItems":1,"items":{"type":"object","required":["sourceId","locator","role"],"properties":{"sourceId":{"type":"string"},"locator":{"type":"string"},"role":{"enum":["supports","qualifies","contradicts"]}},"additionalProperties":false}}
+  },
+  "additionalProperties":false
+}

@@ -1,9 +1,9 @@
 [
-  {"from":"concept.architecture-description","type":"defined-by","to":"standard.iso-42010-2022","evidenceSourceIds":["source.iso-42010"]},
+  {"from":"concept.architecture-description","type":"defined-by","to":"standard.iso-42010-2022","confidence":"strong","locator":"Clauses 5–7","evidenceSourceIds":["source.iso-42010"],"evidenceClaimIds":["claim.architecture-description.normative"]},
   {"from":"standard.iso-42010-2022","type":"supersedes","to":"standard.iso-42010-2011","evidenceSourceIds":["source.iso-42010"]},
-  {"from":"concept.rfc-lifecycle","type":"defined-by","to":"rfc.2026","evidenceSourceIds":["source.rfc2026"]},
+  {"from":"concept.rfc-lifecycle","type":"defined-by","to":"rfc.2026","confidence":"strong","locator":"Sections 4–6","evidenceSourceIds":["source.rfc2026"],"evidenceClaimIds":["claim.rfc.lifecycle"]},
   {"from":"rfc.9846","type":"obsoletes","to":"rfc.8446","evidenceSourceIds":["source.rfc-editor"]},
-  {"from":"concept.ai-risk-management","type":"defined-by","to":"standard.nist-ai-rmf-1.0","evidenceSourceIds":["source.nist.ai-rmf-1"]},
+  {"from":"concept.ai-risk-management","type":"defined-by","to":"standard.nist-ai-rmf-1.0","confidence":"strong","locator":"AI RMF Core","evidenceSourceIds":["source.nist.ai-rmf-1"],"evidenceClaimIds":["claim.ai-risk.lifecycle"]},
   {"from":"standard.spdx-3.0","type":"suitable-for","to":"domain.software-supply-chain","evidenceSourceIds":["source.spdx.3"]},
   {"from":"architecture.modular-monolith","type":"suitable-for","to":"domain.web","evidenceSourceIds":["source.swebok-v4"]}
 ]

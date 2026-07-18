@@ -1,0 +1,156 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import terms from "../../../data/glossary/glossary.json";
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: "tr" } },
+    { params: { locale: "en" } },
+    { params: { locale: "es" } },
+  ];
+}
+
+const { locale } = Astro.params as { locale: "tr" | "en" | "es" };
+
+const copy = {
+  tr: {
+    eyebrow: "Merkezi terminoloji",
+    title: "Teknik terimler sözlüğü",
+    lead: "Türkçe ve İngilizce karşılıklar, kısaltmalar, ilişkiler ve kullanım alanları tek yerde yönetilir.",
+    placeholder: "Terim veya kısaltma ara…",
+    instruction: "Terim kartına gelin, klavyeyle odaklanın veya dokunun. Açıklama Esc tuşuyla ya da kapat düğmesiyle kapanır."
+  },
+  en: {
+    eyebrow: "Centralized Terminology",
+    title: "Technical terms glossary",
+    lead: "Turkish, English, and Spanish counterparts, abbreviations, relationships, and usage areas are managed in one place.",
+    placeholder: "Search term or abbreviation…",
+    instruction: "Hover over a term card, focus with keyboard, or tap. Close the details with the Esc key or the close button."
+  },
+  es: {
+    eyebrow: "Terminología centralizada",
+    title: "Glosario de términos técnicos",
+    lead: "Las contrapartes en turco, inglés y español, abreviaturas, relaciones y áreas de uso se gestionan en un solo lugar.",
+    placeholder: "Buscar término o abreviatura…",
+    instruction: "Pase el cursor sobre una tarjeta de término, enfoque con el teclado o toque. Cierre los detalles con la tecla Esc o el botón de cierre."
+  }
+}[locale];
+---
+<BaseLayout title={copy.title} locale={locale}>
+  <div class="shell">
+    <div class="eyebrow">{copy.eyebrow}</div>
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.lead}</p>
+    <div class="searchbar">
+      <input id="term-search" type="search" placeholder={copy.placeholder} />
+    </div>
+    <p class="muted">{copy.instruction}</p>
+    <div id="terms" class="grid">
+      {terms.map((term, index) => {
+        const activeCanonical = locale === "tr" ? term.canonical_tr : locale === "es" ? (term.canonical_es || term.canonical_en) : term.canonical_en;
+        const otherCanonical = locale === "en" ? `${term.canonical_tr} · ${term.canonical_es || ""}` : term.canonical_en;
+        return (
+          <button class="card term-card" aria-expanded="false" aria-controls="term-popover" data-index={index} data-search={`${term.canonical_tr} ${term.canonical_en} ${term.canonical_es || ""} ${term.abbreviation}`.toLocaleLowerCase("tr")} style="text-align:left">
+            <span class="tag">{term.abbreviation || "TERM"}</span>
+            <h3>{activeCanonical}</h3>
+            <p>{otherCanonical}</p>
+          </button>
+        )
+      })}
+    </div>
+    <aside id="term-popover" class="term-popover" role="dialog" aria-modal="false" aria-label="Teknik terim açıklaması" hidden aria-live="polite">
+      <button id="close-popover" class="popover-close" aria-label="Close">×</button>
+      <div id="term-detail"></div>
+    </aside>
+  </div>
+  <script is:inline define:vars={{ terms, locale }}>
+    const popover=document.querySelector("#term-popover"), detail=document.querySelector("#term-detail"), close=document.querySelector("#close-popover");
+    let active=null,pinned=false,hideTimer;
+    const escapeHtml=v=>v.replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]||c));
+    
+    function show(card,shouldPin=false){
+      clearTimeout(hideTimer);
+      active?.setAttribute("aria-expanded","false");
+      active=card;
+      pinned=shouldPin||pinned;
+      const t=terms[Number(card.dataset.index)];
+      
+      const activeCanonical = locale === "tr" ? t.canonical_tr : locale === "es" ? (t.canonical_es || t.canonical_en) : t.canonical_en;
+      const activeDefinition = locale === "tr" ? t.definition_tr : locale === "es" ? (t.definition_es || t.definition_en) : t.definition_en;
+      
+      // Counterparts for English in non-English modes
+      const englishBadge = locale !== "en" ? ` <span class="muted">(${escapeHtml(t.canonical_en)})</span>` : "";
+      
+      // Localized labels
+      const lblRelated = locale === "tr" ? "İlişkili" : locale === "es" ? "Relacionado" : "Related";
+      const lblUsage = locale === "tr" ? "Kullanım" : locale === "es" ? "Uso" : "Usage";
+      const lblSource = locale === "tr" ? "Kaynak" : locale === "es" ? "Fuente" : "Source";
+      
+      let abbreviationSection = '';
+      if (t.abbreviation) {
+        const lblExpansion = locale === "tr" ? "Açılımı" : locale === "es" ? "Expansión" : "Expansion";
+        const expansionTr = t.canonical_tr;
+        const expansionEn = t.canonical_en;
+        const expansionEs = t.canonical_es || t.canonical_en;
+        
+        let expansionText = '';
+        if (locale === "tr") {
+          expansionText = `${escapeHtml(expansionEn)} (${escapeHtml(expansionTr)})`;
+        } else if (locale === "es") {
+          expansionText = `${escapeHtml(expansionEn)} (${escapeHtml(expansionEs)})`;
+        } else {
+          expansionText = `${escapeHtml(expansionEn)}`;
+        }
+        abbreviationSection = `<p><strong>${lblExpansion}:</strong> ${expansionText}</p>`;
+      }
+      
+      const englishDefSection = locale !== "en"
+        ? `<p lang="en" class="muted"><strong>English Definition:</strong> ${escapeHtml(t.definition_en)}</p>`
+        : "";
+      
+      detail.innerHTML=`
+        <div class="eyebrow">${escapeHtml(t.abbreviation||"Terminology")}</div>
+        <h2>${escapeHtml(activeCanonical)}${englishBadge}</h2>
+        ${abbreviationSection}
+        <p>${escapeHtml(activeDefinition)}</p>
+        ${englishDefSection}
+        <p><strong>${lblRelated}:</strong> ${t.related_terms.map(escapeHtml).join(", ")}</p>
+        <p><strong>${lblUsage}:</strong> ${t.usage.map(escapeHtml).join(", ")}</p>
+        <p><strong>${lblSource}:</strong> ${escapeHtml(t.source)}</p>
+      `;
+      
+      const rect=card.getBoundingClientRect();
+      popover.style.left=`${Math.min(rect.left,innerWidth-390)}px`;
+      popover.style.top=`${Math.min(rect.bottom+8,innerHeight-300)}px`;
+      popover.hidden=false;
+      card.setAttribute("aria-expanded","true");
+    }
+    
+    function dismiss(){clearTimeout(hideTimer);pinned=false;popover.hidden=true;active?.setAttribute("aria-expanded","false");active=null;}
+    function schedule(){clearTimeout(hideTimer);hideTimer=setTimeout(()=>{if(!pinned&&!active?.matches(":hover,:focus")&&!popover.matches(":hover,:focus-within"))dismiss();},180);}
+    
+    document.querySelectorAll(".term-card").forEach(card=>{
+      card.addEventListener("pointerenter",()=>show(card));
+      card.addEventListener("pointerleave",schedule);
+      card.addEventListener("focus",()=>show(card));
+      card.addEventListener("blur",schedule);
+      card.addEventListener("click",()=>{pinned=true;show(card,true);});
+    });
+    
+    popover.addEventListener("pointerenter",()=>clearTimeout(hideTimer));
+    popover.addEventListener("pointerleave",schedule);
+    close.addEventListener("click",()=>{const trigger=active;dismiss();trigger?.focus();});
+    document.addEventListener("keydown",event=>{if(event.key==="Escape"&&!popover.hidden){event.preventDefault();dismiss();}});
+    document.addEventListener("pointerdown",event=>{if(pinned&&!popover.contains(event.target)&&event.target!==active)dismiss();});
+    
+    document.querySelector("#term-search")?.addEventListener("input",e=>{
+      const q=e.target.value.toLocaleLowerCase("tr");
+      document.querySelectorAll(".term-card").forEach(card=>card.hidden=!card.dataset.search?.includes(q));
+    });
+  </script>
+</BaseLayout>
+
+<style>
+  .term-popover{position:fixed;z-index:50;width:min(380px,calc(100vw - 1rem));max-height:min(420px,70vh);overflow:auto;padding:1.15rem;border:1px solid var(--accent2);border-radius:1rem;background:var(--panel);box-shadow:var(--shadow)}
+  .term-popover[hidden]{display:none}.term-popover h2{font-size:1.25rem;padding-right:2rem}.popover-close{position:absolute;right:.65rem;top:.65rem;padding:.25rem .55rem}.term-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+</style>

@@ -6,9 +6,9 @@
   {"id":"REQ-COMPARE-001","area":"comparison","priority":"P1","status":"in-progress","owner":"Architecture lead","acceptance":"Users compare multiple records with type-specific dimensions and exportable results."},
   {"id":"REQ-GRAPH-001","area":"knowledge-graph","priority":"P1","status":"implemented","owner":"Architecture lead","acceptance":"Relations are browsable and every endpoint and evidence source validates."},
   {"id":"REQ-OFFLINE-001","area":"offline","priority":"P1","status":"implemented","owner":"Engineering","acceptance":"Core routes work offline; cache versions migrate and offline behavior is tested."},
-  {"id":"REQ-NOTES-001","area":"local-data","priority":"P1","status":"in-progress","owner":"Engineering","acceptance":"Notes support versioned validated import/export and browser-local persistence."},
+  {"id":"REQ-NOTES-001","area":"local-data","priority":"P1","status":"implemented","owner":"Engineering","acceptance":"Notes support editing, types, tags, source locators, flashcards, status, versioned import/export and browser-local persistence."},
   {"id":"REQ-A11Y-001","area":"accessibility","priority":"P1","status":"in-progress","owner":"Engineering","acceptance":"Keyboard, focus, reflow, reduced-motion and WCAG automated checks pass."},
   {"id":"REQ-CI-001","area":"quality","priority":"P1","status":"implemented","owner":"Engineering","acceptance":"Data validation, tests and production build run for every pull request."},
-  {"id":"REQ-EDITOR-001","area":"authoring","priority":"P2","status":"planned","owner":"Editorial lead","acceptance":"Schema-aware drafts, preview, translation and review workflow are available."},
+  {"id":"REQ-EDITOR-001","area":"authoring","priority":"P2","status":"implemented","owner":"Editorial lead","acceptance":"Schema-aware local drafts, safe preview, source selection and canonical Markdown export are available."},
   {"id":"REQ-DESKTOP-001","area":"desktop","priority":"P2","status":"deferred","owner":"Architecture lead","acceptance":"Tauri and SQLite begin only after editor, PWA and migration readiness gates pass."}
 ]

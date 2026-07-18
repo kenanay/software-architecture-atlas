@@ -1,0 +1,457 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import sources from "../../../../data/sources/sources.json";
+import terms from "../../../../data/glossary/glossary.json";
+import claims from "../../../../data/claims/claims.json";
+
+export async function getStaticPaths() {
+  const docs = await getCollection("documents");
+  return docs.map(doc => ({
+    params: { locale: doc.data.locale, id: doc.data.canonicalId },
+    props: { doc, allDocs: docs }
+  }));
+}
+
+const { doc, allDocs } = Astro.props;
+const { Content, headings } = await render(doc);
+const locale = doc.data.locale;
+
+const sourceRecords = sources.filter(source => doc.data.sources.includes(source.id));
+const documentClaims = claims.filter(claim => claim.documentCanonicalId === doc.data.canonicalId);
+const translations = allDocs.filter(candidate => candidate.data.translationKey === doc.data.translationKey && candidate.data.locale !== locale);
+const translationOutdated = translations.some(t => t.data.version !== doc.data.version);
+
+const copy = {
+  tr: {
+    toc: "Bu belgede",
+    transReq: "Çeviri güncellemesi gerekli",
+    classification: "Sınıflandırma",
+    sources: "Kaynaklar",
+    responsibility: "Belge sorumluluğu",
+    titleAy: "Yönetim ve Bilişim Sistemleri Uzmanı",
+    notes: "Kişisel notlar",
+    notesDesc: "Notlar yalnızca bu tarayıcıda saklanır.",
+    notePlaceholder: "Notunuzu yazın…",
+    btnSave: "Notu kaydet",
+    btnBookmarkEmpty: "☆ Yer imi",
+    btnBookmarkFull: "★ Yer imi",
+    btnExport: "JSON dışa aktar",
+    btnImport: "JSON içe aktar",
+    msgImport: "not içe aktarıldı.",
+    msgFail: "İçe aktarma başarısız."
+  },
+  en: {
+    toc: "On this page",
+    transReq: "Translation update required",
+    classification: "Classification",
+    sources: "Sources",
+    responsibility: "Document responsibility",
+    titleAy: "Management and Information Systems Specialist",
+    notes: "Personal notes",
+    notesDesc: "Notes are stored only in this browser.",
+    notePlaceholder: "Write your note…",
+    btnSave: "Save note",
+    btnBookmarkEmpty: "☆ Bookmark",
+    btnBookmarkFull: "★ Bookmark",
+    btnExport: "Export JSON",
+    btnImport: "Import JSON",
+    msgImport: "notes imported.",
+    msgFail: "Import failed."
+  },
+  es: {
+    toc: "En este documento",
+    transReq: "Actualización de traducción requerida",
+    classification: "Clasificación",
+    sources: "Fuentes",
+    responsibility: "Responsabilidad del documento",
+    titleAy: "Especialista en Gestión y Sistemas de Información",
+    notes: "Notas personales",
+    notesDesc: "Las notas se guardan solo en este navegador.",
+    notePlaceholder: "Escriba su nota…",
+    btnSave: "Guardar nota",
+    btnBookmarkEmpty: "☆ Marcador",
+    btnBookmarkFull: "★ Marcador",
+    btnExport: "Exportar JSON",
+    btnImport: "Importar JSON",
+    msgImport: "notas importadas.",
+    msgFail: "Error al importar."
+  }
+}[locale];
+---
+<BaseLayout title={doc.data.title[locale] || doc.data.title.en} description={doc.data.summary[locale] || doc.data.summary.en} locale={locale}>
+  <div class="shell page-grid">
+    <aside class="sidebar">
+      <div class="eyebrow">{copy.toc}</div>
+      {headings.filter((h: any) => h.depth <= 3).map((h: any) => <a href={`#${h.slug}`}>{h.text}</a>)}
+      <div style="margin-top: 1.5rem; display: flex; flex-direction: column; gap: 0.35rem;">
+        {translations.map(t => {
+          const label = t.data.locale === "tr" ? "Türkçe sürüm →" : t.data.locale === "es" ? "Versión en español →" : "English version →";
+          return <a href={`/${t.data.locale}/docs/${t.data.canonicalId}/`} style="font-size:0.8rem; border-left-color: var(--accent2);">{label}</a>;
+        })}
+      </div>
+    </aside>
+    
+    <article class="content" data-document-id={doc.data.id} data-canonical-id={doc.data.canonicalId}>
+      <div class="eyebrow">{doc.data.type}</div>
+      <h1>{doc.data.title[locale] || doc.data.title.en}</h1>
+      <p class="lead">{doc.data.summary[locale] || doc.data.summary.en}</p>
+      
+      <div class="metadata">
+        <span class={`badge ${doc.data.status === "reviewed" || doc.data.status === "verified" ? "is-current" : "needs-review"}`}>
+          <span class="badge-kind">{locale === "tr" ? "Editoryal" : locale === "es" ? "Editorial" : "Editorial"}</span>{doc.data.status}
+        </span>
+        <span class={`badge ${doc.data.translationStatus === "reviewed" || doc.data.translationStatus === "original" ? "is-synced" : "is-outdated"}`}>
+          <span class="badge-kind">{locale === "tr" ? "Çeviri" : locale === "es" ? "Traducción" : "Translation"}</span>{doc.data.translationStatus}
+        </span>
+        <span class="badge">
+          <span class="badge-kind">{locale === "tr" ? "Olgunluk" : locale === "es" ? "Madurez" : "Maturity"}</span>{doc.data.maturity}
+        </span>
+        <span class="tag">v{doc.data.version}</span>
+        <span class="tag">{doc.data.lastReviewedAt.toLocaleDateString(locale === "tr" ? "tr-TR" : locale === "es" ? "es-ES" : "en-US")}</span>
+      </div>
+      
+      {translationOutdated && (
+        <aside class="card" style="transform:none;border-color:var(--warning);margin-bottom:1rem">
+          <strong>{copy.transReq}</strong>
+          {translations.map(t => (
+            <p style="margin: 0.2rem 0;">
+              {t.data.locale.toUpperCase()}: v{t.data.version} · {locale.toUpperCase()}: v{doc.data.version}
+              <a href={`/${t.data.locale}/docs/${t.data.canonicalId}/`} style="margin-left:0.5rem; text-decoration: underline;">[{t.data.locale.toUpperCase()}] →</a>
+            </p>
+          ))}
+        </aside>
+      )}
+      
+      {(doc.data.qualityAttributes.length > 0 || doc.data.applicableDomains.length > 0) && (
+        <aside class="card" style="transform:none;margin-bottom:2rem">
+          <strong>{copy.classification}</strong>
+          <p>
+            {doc.data.qualityAttributes.map(item => <span class="tag">{item}</span>)}
+            {doc.data.applicableDomains.map(item => <span class="tag">{item}</span>)}
+          </p>
+        </aside>
+      )}
+      
+      <!-- Content Body Container -->
+      <div id="content-body">
+        <Content />
+      </div>
+      
+      {sourceRecords.length > 0 && (
+        <section style="margin-top: 3rem;">
+          <h2>{copy.sources}</h2>
+          <ol>
+            {sourceRecords.map(source => (
+              <li><a href={source.url} rel="noreferrer">{source.title}</a> — {source.publisher}, {source.publication_date}</li>
+            ))}
+          </ol>
+        </section>
+      )}
+      {documentClaims.length > 0 && <section style="margin-top:3rem"><h2>{locale === "tr" ? "İddia–kanıt matrisi" : locale === "es" ? "Matriz de afirmaciones y evidencia" : "Claim–evidence matrix"}</h2>{documentClaims.map(claim=><article class="card" style="transform:none;margin-bottom:1rem"><div class="badge-group"><code>{claim.id}</code><span class="badge">{claim.confidence}</span><span class="badge">{claim.status}</span></div><p>{claim.statement[locale] || claim.statement.en}</p><ul>{claim.evidence.map(e=><li><code>{e.sourceId}</code> · {e.locator} · {e.role}</li>)}</ul></article>)}</section>}
+      
+      <section class="card" style="margin-top:3rem">
+        <div class="eyebrow">{copy.responsibility}</div>
+        <h3>Kenan AY</h3>
+        <p>{copy.titleAy}</p>
+        <p>{doc.data.contributors.flatMap(item => item.roles).join(" · ")}</p>
+      </section>
+      
+      <section id="personal-notes" style="margin-top:3rem">
+        <h2>{copy.notes}</h2>
+        <p class="muted">{copy.notesDesc}</p>
+        <input id="note-id" type="hidden" />
+        <div class="form-grid"><div class="field"><label for="note-type">Type</label><select id="note-type"><option value="observation">Observation</option><option value="question">Question</option><option value="claim">Claim</option><option value="quote">Quote</option><option value="flashcard">Flashcard</option></select></div><div class="field"><label for="note-status">Status</label><select id="note-status"><option value="inbox">Inbox</option><option value="reviewed">Reviewed</option><option value="integrated">Integrated</option><option value="rejected">Rejected</option></select></div></div>
+        <textarea id="note-body" rows="4" placeholder={copy.notePlaceholder}></textarea>
+        <div class="form-grid"><div class="field"><label for="note-answer">Flashcard answer</label><textarea id="note-answer" rows="2"></textarea></div><div class="field"><label for="note-tags">Tags</label><input id="note-tags" placeholder="architecture, consistency" /></div><div class="field"><label for="note-source">Source ID</label><select id="note-source"><option value="">—</option>{sources.map(source=><option value={source.id}>{source.id}</option>)}</select></div><div class="field"><label for="note-locator">Page / section / anchor</label><input id="note-locator" placeholder="p. 42, §4.1" /></div></div>
+        <div class="actions">
+          <button class="primary" id="save-note">{copy.btnSave}</button>
+          <button id="cancel-note" type="button" hidden>Cancel edit</button>
+          <button id="bookmark">{copy.btnBookmarkEmpty}</button>
+          <button id="export-notes">{copy.btnExport}</button>
+          <label class="button">{copy.btnImport}<input id="import-notes" type="file" accept="application/json" hidden /></label>
+        </div>
+        <p id="note-message" role="status" aria-live="polite"></p>
+        <div id="notes-list"></div>
+      </section>
+    </article>
+    
+    <!-- Shared Glossary Popover -->
+    <aside id="term-popover" class="term-popover" role="dialog" aria-modal="false" aria-label="Technical term explanation" hidden aria-live="polite">
+      <button id="close-popover" class="popover-close" aria-label="Close">×</button>
+      <div id="term-detail"></div>
+    </aside>
+  </div>
+  
+  <script>
+    import { IndexedDbNotesRepository } from "../../../modules/notes/adapters/indexed-db-notes";
+    const repo = new IndexedDbNotesRepository();
+    const documentId = document.querySelector("article")?.dataset.documentId || "";
+    const canonicalId = document.querySelector("article")?.dataset.canonicalId || "";
+    const list = document.querySelector("#notes-list");
+    const locale = document.documentElement.lang;
+    
+    const escapeHtml = (value: string) => value.replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[char] || char));
+    
+    const formField=(id:string)=>document.querySelector<HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement>(`#${id}`)!;
+    function resetEditor(){["note-id","note-body","note-answer","note-tags","note-source","note-locator"].forEach(id=>formField(id).value="");formField("note-type").value="observation";formField("note-status").value="inbox";document.querySelector<HTMLButtonElement>("#cancel-note")!.hidden=true;}
+    async function refresh(){
+      const notes = await repo.findByDocumentId(documentId);
+      const lblDelete = locale === "tr" ? "Sil" : locale === "es" ? "Eliminar" : "Delete";
+      const lblEdit = locale === "tr" ? "Düzenle" : locale === "es" ? "Editar" : "Edit";
+      list!.innerHTML = notes.sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt)).map(n => `<div class="card" style="margin-top:1rem"><div class="badge-group"><span class="badge">${escapeHtml(n.type||"observation")}</span><span class="badge">${escapeHtml(n.status||"inbox")}</span>${n.tags.map(tag=>`<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div><p>${escapeHtml(n.body).replace(/\n/g,"<br>")}</p>${n.answer?`<details><summary>Answer</summary><p>${escapeHtml(n.answer)}</p></details>`:""}${n.sourceId?`<small><code>${escapeHtml(n.sourceId)}</code>${n.locator?` · ${escapeHtml(n.locator)}`:""}</small>`:""}<div class="actions"><button data-edit="${n.id}">${lblEdit}</button><button data-remove="${n.id}">${lblDelete}</button></div></div>`).join("");
+    }
+    
+    document.querySelector("#save-note")?.addEventListener("click", async () => {
+      const field = document.querySelector<HTMLTextAreaElement>("#note-body");
+      if (!field?.value.trim()) return;
+      const now = new Date().toISOString();
+      const existingId=formField("note-id").value;const existing=existingId?await repo.findById(existingId):undefined;
+      await repo.save({ id: existingId||crypto.randomUUID(), documentId, body: field.value.trim(), answer:formField("note-answer").value.trim()||undefined,tags:formField("note-tags").value.split(",").map(x=>x.trim()).filter(Boolean),type:formField("note-type").value as any,status:formField("note-status").value as any,sourceId:formField("note-source").value||undefined,locator:formField("note-locator").value.trim()||undefined,createdAt:existing?.createdAt||now,updatedAt:now });
+      resetEditor();
+      await refresh();
+    });
+    
+    list?.addEventListener("click", async e => {
+      const target=e.target as HTMLElement;const id = target.dataset.remove;
+      if (id) {
+        await repo.remove(id);
+        await refresh();
+      }
+      const editId=target.dataset.edit;if(editId){const note=await repo.findById(editId);if(note){formField("note-id").value=note.id;formField("note-body").value=note.body;formField("note-answer").value=note.answer||"";formField("note-tags").value=note.tags.join(", ");formField("note-type").value=note.type||"observation";formField("note-status").value=note.status||"inbox";formField("note-source").value=note.sourceId||"";formField("note-locator").value=note.locator||"";document.querySelector<HTMLButtonElement>("#cancel-note")!.hidden=false;formField("note-body").focus();}}
+    });
+    document.querySelector("#cancel-note")?.addEventListener("click",resetEditor);
+    
+    // Bookmark Toggle logic
+    const bookmarkKey = `bookmark:${canonicalId}`;
+    const bookmarkBtn = document.querySelector<HTMLButtonElement>("#bookmark")!;
+    const lblBookmarkEmpty = locale === "tr" ? "☆ Yer imi" : locale === "es" ? "☆ Marcador" : "☆ Bookmark";
+    const lblBookmarkFull = locale === "tr" ? "★ Yer imi" : locale === "es" ? "★ Marcador" : "★ Bookmark";
+    
+    if (localStorage.getItem(bookmarkKey) === "true") {
+      bookmarkBtn.textContent = lblBookmarkFull;
+    }
+    
+    bookmarkBtn.addEventListener("click", () => {
+      const next = localStorage.getItem(bookmarkKey) !== "true";
+      localStorage.setItem(bookmarkKey, String(next));
+      bookmarkBtn.textContent = next ? lblBookmarkFull : lblBookmarkEmpty;
+    });
+    
+    document.querySelector("#export-notes")?.addEventListener("click", async () => {
+      const blob = new Blob([JSON.stringify({ schemaVersion: 2, project: "software-architecture-atlas", exportedAt: new Date().toISOString(), documentId, notes: await repo.exportAll() }, null, 2)], { type: "application/json" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `atlas-notes-${canonicalId}.json`;
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+    
+    document.querySelector<HTMLInputElement>("#import-notes")?.addEventListener("change", async e => {
+      const message = document.querySelector("#note-message")!;
+      const lblImport = locale === "tr" ? "not içe aktarıldı." : locale === "es" ? "notas importadas." : "notes imported.";
+      const lblFail = locale === "tr" ? "İçe aktarma başarısız." : locale === "es" ? "Error al importar." : "Import failed.";
+      
+      try {
+        const file = (e.currentTarget as HTMLInputElement).files?.[0];
+        if (!file) return;
+        const payload = JSON.parse(await file.text());
+        if (![1,2].includes(payload.schemaVersion) || payload.project !== "software-architecture-atlas" || !Array.isArray(payload.notes)) throw new Error("Geçersiz yedek.");
+        const count = await repo.importAll(payload.notes);
+        message.textContent = `${count} ${lblImport}`;
+        await refresh();
+      } catch (error) {
+        message.textContent = error instanceof Error ? error.message : lblFail;
+      }
+    });
+    
+    refresh();
+  </script>
+  
+  <script is:inline define:vars={{ terms, locale }}>
+    // Phase 4: Dynamic client-side glossary term auto-wrapping
+    const contentBody = document.querySelector("#content-body");
+    const popover = document.querySelector("#term-popover");
+    const detail = document.querySelector("#term-detail");
+    const close = document.querySelector("#close-popover");
+    let active = null, pinned = false, hideTimer;
+    
+    const escapeHtml = v => v.replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c] || c));
+    
+    function show(trigger, shouldPin = false) {
+      clearTimeout(hideTimer);
+      active?.setAttribute("aria-expanded", "false");
+      active = trigger;
+      pinned = shouldPin || pinned;
+      
+      const termId = trigger.dataset.termId;
+      const t = terms.find(candidate => candidate.id === termId);
+      if (!t) return;
+      
+      const activeCanonical = locale === "tr" ? t.canonical_tr : locale === "es" ? (t.canonical_es || t.canonical_en) : t.canonical_en;
+      const activeDefinition = locale === "tr" ? t.definition_tr : locale === "es" ? (t.definition_es || t.definition_en) : t.definition_en;
+      
+      // Technical translations and English badge
+      const englishBadge = locale !== "en" ? ` <span class="muted">(${escapeHtml(t.canonical_en)})</span>` : "";
+      
+      // Localized labels
+      const lblRelated = locale === "tr" ? "İlişkili" : locale === "es" ? "Relacionado" : "Related";
+      const lblUsage = locale === "tr" ? "Kullanım" : locale === "es" ? "Uso" : "Usage";
+      const lblSource = locale === "tr" ? "Kaynak" : locale === "es" ? "Fuente" : "Source";
+      
+      let abbreviationSection = '';
+      if (t.abbreviation) {
+        const lblExpansion = locale === "tr" ? "Açılımı" : locale === "es" ? "Expansión" : "Expansion";
+        const expansionTr = t.canonical_tr;
+        const expansionEn = t.canonical_en;
+        const expansionEs = t.canonical_es || t.canonical_en;
+        
+        let expansionText = '';
+        if (locale === "tr") {
+          expansionText = `${escapeHtml(expansionEn)} (${escapeHtml(expansionTr)})`;
+        } else if (locale === "es") {
+          expansionText = `${escapeHtml(expansionEn)} (${escapeHtml(expansionEs)})`;
+        } else {
+          expansionText = `${escapeHtml(expansionEn)}`;
+        }
+        abbreviationSection = `<p><strong>${lblExpansion}:</strong> ${expansionText}</p>`;
+      }
+      
+      const englishDefSection = locale !== "en"
+        ? `<p lang="en" class="muted"><strong>English Definition:</strong> ${escapeHtml(t.definition_en)}</p>`
+        : "";
+      
+      detail.innerHTML = `
+        <div class="eyebrow">${escapeHtml(t.abbreviation || "Terminology")}</div>
+        <h2>${escapeHtml(activeCanonical)}${englishBadge}</h2>
+        ${abbreviationSection}
+        <p>${escapeHtml(activeDefinition)}</p>
+        ${englishDefSection}
+        <p><strong>${lblRelated}:</strong> ${t.related_terms.map(escapeHtml).join(", ")}</p>
+        <p><strong>${lblUsage}:</strong> ${t.usage.map(escapeHtml).join(", ")}</p>
+        <p><strong>${lblSource}:</strong> ${escapeHtml(t.source)}</p>
+      `;
+      
+      const rect = trigger.getBoundingClientRect();
+      popover.style.left = `${Math.min(rect.left, window.innerWidth - 390)}px`;
+      popover.style.top = `${Math.min(rect.bottom + window.scrollY + 8, window.innerHeight + window.scrollY - 300)}px`;
+      popover.style.position = "absolute";
+      popover.hidden = false;
+      trigger.setAttribute("aria-expanded", "true");
+    }
+    
+    function dismiss() {
+      clearTimeout(hideTimer);
+      pinned = false;
+      popover.hidden = true;
+      active?.setAttribute("aria-expanded", "false");
+      active = null;
+    }
+    
+    function schedule() {
+      clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        if (!pinned && !active?.matches(":hover,:focus") && !popover.matches(":hover,:focus-within")) dismiss();
+      }, 200);
+    }
+    
+    function wrapTerms(container, termsList) {
+      const sorted = [...termsList].sort((a, b) => {
+        const lenA = Math.max(a.canonical_tr.length, a.canonical_en.length, (a.canonical_es || "").length);
+        const lenB = Math.max(b.canonical_tr.length, b.canonical_en.length, (b.canonical_es || "").length);
+        return lenB - lenA;
+      });
+      
+      const skipTags = new Set(["SCRIPT", "STYLE", "CODE", "PRE", "A", "BUTTON", "H1", "H2", "H3", "H4", "H5", "H6"]);
+      
+      function walk(node) {
+        if (node.nodeType === 1) { // ELEMENT_NODE
+          if (skipTags.has(node.tagName) || node.classList.contains("term-trigger")) return;
+          const children = Array.from(node.childNodes);
+          for (const child of children) walk(child);
+        } else if (node.nodeType === 3) { // TEXT_NODE
+          const text = node.nodeValue;
+          if (!text.trim()) return;
+          
+          for (const term of sorted) {
+            const variations = new Set();
+            if (term.canonical_tr) variations.add(term.canonical_tr);
+            if (term.canonical_en) variations.add(term.canonical_en);
+            if (term.canonical_es) variations.add(term.canonical_es);
+            if (term.abbreviation) variations.add(term.abbreviation);
+            
+            for (const variation of variations) {
+              if (!variation) continue;
+              const escaped = variation.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+              const regex = new RegExp(`(?<![a-zA-ZçÇğĞıİöÖşŞüÜ])${escaped}(?![a-zA-ZçÇğĞıİöÖşŞüÜ])`, "i");
+              
+              const match = text.match(regex);
+              if (match) {
+                const index = match.index;
+                const matchedText = match[0];
+                
+                const before = document.createTextNode(text.substring(0, index));
+                const button = document.createElement("button");
+                button.className = "term-trigger";
+                button.dataset.termId = term.id;
+                button.textContent = matchedText;
+                button.setAttribute("aria-expanded", "false");
+                button.style = "background: none; border: none; border-bottom: 1.5px dotted var(--accent2); color: inherit; padding: 0; font: inherit; cursor: help;";
+                
+                const after = document.createTextNode(text.substring(index + matchedText.length));
+                
+                const parent = node.parentNode;
+                parent.insertBefore(before, node);
+                parent.insertBefore(button, node);
+                parent.insertBefore(after, node);
+                parent.removeChild(node);
+                
+                walk(after);
+                return;
+              }
+            }
+          }
+        }
+      }
+      walk(container);
+    }
+    
+    if (contentBody) {
+      wrapTerms(contentBody, terms);
+      
+      // Bind event listeners to newly created triggers
+      document.querySelectorAll(".term-trigger").forEach(trigger => {
+        trigger.addEventListener("pointerenter", () => show(trigger));
+        trigger.addEventListener("pointerleave", schedule);
+        trigger.addEventListener("focus", () => show(trigger));
+        trigger.addEventListener("blur", schedule);
+        trigger.addEventListener("click", () => {
+          pinned = true;
+          show(trigger, true);
+        });
+      });
+      
+      popover.addEventListener("pointerenter", () => clearTimeout(hideTimer));
+      popover.addEventListener("pointerleave", schedule);
+      close.addEventListener("click", () => {
+        const trigger = active;
+        dismiss();
+        trigger?.focus();
+      });
+      document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && !popover.hidden) {
+          event.preventDefault();
+          dismiss();
+        }
+      });
+      document.addEventListener("pointerdown", event => {
+        if (pinned && !popover.contains(event.target) && event.target !== active) dismiss();
+      });
+    }
+  </script>
+</BaseLayout>
+
+<style>
+  .term-popover{position:absolute;z-index:50;width:min(380px,calc(100vw - 1rem));max-height:min(420px,70vh);overflow:auto;padding:1.15rem;border:1px solid var(--accent2);border-radius:1rem;background:var(--panel);box-shadow:var(--shadow)}
+  .term-popover[hidden]{display:none}.term-popover h2{font-size:1.25rem;padding-right:2rem}.popover-close{position:absolute;right:.65rem;top:.65rem;padding:.25rem .55rem}.term-card:focus-visible{outline:3px solid var(--accent);outline-offset:3px}
+</style>

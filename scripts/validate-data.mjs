@@ -1,10 +1,11 @@
 import { readFile } from "node:fs/promises";
 
 const load = async path => JSON.parse(await readFile(new URL(`../${path}`, import.meta.url), "utf8"));
-const [taxonomy, requestMap, glossary, sources, standards, rfcs, people, relations, requirements] = await Promise.all([
+const [taxonomy, requestMap, glossary, sources, standards, rfcs, people, relations, requirements, claims] = await Promise.all([
   load("data/taxonomy/taxonomy.json"), load("data/taxonomy/request-map.json"), load("data/glossary/glossary.json"), load("data/sources/sources.json"),
   load("data/standards/standards.json"), load("data/rfcs/rfcs.json"), load("data/people/people.json"), load("data/relations/relations.json"),
   load("data/requirements/requirements.json"),
+  load("data/claims/claims.json"),
 ]);
 
 const errors = [];
@@ -20,13 +21,29 @@ const unique = (items, label, key = "id") => {
 unique(taxonomy, "taxonomy"); unique(glossary, "glossary"); unique(sources, "sources");
 unique(standards, "standards"); unique(rfcs, "rfcs"); unique(rfcs, "rfcs", "number"); unique(people, "people");
 unique(requirements, "requirements");
+unique(claims, "claims");
 
 const sourceIds = new Set(sources.map(source => source.id));
+const claimIds = new Set(claims.map(claim => claim.id));
 const taxonomyIds = new Set(taxonomy.map(section => section.id));
 if (requestMap.length !== 28) errors.push(`taxonomy map: expected 28 requested headings, found ${requestMap.length}`);
 for (const item of requestMap) for (const canonicalId of item.canonicalIds) if (!taxonomyIds.has(canonicalId)) errors.push(`taxonomy map: unknown canonical ID ${canonicalId}`);
 for (const term of glossary) if (!sourceIds.has(term.source)) errors.push(`glossary: unknown source ${term.source}`);
 for (const relation of relations) for (const sourceId of relation.evidenceSourceIds ?? []) if (!sourceIds.has(sourceId)) errors.push(`relations: unknown evidence source ${sourceId}`);
+for (const relation of relations) for (const claimId of relation.evidenceClaimIds ?? []) if (!claimIds.has(claimId)) errors.push(`relations: unknown evidence claim ${claimId}`);
+for (const claim of claims) {
+  if (!/^claim\./.test(claim.id)) errors.push(`claims: invalid ID ${claim.id}`);
+  if (!claim.statement?.tr || !claim.statement?.en) errors.push(`claims: missing core translation ${claim.id}`);
+  if (!claim.evidence?.length) errors.push(`claims: missing evidence ${claim.id}`);
+  for (const evidence of claim.evidence ?? []) {
+    if (!sourceIds.has(evidence.sourceId)) errors.push(`claims: unknown source ${evidence.sourceId} in ${claim.id}`);
+    if (!evidence.locator?.trim()) errors.push(`claims: missing locator in ${claim.id}`);
+  }
+}
+for (const source of sources) {
+  if (source.doi && !/^10\.\d{4,9}\//.test(source.doi)) errors.push(`sources: invalid DOI ${source.id}`);
+  if (source.review_status && !["queued","reading","read","synthesized"].includes(source.review_status)) errors.push(`sources: invalid review_status ${source.id}`);
+}
 const relationKeys = new Set();
 for (const relation of relations) {
   const key = `${relation.from}|${relation.type}|${relation.to}`;
@@ -53,4 +70,4 @@ for (const rfc of rfcs) {
 if (taxonomy.length < 26) errors.push("taxonomy: program_info requires at least 26 top-level sections");
 
 if (errors.length) { console.error(errors.join("\n")); process.exit(1); }
-console.log(`Validated ${requestMap.length}→${taxonomy.length} taxonomy mappings, ${glossary.length} terms, ${sources.length} sources, ${standards.length} standards, ${rfcs.length} RFCs, ${relations.length} relations, ${requirements.length} requirements and ${people.length} people.`);
+console.log(`Validated ${requestMap.length}→${taxonomy.length} taxonomy mappings, ${glossary.length} terms, ${sources.length} sources, ${claims.length} claims, ${standards.length} standards, ${rfcs.length} RFCs, ${relations.length} relations, ${requirements.length} requirements and ${people.length} people.`);

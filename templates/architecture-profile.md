@@ -29,11 +29,22 @@ applicableDomains: []
 ## Bileşenler ve sınırlar
 ## Bağımlılık yönü
 ## Veri ve kontrol akışı
-## Avantajlar ve dezavantajlar
-## Güvenlik ve performans etkileri
-## Test ve dağıtım yaklaşımı
-## Uygun ve uygun olmayan durumlar
+## Veri sahipliği ve tutarlılık modeli
+## Çalışma zamanı ve hata modeli
+## Dağıtım ve operasyon modeli
+## Güvenlik etkileri
+## Performans ve ölçeklenebilirlik
+## Gözlemlenebilirlik
+## Test stratejisi
+## Avantajlar
+## Dezavantajlar
+## Uygun kullanım alanları
+## Uygun olmadığı durumlar
 ## Örnek dizin yapısı
 ## Alternatifler
+## Birlikte kullanılabilen yaklaşımlar
+## Standartlar ve akademik bulgular
+## İddia–kanıt matrisi
+## Açık sorular
 ## AI kod üretim kuralları
 ## Kaynaklar ve değişiklik geçmişi

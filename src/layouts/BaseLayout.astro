@@ -1,10 +1,25 @@
 ---
 import { projectIdentity } from "../config/identity";
-interface Props { title?: string; description?: string; locale?: "tr" | "en"; }
+interface Props { title?: string; description?: string; locale?: "tr" | "en" | "es"; }
 const { title, description = projectIdentity.projectName.tr, locale = "tr" } = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const getPathForLocale = (loc: string) => {
+  const parts = currentPath.split("/").filter(Boolean);
+  if (parts.length === 0) return `/${loc}/`;
+  if (["tr", "en", "es"].includes(parts[0])) {
+    parts[0] = loc;
+  } else {
+    parts.unshift(loc);
+  }
+  return "/" + parts.join("/") + "/";
+};
+
 const labels = locale === "tr"
-  ? { home: "Ana sayfa", catalog: "Katalog", glossary: "Sözlük", compare: "Karşılaştır", decide: "Karar desteği", sources: "Kaynaklar", standards: "Standartlar", status: "Durum", registry: "Veri", graph: "Graf", requirements: "Gereksinimler" }
-  : { home: "Home", catalog: "Catalog", glossary: "Glossary", compare: "Compare", decide: "Decision support", sources: "Sources", standards: "Standards", status: "Status", registry: "Data", graph: "Graph", requirements: "Requirements" };
+  ? { home: "Ana sayfa", catalog: "Katalog", glossary: "Sözlük", compare: "Karşılaştır", decide: "Karar desteği", sources: "Kaynaklar", standards: "Standartlar", status: "Durum", registry: "Veri", graph: "Graf", requirements: "Gereksinimler", research:"Araştırma", author:"Yaz", manual:"Kullanım kılavuzu", skipLink: "İçeriğe geç" }
+  : locale === "es"
+  ? { home: "Inicio", catalog: "Catálogo", glossary: "Glosario", compare: "Comparar", decide: "Soporte de decisión", sources: "Fuentes", standards: "Estándares", status: "Estado", registry: "Datos", graph: "Grafo", requirements: "Requisitos", research:"Investigación", author:"Escribir", manual:"Manual de usuario", skipLink: "Saltar al contenido" }
+  : { home: "Home", catalog: "Catalog", glossary: "Glossary", compare: "Compare", decide: "Decision support", sources: "Sources", standards: "Standards", status: "Status", registry: "Data", graph: "Graph", requirements: "Requirements", research:"Research", author:"Author", manual:"User manual", skipLink: "Skip to content" };
 ---
 <!doctype html>
 <html lang={locale} data-theme="dark" data-env={import.meta.env.MODE}>
@@ -18,23 +33,38 @@ const labels = locale === "tr"
     <title>{title ? `${title} · ${projectIdentity.projectName[locale]}` : projectIdentity.projectName[locale]}</title>
   </head>
   <body>
-    <a class="skip-link" href="#main">İçeriğe geç</a>
+    <a class="skip-link" href="#main">{labels.skipLink}</a>
     <header class="topbar">
-      <a class="brand" href="/">
+      <a class="brand" href={`/${locale}/`}>
         <span class="brand-mark">KA</span>
         <span><strong>{projectIdentity.projectName[locale]}</strong><small>Kenan AY · Knowledge system</small></span>
       </a>
       <nav aria-label="Ana gezinme">
-        <a href="/">{labels.home}</a><a href="/catalog">{labels.catalog}</a><a href="/glossary">{labels.glossary}</a>
-        <a href="/compare">{labels.compare}</a><a href="/decision">{labels.decide}</a><a href="/graph">{labels.graph}</a><a href="/requirements">{labels.requirements}</a><a href="/standards">{labels.standards}</a><a href="/registry">{labels.registry}</a><a href="/status">{labels.status}</a>
+        <a href={`/${locale}/`}>{labels.home}</a>
+        <a href={`/${locale}/catalog/`}>{labels.catalog}</a>
+        <a href={`/${locale}/glossary/`}>{labels.glossary}</a>
+        <a href={`/${locale}/compare/`}>{labels.compare}</a>
+        <a href={`/${locale}/decision/`}>{labels.decide}</a>
+        <a href={`/${locale}/graph/`}>{labels.graph}</a>
+        <a href={`/${locale}/research/`}>{labels.research}</a>
+        <a href={`/${locale}/author/`}>{labels.author}</a>
+        <a href={`/${locale}/requirements/`}>{labels.requirements}</a>
+        <a href={`/${locale}/standards/`}>{labels.standards}</a>
+        <a href={`/${locale}/registry/`}>{labels.registry}</a>
+        <a href={`/${locale}/status/`}>{labels.status}</a>
       </nav>
-      <div class="toolbar"><a class="locale-link" href="/tr/" lang="tr">TR</a><a class="locale-link" href="/en/" lang="en">EN</a><button id="theme-toggle" aria-label="Temayı değiştir">◐</button></div>
+      <div class="toolbar">
+        <a class="locale-link" href={getPathForLocale("tr")} lang="tr">TR</a>
+        <a class="locale-link" href={getPathForLocale("en")} lang="en">EN</a>
+        <a class="locale-link" href={getPathForLocale("es")} lang="es">ES</a>
+        <button id="theme-toggle" aria-label="Temayı değiştir">◐</button>
+      </div>
     </header>
     <main id="main" data-pagefind-body><slot /></main>
     <footer>
       <div><strong>{projectIdentity.owner.name}</strong><br />{projectIdentity.owner.professionalTitle[locale]}</div>
       <div>{projectIdentity.roles[locale].join(" · ")}</div>
-      <div>v0.1.0 · Local-first</div>
+      <div><a class="footer-help" href={`/${locale}/docs/guide.user-manual/`}>{labels.manual}</a><br />v0.1.0 · Local-first</div>
     </footer>
     <script is:inline>
       const root = document.documentElement;

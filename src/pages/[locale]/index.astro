@@ -1,0 +1,177 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: "tr" } },
+    { params: { locale: "en" } },
+    { params: { locale: "es" } },
+  ];
+}
+
+const { locale } = Astro.params as { locale: "tr" | "en" | "es" };
+
+const docs = await getCollection("documents", ({ data }) => data.locale === locale);
+const reviewed = docs.filter(({ data }) => ["reviewed", "verified"].includes(data.status)).length;
+const categories = new Set(docs.flatMap(({ data }) => data.categories));
+
+const copy = {
+  tr: {
+    eyebrow: "Yerel öncelikli · Çok dilli · Kaynak temelli",
+    title: "Yazılım kararları için yaşayan bir bilgi atlası.",
+    lead: "Programlama dilleri, mimari stiller, yapay zekâ sistemleri ve araç zincirlerini araştırın; proje gereksinimlerinize göre gerekçeli seçenekler üretin.",
+    explore: "Atlası keşfet",
+    decide: "Karar desteğini başlat",
+    metricCanonical: "Kanonik belgeler",
+    metricReviewed: "İncelenmiş",
+    metricCategories: "Kategoriler",
+    metricMode: "Çalışma biçimi",
+    section1Eyebrow: "Bilgi mimarisi",
+    section1Title: "Tek bir ağaç değil, ilişkili bilgi eksenleri",
+    section1Muted: "Alan, mimari, dil, platform ve kalite öznitelikleri ayrı sınıflandırılır.",
+    langTitle: "Programlama dilleri",
+    langDesc: "Tip sistemi, bellek modeli, çalışma zamanı, ekosistem ve kullanım uygunluğu.",
+    archTitle: "Mimari stiller",
+    archDesc: "Bağımlılık yönü, veri akışı, ödünleşimler, test ve dağıtım yaklaşımları.",
+    aiTitle: "Yapay zekâ ve ML",
+    aiDesc: "Model aileleri, eğitim yaşam döngüsü, RAG, agent sistemleri ve güvenlik.",
+    section2Eyebrow: "Son içerikler",
+    section2Title: "İnceleme kuyruğu görünür",
+    all: "Tümünü gör →",
+    helpEyebrow: "Yardım ve başlangıç",
+    helpTitle: "Atlası nasıl kullanacağınızı öğrenin",
+    helpText: "Menülerin kullanımı, araştırma yöntemleri, notlar, kaynaklar, bilgi grafı ve ADR süreci hikâyesel kılavuzda açıklanır.",
+    helpLink: "Kullanım kılavuzunu aç →"
+  },
+  en: {
+    eyebrow: "Local-first · Multilingual · Source-based",
+    title: "A living knowledge atlas for software decisions.",
+    lead: "Explore programming languages, architectural styles, AI systems, and toolchains; generate reasoned options according to your project requirements.",
+    explore: "Explore the atlas",
+    decide: "Start decision support",
+    metricCanonical: "Canonical documents",
+    metricReviewed: "Reviewed",
+    metricCategories: "Categories",
+    metricMode: "Operation mode",
+    section1Eyebrow: "Knowledge Architecture",
+    section1Title: "Not a single tree, but related information axes",
+    section1Muted: "Domain, architecture, language, platform, and quality attributes are classified separately.",
+    langTitle: "Programming Languages",
+    langDesc: "Type system, memory model, runtime, ecosystem, and suitability of use.",
+    archTitle: "Architectural Styles",
+    archDesc: "Dependency direction, data flow, trade-offs, testing, and deployment approaches.",
+    aiTitle: "Artificial Intelligence & ML",
+    aiDesc: "Model families, training lifecycle, RAG, agent systems, and security.",
+    section2Eyebrow: "Recent Content",
+    section2Title: "Review queue is visible",
+    all: "See all →",
+    helpEyebrow: "Help and getting started",
+    helpTitle: "Learn how to use the Atlas",
+    helpText: "The user manual explains navigation, research methods, notes, sources, the knowledge graph, and the ADR workflow.",
+    helpLink: "Open the user manual →"
+  },
+  es: {
+    eyebrow: "Local primero · Multilingüe · Basado en fuentes",
+    title: "Un atlas de conocimiento vivo para decisiones de software.",
+    lead: "Explore lenguajes de programación, estilos arquitectónicos, sistemas de IA y cadenas de herramientas; genere opciones fundamentadas según los requisitos de su proyecto.",
+    explore: "Explorar el atlas",
+    decide: "Iniciar soporte de decisión",
+    metricCanonical: "Documentos canónicos",
+    metricReviewed: "Revisados",
+    metricCategories: "Categorías",
+    metricMode: "Modo de operación",
+    section1Eyebrow: "Arquitectura del Conocimiento",
+    section1Title: "No un solo árbol, sino ejes de información relacionados",
+    section1Muted: "El dominio, la arquitectura, el lenguaje, la plataforma y los atributos de calidad se clasifican por separado.",
+    langTitle: "Lenguajes de Programación",
+    langDesc: "Sistema de tipos, modelo de memoria, tiempo de ejecución, ecosistema e idoneidad de uso.",
+    archTitle: "Estilos Arquitectónicos",
+    archDesc: "Dirección de dependencia, flujo de datos, compensaciones (trade-offs), pruebas y enfoques de despliegue.",
+    aiTitle: "Inteligencia Artificial y ML",
+    aiDesc: "Familias de modelos, ciclo de vida del entrenamiento, RAG, sistemas de agentes y seguridad.",
+    section2Eyebrow: "Contenido Reciente",
+    section2Title: "Cola de revisión visible",
+    all: "Ver todo →",
+    helpEyebrow: "Ayuda y primeros pasos",
+    helpTitle: "Aprenda a utilizar el Atlas",
+    helpText: "El manual explica los menús, métodos de investigación, notas, fuentes, el grafo de conocimiento y el proceso ADR.",
+    helpLink: "Abrir el manual de usuario →"
+  }
+}[locale];
+---
+<BaseLayout locale={locale}>
+  <div class="shell">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">{copy.eyebrow}</div>
+        <h1>{copy.title}</h1>
+        <p class="lead">{copy.lead}</p>
+        <div class="actions">
+          <a class="button primary" href={`/${locale}/catalog/`}>{copy.explore}</a>
+          <a class="button" href={`/${locale}/decision/`}>{copy.decide}</a>
+        </div>
+      </div>
+      <aside class="metric-panel" aria-label={locale === "tr" ? "Atlas durumu" : locale === "es" ? "Estado del atlas" : "Atlas status"}>
+        <div class="metric"><span>{copy.metricCanonical}</span><strong>{docs.length}</strong></div>
+        <div class="metric"><span>{copy.metricReviewed}</span><strong>{reviewed}</strong></div>
+        <div class="metric"><span>{copy.metricCategories}</span><strong>{categories.size}</strong></div>
+        <div class="metric"><span>{copy.metricMode}</span><strong>Offline</strong></div>
+      </aside>
+    </section>
+    <section>
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">{copy.section1Eyebrow}</div>
+          <h2>{copy.section1Title}</h2>
+        </div>
+        <p class="muted">{copy.section1Muted}</p>
+      </div>
+      <div class="grid">
+        <a class="card" href={`/${locale}/catalog/?category=languages`}>
+          <span class="tag">03</span>
+          <h3>{copy.langTitle}</h3>
+          <p>{copy.langDesc}</p>
+        </a>
+        <a class="card" href={`/${locale}/catalog/?category=architectures`}>
+          <span class="tag">06</span>
+          <h3>{copy.archTitle}</h3>
+          <p>{copy.archDesc}</p>
+        </a>
+        <a class="card" href={`/${locale}/catalog/?category=ai`}>
+          <span class="tag">16</span>
+          <h3>{copy.aiTitle}</h3>
+          <p>{copy.aiDesc}</p>
+        </a>
+      </div>
+    </section>
+    <section style="margin-top:4rem">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">{copy.section2Eyebrow}</div>
+          <h2>{copy.section2Title}</h2>
+        </div>
+        <a href={`/${locale}/catalog/`}>{copy.all}</a>
+      </div>
+      <div class="grid">
+        {docs.slice(0,3).map(doc => (
+          <a class="card" href={`/${locale}/docs/${doc.data.canonicalId}/`}>
+            <span class={`status ${doc.data.status}`}>{doc.data.status}</span>
+            <h3>{doc.data.title[locale] || doc.data.title.en}</h3>
+            <p>{doc.data.summary[locale] || doc.data.summary.en}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+    <aside class="home-help" aria-labelledby="home-help-title">
+      <div><div class="eyebrow">{copy.helpEyebrow}</div><h2 id="home-help-title">{copy.helpTitle}</h2><p>{copy.helpText}</p></div>
+      <a class="button" href={`/${locale}/docs/guide.user-manual/`}>{copy.helpLink}</a>
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  .home-help{margin-top:5rem;padding:1.25rem 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:2rem;color:var(--muted)}
+  .home-help h2{font-size:1.2rem;margin:.35rem 0}.home-help p{font-size:.88rem;max-width:720px;margin:0}.home-help .button{font-size:.82rem;white-space:nowrap}
+  @media(max-width:700px){.home-help{align-items:flex-start;flex-direction:column;gap:1rem}}
+</style>

@@ -1,0 +1,115 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import standards from "../../../data/standards/standards.json";
+import rfcs from "../../../data/rfcs/rfcs.json";
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: "tr" } },
+    { params: { locale: "en" } },
+    { params: { locale: "es" } },
+  ];
+}
+
+const { locale } = Astro.params as { locale: "tr" | "en" | "es" };
+
+const copy = {
+  tr: {
+    eyebrow: "Normatif ve resmî kayıtlar",
+    title: "Standartlar ve RFC durumları",
+    lead: "Yayın durumu, sürüm, değiştirme ilişkileri ve son doğrulama tarihi ayrı alanlar olarak izlenir. RFC içeriği yayımlandıktan sonra değişmez; güncelleme, yürürlükten kaldırma ve errata metadata üzerinden takip edilir.",
+    standardsTitle: "Standart ve rehber kayıtları",
+    standardsDesc: "ISO, IEEE, W3C, NIST ve SPDX birincil kayıtları.",
+    rfcsTitle: "RFC kayıtları",
+    rfcsDesc: "Updates, Updated by, Obsoletes ve Obsoleted by ilişkileri birlikte gösterilir."
+  },
+  en: {
+    eyebrow: "Normative and official records",
+    title: "Standards and RFC statuses",
+    lead: "Publication status, version, supersession, and verification date are tracked as separate fields. RFC content is immutable; updates, obsolescence, and errata are tracked via metadata.",
+    standardsTitle: "Standards and guidelines",
+    standardsDesc: "ISO, IEEE, W3C, NIST, and SPDX primary records.",
+    rfcsTitle: "RFC records",
+    rfcsDesc: "Updates, Updated by, Obsoletes, and Obsoleted by relations are shown together."
+  },
+  es: {
+    eyebrow: "Registros normativos y oficiales",
+    title: "Estándares y estados de RFC",
+    lead: "El estado de publicación, la versión, las relaciones de reemplazo y la fecha de verificación se registran en campos separados. Las RFC son inmutables una vez publicadas; las actualizaciones y la obsolescencia se siguen mediante metadatos.",
+    standardsTitle: "Estándares y especificaciones",
+    standardsDesc: "Registros primarios de ISO, IEEE, W3C, NIST y SPDX.",
+    rfcsTitle: "Registros RFC",
+    rfcsDesc: "Las relaciones de Updates, Updated by, Obsoletes y Obsoleted by se muestran de forma unificada."
+  }
+}[locale];
+---
+<BaseLayout title={copy.title} locale={locale}>
+  <div class="shell">
+    <div class="eyebrow">{copy.eyebrow}</div>
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.lead}</p>
+    
+    <div class="section-head">
+      <div>
+        <h2>{copy.standardsTitle}</h2>
+        <p class="muted">{copy.standardsDesc}</p>
+      </div>
+      <span class="tag">{standards.length} records</span>
+    </div>
+    
+    <div class="grid">
+      {standards.map(item => (
+        <article class="card" style="transform:none">
+          <div class="badge-group">
+            <span class={`badge ${item.status === "withdrawn" ? "is-withdrawn" : "is-current"}`}>
+              <span class="badge-kind">Status</span>{item.status}
+            </span>
+            <span class="tag">{item.organization}</span>
+          </div>
+          <h3><a href={item.url}>{item.identifier}</a></h3>
+          <p>{item.title}</p>
+          <small class="muted">
+            {locale === "tr" ? "Yayın" : locale === "es" ? "Publicación" : "Published"}: {item.publicationDate} · 
+            {locale === "tr" ? "Doğrulama" : locale === "es" ? "Verificado" : "Verified"}: {item.lastVerified}
+          </small>
+          {"notes" in item && <p class="muted" style="margin-top: 0.5rem; font-size: 0.8rem;">{item.notes}</p>}
+        </article>
+      ))}
+    </div>
+    
+    <div class="section-head" style="margin-top:4rem">
+      <div>
+        <h2>{copy.rfcsTitle}</h2>
+        <p class="muted">{copy.rfcsDesc}</p>
+      </div>
+      <span class="tag">{rfcs.length} records</span>
+    </div>
+    
+    <div class="grid">
+      {rfcs.map(rfc => (
+        <article class="card" style="transform:none">
+          <div class="badge-group">
+            <span class="badge"><span class="badge-kind">Status</span>{rfc.status}</span>
+            <span class={`badge ${rfc.obsoletedBy.length ? "is-obsolete" : "is-current"}`}>
+              <span class="badge-kind">Lifecycle</span>{rfc.obsoletedBy.length ? "Obsoleted" : "Current"}
+            </span>
+            <span class="tag">{rfc.stream}</span>
+          </div>
+          <h3><a href={rfc.url}>RFC {rfc.number}</a></h3>
+          <p>{rfc.title}</p>
+          <dl>
+            <dt>Updates</dt>
+            <dd>{rfc.updates.length ? rfc.updates.map(n => `RFC ${n}`).join(", ") : "—"}</dd>
+            <dt>Updated by</dt>
+            <dd>{rfc.updatedBy.length ? rfc.updatedBy.map(n => `RFC ${n}`).join(", ") : "—"}</dd>
+            <dt>Obsoletes</dt>
+            <dd>{rfc.obsoletes.length ? rfc.obsoletes.map(n => `RFC ${n}`).join(", ") : "—"}</dd>
+            <dt>Obsoleted by</dt>
+            <dd>{rfc.obsoletedBy.length ? rfc.obsoletedBy.map(n => `RFC ${n}`).join(", ") : "—"}</dd>
+          </dl>
+          <small class="muted">DOI: {rfc.doi} · Verified: {rfc.lastVerified}</small>
+        </article>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

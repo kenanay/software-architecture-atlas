@@ -1,0 +1,386 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import relations from "../../../data/relations/relations.json";
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: "tr" } },
+    { params: { locale: "en" } },
+    { params: { locale: "es" } },
+  ];
+}
+
+const { locale } = Astro.params as { locale: "tr" | "en" | "es" };
+
+const nodes = [...new Set(relations.flatMap(item => [item.from, item.to]))].sort();
+
+const copy = {
+  tr: {
+    eyebrow: "İzlenebilir ilişkiler",
+    title: "Bilgi grafı",
+    lead: "Teknoloji, standart, mimari ve alan kayıtları arasındaki kanıta dayalı ilişkileri gezin.",
+    placeholder: "architecture, standard, defined-by…",
+    lblFilter: "Düğüm veya ilişki ara",
+    summary: `${nodes.length} düğüm · ${relations.length} ilişki`,
+    instruction: "Düğümleri sürükleyebilir ve ilişkileri inceleyebilirsiniz.",
+    helpTitle: "Bu graf nasıl okunur?",
+    helpLead: "Graf, Atlas içindeki bilgi kayıtlarını ve aralarındaki kanıtlanmış bağlantıları gösteren etkileşimli bir haritadır. Buradaki sayılar içerik miktarını değil, graf üzerinde şu anda temsil edilen benzersiz kayıt ve bağlantı sayısını belirtir.",
+    nodeTitle: "Düğüm nedir?",
+    nodeText: "Düğüm; bir mimariyi, kavramı, standardı, RFC'yi, programlama dilini veya uygulama alanını temsil eden dairedir. Örneğin concept.architecture-description bir kavram, standard.iso-42010-2022 ise bir standart kaydıdır.",
+    relationTitle: "İlişki ve ok ne anlatır?",
+    relationText: "İki düğüm arasındaki çizgi yönlü bir ilişkiyi gösterir. Ok, kaynak düğümden hedef düğüme gider. defined-by ‘tarafından tanımlanır’, obsoletes ‘yerine geçerek geçersiz kılar’, suitable-for ise ‘şu alan için uygundur’ anlamındadır.",
+    interactionTitle: "Nasıl kullanılır?",
+    interactionText: "Düğümleri yalnızca görünümü düzenlemek için sürükleyin; sürüklemek veriyi veya ilişkiyi değiştirmez. Bir düğüme basarak bağlantılarını görün. Arama alanına düğüm kimliği ya da defined-by gibi bir ilişki türü yazarak alttaki ilişki kartlarını filtreleyin.",
+    colorsTitle: "Renkler neyi gösterir?",
+    colorsText: "Turuncu programlama dilini, yeşil mimariyi, mor kavramı, mavi standart veya RFC kaydını, gri ise diğer düğüm türlerini gösterir. Renk yalnızca türü ayırt etmeye yardım eder; önem veya güven puanı değildir.",
+    evidenceTitle: "Kanıt neden gösteriliyor?",
+    evidenceText: "Her ilişki en az bir kaynak kimliği taşır. Varsa claim.* kimliği, ilişkinin dayandığı doğrulanabilir teknik iddiayı gösterir. Kaynak kimliği ilişkinin doğru olduğuna dair kanıt zincirini; konum bilgisi ise ilgili bölüm veya maddeyi bulmayı sağlar.",
+    exampleTitle: "Örnek bir ilişkiyi okuyalım",
+    exampleText: "concept.architecture-description → defined-by → standard.iso-42010-2022 ifadesi şöyle okunur: ‘Mimari açıklama kavramı ISO/IEC/IEEE 42010:2022 standardı tarafından tanımlanır.’ Ok standarda yönelir; kaynak ve iddia kimlikleri bu bağlantının gerekçesini denetlemeyi sağlar.",
+    countTitle: "13 düğüm ve 7 ilişki ne demek?",
+    countText: "Mevcut veri kümesinde ilişkilerin başlangıç veya bitişinde yer alan 13 benzersiz kayıt ve bunları bağlayan 7 yönlü ilişki vardır. Yeni kanıtlı ilişkiler relations.json dosyasına eklendikçe iki sayı da otomatik olarak güncellenir."
+  },
+  en: {
+    eyebrow: "Traceable Relationships",
+    title: "Knowledge graph",
+    lead: "Navigate evidence-based relationships between technology, standards, architecture, and domains.",
+    placeholder: "architecture, standard, defined-by…",
+    lblFilter: "Search node or relationship",
+    summary: `${nodes.length} nodes · ${relations.length} relationships`,
+    instruction: "You can drag nodes and inspect relationships.",
+    helpTitle:"How do you read this graph?",helpLead:"The graph is an interactive map of Atlas records and their evidenced connections. The counts show unique records and links currently represented, not the total amount of content.",nodeTitle:"What is a node?",nodeText:"A node is a circle representing an architecture, concept, standard, RFC, programming language, or application domain.",relationTitle:"What do relationships and arrows mean?",relationText:"A line is a directed relationship. The arrow runs from source to target: defined-by means ‘is defined by’, obsoletes means ‘replaces and makes obsolete’, and suitable-for means ‘is suitable for’. ",interactionTitle:"How do I use it?",interactionText:"Drag nodes to arrange the view; dragging never changes data. Select a node to inspect its connections, and use the search field to filter relationship cards by node ID or relationship type.",colorsTitle:"What do the colors mean?",colorsText:"Orange represents languages, green architectures, purple concepts, blue standards or RFCs, and gray other record types. Color identifies type, not importance or confidence.",evidenceTitle:"Why is evidence shown?",evidenceText:"Every relationship carries at least one source ID. A claim.* ID, when present, points to the verifiable technical claim supporting that connection.",exampleTitle:"Reading an example",exampleText:"concept.architecture-description → defined-by → standard.iso-42010-2022 reads: ‘The architecture-description concept is defined by ISO/IEC/IEEE 42010:2022.’",countTitle:"What do 13 nodes and 7 relationships mean?",countText:"The current dataset contains 13 unique records used as relation endpoints and 7 directed links. Both counts update automatically as evidenced relations are added."
+  },
+  es: {
+    eyebrow: "Relaciones trazables",
+    title: "Grafo de conocimiento",
+    lead: "Navegue por relaciones basadas en evidencia entre tecnología, estándares, arquitectura y dominios.",
+    placeholder: "architecture, standard, defined-by…",
+    lblFilter: "Buscar nodo o relación",
+    summary: `${nodes.length} nodos · ${relations.length} relaciones`,
+    instruction: "Puede arrastrar los nodos e inspeccionar las relaciones.",
+    helpTitle:"¿Cómo se lee este grafo?",helpLead:"El grafo es un mapa interactivo de los registros del Atlas y sus conexiones con evidencia. Los números indican registros y enlaces únicos representados actualmente, no todo el contenido.",nodeTitle:"¿Qué es un nodo?",nodeText:"Un nodo es un círculo que representa una arquitectura, concepto, estándar, RFC, lenguaje o dominio de aplicación.",relationTitle:"¿Qué significan la relación y la flecha?",relationText:"La línea representa una relación dirigida. La flecha va del origen al destino: defined-by significa ‘definido por’, obsoletes ‘reemplaza y deja obsoleto’ y suitable-for ‘adecuado para’. ",interactionTitle:"¿Cómo se usa?",interactionText:"Arrastre los nodos para organizar la vista; esto no modifica los datos. Seleccione un nodo para revisar sus conexiones y use la búsqueda para filtrar las tarjetas.",colorsTitle:"¿Qué significan los colores?",colorsText:"Naranja indica lenguajes, verde arquitecturas, morado conceptos, azul estándares o RFC y gris otros tipos. El color no indica importancia ni confianza.",evidenceTitle:"¿Por qué se muestra evidencia?",evidenceText:"Cada relación contiene al menos un identificador de fuente. Un identificador claim.*, cuando existe, señala la afirmación técnica verificable que respalda la conexión.",exampleTitle:"Ejemplo de lectura",exampleText:"concept.architecture-description → defined-by → standard.iso-42010-2022 se lee: ‘El concepto de descripción de arquitectura está definido por ISO/IEC/IEEE 42010:2022’. ",countTitle:"¿Qué significan 13 nodos y 7 relaciones?",countText:"El conjunto actual contiene 13 registros únicos usados como extremos y 7 enlaces dirigidos. Ambos números se actualizan automáticamente al añadir relaciones con evidencia."
+  }
+}[locale];
+---
+<BaseLayout title={copy.title} locale={locale}>
+  <div class="shell">
+    <div class="eyebrow">{copy.eyebrow}</div>
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.lead}</p>
+    
+    <div class="field">
+      <label for="graph-filter">{copy.lblFilter}</label>
+      <input id="graph-filter" type="search" placeholder={copy.placeholder} />
+    </div>
+    
+    <p class="muted">{copy.summary} · {copy.instruction}</p>
+    
+    <!-- Interactive Graph Visualization -->
+    <div class="card graph-container" style="padding: 0; overflow: hidden; position: relative; margin-bottom: 2rem; border-color: var(--accent2)">
+      <svg id="graph-svg" width="100%" height="520" style="background: radial-gradient(circle at center, var(--panel) 60%, var(--bg) 100%)">
+        <defs>
+          <marker id="arrow" viewBox="0 -5 10 10" refX="18" refY="0" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,-5L10,0L0,5" fill="var(--line)" opacity="0.65"></path>
+          </marker>
+        </defs>
+        <g id="links-group"></g>
+        <g id="nodes-group"></g>
+      </svg>
+      <div id="graph-tooltip" class="graph-tooltip" hidden></div>
+    </div>
+    
+    <div id="graph-list" class="grid">
+      {relations.map(item => (
+        <article class="card graph-edge" data-search={`${item.from} ${item.type} ${item.to}`}>
+          <code>{item.from}</code>
+          <h3>{item.type}</h3>
+          <code>{item.to}</code>
+          <p>Kanıt / Evidence: {item.evidenceSourceIds.join(", ")}{item.evidenceClaimIds?.length ? ` · ${item.evidenceClaimIds.join(", ")}` : ""}</p>
+        </article>
+      ))}
+    </div>
+    <section class="graph-help" aria-labelledby="graph-help-title">
+      <div class="section-head"><div><div class="eyebrow">Graph guide</div><h2 id="graph-help-title">{copy.helpTitle}</h2></div></div>
+      <p class="lead">{copy.helpLead}</p>
+      <div class="grid">
+        <article class="card" style="transform:none"><h3>{copy.countTitle}</h3><p>{copy.countText}</p></article>
+        <article class="card" style="transform:none"><h3>{copy.nodeTitle}</h3><p>{copy.nodeText}</p></article>
+        <article class="card" style="transform:none"><h3>{copy.relationTitle}</h3><p>{copy.relationText}</p></article>
+        <article class="card" style="transform:none"><h3>{copy.interactionTitle}</h3><p>{copy.interactionText}</p></article>
+        <article class="card" style="transform:none"><h3>{copy.colorsTitle}</h3><p>{copy.colorsText}</p><p><span class="graph-key language"></span> Language <span class="graph-key architecture"></span> Architecture <span class="graph-key concept"></span> Concept <span class="graph-key standard"></span> Standard / RFC <span class="graph-key other"></span> Other</p></article>
+        <article class="card" style="transform:none"><h3>{copy.evidenceTitle}</h3><p>{copy.evidenceText}</p></article>
+      </div>
+      <aside class="card graph-example"><div class="eyebrow">Example</div><h3>{copy.exampleTitle}</h3><p><code>concept.architecture-description</code> → <strong>defined-by</strong> → <code>standard.iso-42010-2022</code></p><p>{copy.exampleText}</p></aside>
+    </section>
+  </div>
+  
+  <script is:inline define:vars={{ relations }}>
+    // Setup client-side interactive SVG force layout
+    const svg = document.querySelector("#graph-svg");
+    const linksGroup = document.querySelector("#links-group");
+    const nodesGroup = document.querySelector("#nodes-group");
+    const tooltip = document.querySelector("#graph-tooltip");
+    
+    if (svg) {
+      // Build nodes from relations
+      const nodesMap = new Map();
+      relations.forEach(r => {
+        if (!nodesMap.has(r.from)) nodesMap.set(r.from, { id: r.from, label: r.from.split(".").pop() });
+        if (!nodesMap.has(r.to)) nodesMap.set(r.to, { id: r.to, label: r.to.split(".").pop() });
+      });
+      
+      const nodes = Array.from(nodesMap.values());
+      const links = relations.map((r, idx) => ({ id: idx, source: r.from, target: r.to, type: r.type, evidence: r.evidenceSourceIds }));
+      
+      const width = svg.clientWidth || 800;
+      const height = 520;
+      
+      // Initialize node positions
+      nodes.forEach(node => {
+        node.x = width / 2 + (Math.random() - 0.5) * 300;
+        node.y = height / 2 + (Math.random() - 0.5) * 300;
+        node.vx = 0;
+        node.vy = 0;
+        node.fx = null;
+        node.fy = null;
+      });
+      
+      // Color coding by type
+      const getNodeColorClass = (id) => {
+        if (id.startsWith("language")) return "node-lang";
+        if (id.startsWith("architecture")) return "node-arch";
+        if (id.startsWith("concept")) return "node-concept";
+        if (id.startsWith("standard") || id.startsWith("rfc")) return "node-standard";
+        return "node-default";
+      };
+      
+      // Render links
+      linksGroup.innerHTML = links.map(l => `
+        <line id="link-${l.id}" class="graph-link" marker-end="url(#arrow)"></line>
+      `).join("");
+      
+      // Render nodes
+      nodesGroup.innerHTML = nodes.map(n => `
+        <g id="node-${n.id.replace(/\./g, '_')}" class="graph-node-group" style="cursor: grab;">
+          <circle r="14" class="graph-node ${getNodeColorClass(n.id)}"></circle>
+          <text dy="-18" text-anchor="middle" class="graph-node-text">${n.label}</text>
+        </g>
+      `).join("");
+      
+      const svgLinks = Array.from(linksGroup.querySelectorAll("line"));
+      const svgNodes = nodes.map(n => {
+        const el = nodesGroup.querySelector(`#node-${n.id.replace(/\./g, '_')}`);
+        return { node: n, element: el };
+      });
+      
+      // Physics factors
+      const kAttract = 0.03;
+      const kRepel = 2400;
+      const gravity = 0.015;
+      const friction = 0.88;
+      
+      function tick() {
+        // 1. Repel forces
+        for (let i = 0; i < nodes.length; i++) {
+          const n1 = nodes[i];
+          for (let j = i + 1; j < nodes.length; j++) {
+            const n2 = nodes[j];
+            const dx = n2.x - n1.x || 0.1;
+            const dy = n2.y - n1.y || 0.1;
+            const distSqr = dx * dx + dy * dy || 0.1;
+            const dist = Math.sqrt(distSqr) || 0.1;
+            
+            const force = kRepel / distSqr;
+            const fx = (dx / dist) * force;
+            const fy = (dy / dist) * force;
+            
+            if (n1.fx === null) { n1.vx -= fx; n1.vy -= fy; }
+            if (n2.fx === null) { n2.vx += fx; n2.vy += fy; }
+          }
+        }
+        
+        // 2. Attraction along links
+        links.forEach(l => {
+          const s = nodes.find(n => n.id === l.source);
+          const t = nodes.find(n => n.id === l.target);
+          if (!s || !t) return;
+          
+          const dx = t.x - s.x;
+          const dy = t.y - s.y;
+          const dist = Math.sqrt(dx * dx + dy * dy) || 0.1;
+          const targetDist = 130;
+          const force = kAttract * (dist - targetDist);
+          
+          const fx = (dx / dist) * force;
+          const fy = (dy / dist) * force;
+          
+          if (s.fx === null) { s.vx += fx; s.vy += fy; }
+          if (t.fx === null) { t.vx -= fx; t.vy -= fy; }
+        });
+        
+        // 3. Gravity and integrate
+        nodes.forEach(n => {
+          if (n.fx !== null) {
+            n.x = n.fx;
+            n.y = n.fy;
+            n.vx = 0;
+            n.vy = 0;
+            return;
+          }
+          const dxCenter = width / 2 - n.x;
+          const dyCenter = height / 2 - n.y;
+          
+          n.vx += dxCenter * gravity;
+          n.vy += dyCenter * gravity;
+          
+          n.x += n.vx;
+          n.y += n.vy;
+          
+          n.vx *= friction;
+          n.vy *= friction;
+        });
+        
+        // 4. Update SVG positions
+        links.forEach((l, idx) => {
+          const s = nodes.find(n => n.id === l.source);
+          const t = nodes.find(n => n.id === l.target);
+          if (s && t && svgLinks[idx]) {
+            svgLinks[idx].setAttribute("x1", s.x);
+            svgLinks[idx].setAttribute("y1", s.y);
+            svgLinks[idx].setAttribute("x2", t.x);
+            svgLinks[idx].setAttribute("y2", t.y);
+          }
+        });
+        
+        svgNodes.forEach(item => {
+          if (item.element) {
+            item.element.setAttribute("transform", `translate(${item.node.x}, ${item.node.y})`);
+          }
+        });
+      }
+      
+      // Start loop
+      function frame() {
+        tick();
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+      
+      // Add Dragging Interaction
+      let dragItem = null;
+      svgNodes.forEach(item => {
+        if (!item.element) return;
+        
+        item.element.addEventListener("pointerdown", e => {
+          e.preventDefault();
+          dragItem = item.node;
+          dragItem.fx = dragItem.x;
+          dragItem.fy = dragItem.y;
+          item.element.style.cursor = "grabbing";
+          svg.setPointerCapture(e.pointerId);
+          
+          // Tooltip details on click
+          const connections = links.filter(l => l.source === dragItem.id || l.target === dragItem.id);
+          tooltip.innerHTML = `
+            <strong>${dragItem.id}</strong><br>
+            <small>${connections.length} relationships</small>
+            <ul style="padding-left: 1.1rem; margin: 0.3rem 0 0;">
+              ${connections.map(c => `<li>${c.source === dragItem.id ? `→ ${c.type} → <code>${c.target.split('.').pop()}</code>` : `← ${c.type} ← <code>${c.source.split('.').pop()}</code>`}</li>`).join("")}
+            </ul>
+          `;
+          tooltip.style.left = `${Math.min(e.clientX - svg.getBoundingClientRect().left + 15, width - 240)}px`;
+          tooltip.style.top = `${e.clientY - svg.getBoundingClientRect().top + 15}px`;
+          tooltip.hidden = false;
+        });
+        
+        item.element.addEventListener("pointerenter", () => {
+          item.element.querySelector("circle").style.filter = "drop-shadow(0 0 8px var(--accent))";
+        });
+        item.element.addEventListener("pointerleave", () => {
+          item.element.querySelector("circle").style.filter = "none";
+        });
+      });
+      
+      svg.addEventListener("pointermove", e => {
+        if (dragItem) {
+          const rect = svg.getBoundingClientRect();
+          dragItem.fx = e.clientX - rect.left;
+          dragItem.fy = e.clientY - rect.top;
+          
+          tooltip.style.left = `${Math.min(e.clientX - rect.left + 15, width - 240)}px`;
+          tooltip.style.top = `${e.clientY - rect.top + 15}px`;
+        }
+      });
+      
+      const release = () => {
+        if (dragItem) {
+          const el = nodesGroup.querySelector(`#node-${dragItem.id.replace(/\./g, '_')}`);
+          if (el) el.style.cursor = "grab";
+          dragItem.fx = null;
+          dragItem.fy = null;
+          dragItem = null;
+        }
+      };
+      
+      svg.addEventListener("pointerup", release);
+      svg.addEventListener("pointercancel", release);
+      
+      // Hide tooltip when clicking on background
+      svg.addEventListener("pointerdown", e => {
+        if (e.target === svg) {
+          tooltip.hidden = true;
+        }
+      });
+    }
+    
+    // Setup list-based text filtering
+    document.querySelector('#graph-filter')?.addEventListener('input', e => {
+      const q = e.target.value.toLowerCase();
+      document.querySelectorAll('.graph-edge').forEach(el => el.hidden = !el.dataset.search.toLowerCase().includes(q));
+    });
+  </script>
+</BaseLayout>
+
+<style is:global>
+  .graph-link {
+    fill: none;
+    stroke: var(--line);
+    stroke-width: 1.5px;
+    opacity: 0.55;
+  }
+  
+  .graph-node {
+    stroke: var(--line);
+    stroke-width: 1.5px;
+    transition: filter 0.15s ease;
+  }
+  
+  .node-lang { fill: #f97316; } /* Orange */
+  .node-arch { fill: #10b981; } /* Green */
+  .node-concept { fill: #8b5cf6; } /* Purple */
+  .node-standard { fill: #3b82f6; } /* Blue */
+  .node-default { fill: var(--muted); }
+  
+  .graph-node-text {
+    fill: var(--text);
+    font-size: 0.72rem;
+    font-weight: 500;
+    pointer-events: none;
+  }
+  
+  .graph-tooltip {
+    position: absolute;
+    background: color-mix(in srgb, var(--panel) 90%, transparent);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--line);
+    border-radius: 0.5rem;
+    padding: 0.65rem;
+    pointer-events: none;
+    font-size: 0.75rem;
+    color: var(--text);
+    box-shadow: var(--shadow);
+    width: 220px;
+    z-index: 10;
+  }
+  .graph-help{margin-top:4rem}.graph-example{margin-top:1rem;transform:none;border-color:var(--accent2)}.graph-key{display:inline-block;width:.75rem;height:.75rem;border-radius:50%;margin:0 .25rem 0 .65rem;vertical-align:middle}.graph-key.language{background:#f97316}.graph-key.architecture{background:#10b981}.graph-key.concept{background:#8b5cf6}.graph-key.standard{background:#3b82f6}.graph-key.other{background:var(--muted)}
+</style>

@@ -1,0 +1,316 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import taxonomy from "../../../data/taxonomy/taxonomy.json";
+import requestMap from "../../../data/taxonomy/request-map.json";
+import glossary from "../../../data/glossary/glossary.json";
+import sources from "../../../data/sources/sources.json";
+import rfcs from "../../../data/rfcs/rfcs.json";
+import relations from "../../../data/relations/relations.json";
+import people from "../../../data/people/people.json";
+import documentTypes from "../../../data/document-types/document-types.json";
+import claims from "../../../data/claims/claims.json";
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: "tr" } },
+    { params: { locale: "en" } },
+    { params: { locale: "es" } },
+  ];
+}
+
+const { locale } = Astro.params as { locale: "tr" | "en" | "es" };
+
+const registries = [
+  {id:"claims",label:{tr:"İddialar",en:"Claims",es:"Afirmaciones"}[locale],count:claims.length,description:{tr:"Kaynak, konum, rol ve güven düzeyi taşıyan teknik iddialar.",en:"Technical claims with source, locator, role, and confidence.",es:"Afirmaciones técnicas con fuente, ubicación, rol y confianza."}[locale]},
+  {
+    id: "taxonomy",
+    label: { tr: "Taksonomi", en: "Taxonomy", es: "Taxonomía" }[locale],
+    count: taxonomy.length,
+    description: {
+      tr: "Kanonik bölümler, sıralama ve planlı konu profilleri.",
+      en: "Canonical sections, sorting, and planned topic profiles.",
+      es: "Secciones canónicas, ordenamiento y perfiles de temas planificados."
+    }[locale]
+  },
+  {
+    id: "mapping",
+    label: { tr: "Gereksinim eşlemesi", en: "Requirement mapping", es: "Mapeo de requisitos" }[locale],
+    count: requestMap.length,
+    description: {
+      tr: "28 istek başlığının 26 kanonik bölüme dönüşümü.",
+      en: "Transformation of 28 request topics into 26 canonical sections.",
+      es: "Transformación de 28 temas de solicitud en 26 secciones canónicas."
+    }[locale]
+  },
+  {
+    id: "glossary",
+    label: { tr: "Terminoloji", en: "Terminology", es: "Terminología" }[locale],
+    count: glossary.length,
+    description: {
+      tr: "Çift dilli terimler, kısaltmalar, ilişkiler ve kaynaklar.",
+      en: "Counterpart terms, abbreviations, relations, and sources.",
+      es: "Términos equivalentes, abreviaturas, relaciones y fuentes."
+    }[locale]
+  },
+  {
+    id: "sources",
+    label: { tr: "Kaynaklar", en: "Sources", es: "Fuentes" }[locale],
+    count: sources.length,
+    description: {
+      tr: "Yayın, sürüm, geçerlilik ve son erişim metadata'sı.",
+      en: "Publication, version, validity, and last access metadata.",
+      es: "Metadatos de publicación, versión, validez y último acceso."
+    }[locale]
+  },
+  {
+    id: "rfcs",
+    label: { tr: "RFC kayıtları", en: "RFC records", es: "Registros RFC" }[locale],
+    count: rfcs.length,
+    description: {
+      tr: "Status, stream, DOI ve yaşam döngüsü ilişkileri.",
+      en: "Status, stream, DOI, and lifecycle relations.",
+      es: "Estado, flujo (stream), DOI y relaciones de ciclo de vida."
+    }[locale]
+  },
+  {
+    id: "relations",
+    label: { tr: "Bilgi ilişkileri", en: "Information relations", es: "Relaciones de información" }[locale],
+    count: relations.length,
+    description: {
+      tr: "Kanıt kaynağı zorunlu yönlü kavram ilişkileri.",
+      en: "Directed concept relations with mandatory evidence sources.",
+      es: "Relaciones conceptuales dirigidas con fuentes de evidencia obligatorias."
+    }[locale]
+  },
+  {
+    id: "people",
+    label: { tr: "Kişi ve roller", en: "People and roles", es: "Personas y roles" }[locale],
+    count: people.length,
+    description: {
+      tr: "Tekrarsız kişi kimliği ve sorumluluk rolleri.",
+      en: "Unique person identities and responsibility roles.",
+      es: "Identidades de personas únicas y roles de responsabilidad."
+    }[locale]
+  },
+  {
+    id: "types",
+    label: { tr: "Belge türleri", en: "Document types", es: "Tipos de documento" }[locale],
+    count: documentTypes.length,
+    description: {
+      tr: "İçerik koleksiyonunun desteklediği belge profilleri.",
+      en: "Document profiles supported by content collections.",
+      es: "Perfiles de documentos admitidos por las colecciones de contenido."
+    }[locale]
+  }
+];
+
+const schemaFiles = ["document.schema.json", "source.schema.json", "rfc.schema.json", "relation.schema.json", "term.schema.json"];
+schemaFiles.push("claim.schema.json");
+
+const copy = {
+  tr: {
+    eyebrow: "Kendi metadata'sını açıklayan atlas",
+    title: "Veri kayıtları ve şemalar",
+    lead: "Build-time JSON dosyaları artık uygulama içinde denetlenebilir. Bu ekran kanonik kayıtların kapsamını ve ilişkilerini görünür kılar."
+  },
+  en: {
+    eyebrow: "Atlas describing its own metadata",
+    title: "Data registries and schemas",
+    lead: "Build-time JSON files can now be audited inside the app. This screen exposes the scope and relations of canonical registries."
+  },
+  es: {
+    eyebrow: "Atlas que describe sus propios metadatos",
+    title: "Registros de datos y esquemas",
+    lead: "Los archivos JSON de tiempo de compilación ahora se pueden auditar en la aplicación. Esta pantalla expone el alcance y las relaciones de los registros canónicos."
+  }
+}[locale];
+---
+<BaseLayout title={copy.title} locale={locale}>
+  <div class="shell">
+    <div class="eyebrow">{copy.eyebrow}</div>
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.lead}</p>
+    
+    <div class="grid">
+      {registries.map(item => (
+        <a class="card" href={`#${item.id}`}>
+          <span class="tag">{item.count} records</span>
+          <h3>{item.label}</h3>
+          <p>{item.description}</p>
+        </a>
+      ))}
+    </div>
+    
+    <section id="taxonomy">
+      <div class="section-head">
+        <h2>{registries.find(item=>item.id==="taxonomy")?.label}</h2>
+        <span class="tag">taxonomy.json</span>
+      </div>
+      <div style="overflow:auto">
+        <table class="registry-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Language-specific Labels</th>
+              <th>Planned Topics</th>
+            </tr>
+          </thead>
+          <tbody>
+            {taxonomy.map(item => (
+              <tr>
+                <td><code>{item.id}</code></td>
+                <td>
+                  TR: {item.label.tr}<br/>
+                  EN: {item.label.en}<br/>
+                  ES: {(item.label as any).es || "N/A"}
+                </td>
+                <td>{item.topics.join(" · ")}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+    <section id="mapping">
+      <div class="section-head">
+        <h2>{registries.find(item=>item.id==="mapping")?.label}</h2>
+        <a href={`/${locale}/status/#taxonomy-map`}>Open in status →</a>
+      </div>
+      <p>28 raw request headings map directly, collectively, or separately to 26 canonical categories.</p>
+    </section>
+    
+    <section id="sources">
+      <div class="section-head">
+        <h2>{registries.find(item=>item.id==="sources")?.label}</h2>
+        <span class="tag">sources.json</span>
+      </div>
+      <div style="overflow:auto">
+        <table class="registry-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Source</th>
+              <th>Status</th>
+              <th>Accessed</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sources.map(item => (
+              <tr>
+                <td><code>{item.id}</code></td>
+                <td>
+                  <a href={item.url}>{item.title}</a><br/>
+                  <small>{item.publisher}</small>
+                </td>
+                <td>{item.status}</td>
+                <td>{item.accessed_at}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+    <section id="rfcs">
+      <div class="section-head">
+        <h2>{registries.find(item=>item.id==="rfcs")?.label}</h2>
+        <span class="tag">rfcs.json</span>
+      </div>
+      <div style="overflow:auto">
+        <table class="registry-table">
+          <thead>
+            <tr>
+              <th>RFC</th>
+              <th>Status / Stream</th>
+              <th>Updates</th>
+              <th>Obsoletes</th>
+              <th>Obsoleted by</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rfcs.map(item => (
+              <tr>
+                <td><a href={item.url}>RFC {item.number}</a></td>
+                <td>{item.status}<br/><small>{item.stream}</small></td>
+                <td>{item.updates.join(", ") || "—"}</td>
+                <td>{item.obsoletes.join(", ") || "—"}</td>
+                <td>{item.obsoletedBy.join(", ") || "—"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    
+    <section id="relations">
+      <div class="section-head">
+        <h2>{registries.find(item=>item.id==="relations")?.label}</h2>
+        <span class="tag">relations.json</span>
+      </div>
+      <div style="overflow:auto">
+        <table class="registry-table">
+          <thead>
+            <tr>
+              <th>Source Node</th>
+              <th>Relation</th>
+              <th>Target Node</th>
+              <th>Evidence</th>
+            </tr>
+          </thead>
+          <tbody>
+            {relations.map(item => (
+              <tr>
+                <td><code>{item.from}</code></td>
+                <td>{item.type}</td>
+                <td><code>{item.to}</code></td>
+                <td>{item.evidenceSourceIds.map(id => <code>{id}</code>)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+    <section id="claims"><div class="section-head"><h2>{registries.find(item=>item.id==="claims")?.label}</h2><span class="tag">claims.json</span></div>{claims.map(claim=><article class="card" style="transform:none;margin-bottom:1rem"><code>{claim.id}</code><p>{claim.statement[locale] || claim.statement.en}</p><p>{claim.evidence.map(e=><span class="tag">{e.sourceId} · {e.locator} · {e.role}</span>)}</p></article>)}</section>
+    
+    <section id="glossary">
+      <div class="section-head">
+        <h2>{registries.find(item=>item.id==="glossary")?.label}</h2>
+        <span class="tag">glossary.json</span>
+      </div>
+      <p>
+        {glossary.map(item => {
+          const canonical = locale === "tr" ? item.canonical_tr : locale === "es" ? (item.canonical_es || item.canonical_en) : item.canonical_en;
+          return <span class="tag">{canonical}</span>;
+        })}
+      </p>
+    </section>
+    
+    <section id="people">
+      <div class="section-head">
+        <h2>{registries.find(item=>item.id==="people")?.label}</h2>
+        <span class="tag">people.json</span>
+      </div>
+      {people.map(item => (
+        <article class="card" style="transform:none">
+          <h3>{item.name}</h3>
+          <p>
+            TR: {item.professionalTitle.tr}<br/>
+            EN: {item.professionalTitle.en}<br/>
+            ES: {item.professionalTitle.es || "N/A"}
+          </p>
+          <p>{item.roles.map(role => <span class="tag">{role}</span>)}</p>
+        </article>
+      ))}
+    </section>
+    
+    <section id="types">
+      <div class="section-head">
+        <h2>{registries.find(item=>item.id==="types")?.label}</h2>
+        <span class="tag">schemas/</span>
+      </div>
+      <p>{documentTypes.map(type => <span class="tag">{type}</span>)}</p>
+      <ul>{schemaFiles.map(file => <li><code>{file}</code></li>)}</ul>
+    </section>
+  </div>
+</BaseLayout>

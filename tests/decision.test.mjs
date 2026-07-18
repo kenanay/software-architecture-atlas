@@ -72,3 +72,14 @@ test("knowledge relations have unique, evidenced edges", async () => {
   assert.equal(new Set(keys).size,keys.length);
   for(const item of data){assert.notEqual(item.from,item.to);assert.ok(item.evidenceSourceIds.length);}
 });
+
+test("claims have localized statements and source locators", async () => {
+  const [claims,sources]=await Promise.all([readFile(new URL("../data/claims/claims.json",import.meta.url)).then(JSON.parse),readFile(new URL("../data/sources/sources.json",import.meta.url)).then(JSON.parse)]);
+  const sourceIds=new Set(sources.map(item=>item.id));
+  for(const claim of claims){assert.match(claim.id,/^claim\./);assert.ok(claim.statement.tr);assert.ok(claim.statement.en);assert.ok(claim.evidence.length);for(const evidence of claim.evidence){assert.ok(sourceIds.has(evidence.sourceId));assert.ok(evidence.locator);}}
+});
+
+test("startup scripts do not forcibly terminate port owners", async () => {
+  const [shell,batch]=await Promise.all([readFile(new URL("../start.sh",import.meta.url),"utf8"),readFile(new URL("../start.bat",import.meta.url),"utf8")]);
+  assert.doesNotMatch(shell,/kill\s+-9/);assert.doesNotMatch(batch,/taskkill\s+\/F/i);
+});

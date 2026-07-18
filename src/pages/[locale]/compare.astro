@@ -1,0 +1,136 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: "tr" } },
+    { params: { locale: "en" } },
+    { params: { locale: "es" } },
+  ];
+}
+
+const { locale } = Astro.params as { locale: "tr" | "en" | "es" };
+
+const docs = (await getCollection("documents")).map(d=>({
+  id: d.data.id,
+  canonicalId: d.data.canonicalId,
+  locale: d.data.locale,
+  title: d.data.title[d.data.locale] || d.data.title.en,
+  otherTitle: d.data.title[d.data.locale === "tr" ? "en" : "tr"] || d.data.title.en,
+  summary: d.data.summary[d.data.locale] || d.data.summary.en,
+  type: d.data.type,
+  status: d.data.status,
+  maturity: d.data.maturity,
+  translationStatus: d.data.translationStatus,
+  version: d.data.version,
+  categories: d.data.categories,
+  tags: d.data.tags,
+  qualityAttributes: d.data.qualityAttributes,
+  applicableDomains: d.data.applicableDomains,
+  sources: d.data.sources
+}));
+
+const copy = {
+  tr: {
+    eyebrow: "Yan yana değerlendirme",
+    title: "Bilgi profillerini karşılaştırın",
+    lead: "Tüm belge türlerini Türkçe, İngilizce veya birlikte karşılaştırın; editoryal durum ile teknoloji olgunluğunu ayrı görün.",
+    lblLocale: "Belge dili",
+    optAll: "Türkçe + English + Spanish",
+    lblLeft: "Birinci profil",
+    lblRight: "İkinci profil"
+  },
+  en: {
+    eyebrow: "Side-by-Side Evaluation",
+    title: "Compare knowledge profiles",
+    lead: "Compare all document types in Turkish, English, or Spanish; see editorial status and technology maturity separately.",
+    lblLocale: "Document language",
+    optAll: "Turkish + English + Spanish",
+    lblLeft: "First profile",
+    lblRight: "Second profile"
+  },
+  es: {
+    eyebrow: "Evaluación lado a lado",
+    title: "Comparar perfiles de conocimiento",
+    lead: "Compare todos los tipos de documentos en turco, inglés o español; vea el estado editorial y la madurez tecnológica por separado.",
+    lblLocale: "Idioma del documento",
+    optAll: "Turco + Inglés + Español",
+    lblLeft: "Primer perfil",
+    lblRight: "Segundo perfil"
+  }
+}[locale];
+---
+<BaseLayout title={copy.title} locale={locale}>
+  <div class="shell">
+    <div class="eyebrow">{copy.eyebrow}</div>
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.lead}</p>
+    <div class="field" style="max-width:320px">
+      <label for="compare-locale">{copy.lblLocale}</label>
+      <select id="compare-locale">
+        <option value="all">{copy.optAll}</option>
+        <option value="tr">Türkçe</option>
+        <option value="en">English</option>
+        <option value="es">Español</option>
+      </select>
+    </div>
+    <div class="form-grid">
+      <div>
+        <label for="left">{copy.lblLeft}</label>
+        <select id="left"></select>
+      </div>
+      <div>
+        <label for="right">{copy.lblRight}</label>
+        <select id="right"></select>
+      </div>
+    </div>
+    <div id="comparison" class="grid" style="grid-template-columns:1fr 1fr;margin-top:2rem"></div>
+  </div>
+  <script is:inline define:vars={{ docs, locale }}>
+    const left=document.querySelector("#left"),right=document.querySelector("#right"),localeSelect=document.querySelector("#compare-locale"),out=document.querySelector("#comparison");
+    const esc=v=>String(v).replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[c]);
+    
+    const card=d=>`
+      <article class="card" style="transform:none">
+        <div class="badge-group">
+          <span class="badge"><span class="badge-kind">Locale</span>${esc(d.locale.toUpperCase())}</span>
+          <span class="badge ${["reviewed","verified"].includes(d.status)?"is-current":"needs-review"}"><span class="badge-kind">Editorial</span>${esc(d.status)}</span>
+          <span class="badge"><span class="badge-kind">Maturity</span>${esc(d.maturity)}</span>
+          <span class="badge ${["reviewed","original"].includes(d.translationStatus)?"is-synced":"is-outdated"}"><span class="badge-kind">Translation</span>${esc(d.translationStatus)}</span>
+        </div>
+        <h2>${esc(d.title)}</h2>
+        <p class="muted">${esc(d.otherTitle)}</p>
+        <p>${esc(d.summary)}</p>
+        <h3>Profile</h3>
+        <p><strong>Type:</strong> ${esc(d.type)}<br><strong>Canonical ID:</strong> ${esc(d.canonicalId)}<br><strong>Version:</strong> ${esc(d.version)}</p>
+        <h3>Quality attributes</h3>
+        <p>${d.qualityAttributes.map(x=>`<span class="tag">${esc(x)}</span>`).join("")||"—"}</p>
+        <h3>Applicable domains</h3>
+        <p>${d.applicableDomains.map(x=>`<span class="tag">${esc(x)}</span>`).join("")||"—"}</p>
+        <h3>Categories & Sources</h3>
+        <p>${d.categories.map(x=>`<span class="tag">${esc(x)}</span>`).join("")}</p>
+        <p>${d.sources.map(x=>`<span class="tag">${esc(x)}</span>`).join("")||"No source record"}</p>
+        <a href="/${locale}/docs/${encodeURIComponent(d.canonicalId)}/">Open document →</a>
+      </article>`;
+      
+    function options(){
+      const filtered=docs.filter(d=>localeSelect.value==="all"||d.locale===localeSelect.value);
+      const previous=[left.value,right.value];
+      [left,right].forEach((select,index)=>{
+        select.innerHTML=filtered.map(d=>`<option value="${esc(d.id)}">[${d.locale.toUpperCase()}] ${esc(d.title)} · ${esc(d.type)}</option>`).join("");
+        if(filtered.some(d=>d.id===previous[index]))select.value=previous[index];
+      });
+      if(right.options.length>1&&right.value===left.value)right.selectedIndex=1;
+      render();
+    }
+    
+    function render(){
+      out.innerHTML=[left.value,right.value].map(id=>docs.find(d=>d.id===id)).filter(Boolean).map(card).join("");
+    }
+    
+    [left,right].forEach(el=>el.addEventListener("change",render));
+    localeSelect.addEventListener("change",options);
+    options();
+  </script>
+</BaseLayout>

@@ -25,7 +25,7 @@ applicableDomains: [ai, ml, generative-ai]
 ---
 ## Lifecycle approach
 
-NIST AI RMF 1.0 organizes AI risk management around four high-level functions: **Govern, Map, Measure, and Manage**. Govern is cross-cutting, and risk management is continuous throughout the system lifecycle rather than a one-time approval.
+NIST AI RMF 1.0 organizes AI Risk Management around four high-level functions: **Govern, Map, Measure, and Manage**. Govern is cross-cutting, and risk management is continuous throughout the system lifecycle rather than a one-time approval.
 
 ## Architecture implications
 

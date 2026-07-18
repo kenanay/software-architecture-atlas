@@ -22,7 +22,23 @@ const copy = {
     placeholder: "architecture, standard, defined-by…",
     lblFilter: "Düğüm veya ilişki ara",
     summary: `${nodes.length} düğüm · ${relations.length} ilişki`,
-    instruction: "Düğümleri sürükleyebilir ve ilişkileri inceleyebilirsiniz."
+    instruction: "Düğümleri sürükleyebilir ve ilişkileri inceleyebilirsiniz.",
+    helpTitle: "Bu graf nasıl okunur?",
+    helpLead: "Graf, Atlas içindeki bilgi kayıtlarını ve aralarındaki kanıtlanmış bağlantıları gösteren etkileşimli bir haritadır. Buradaki sayılar içerik miktarını değil, graf üzerinde şu anda temsil edilen benzersiz kayıt ve bağlantı sayısını belirtir.",
+    nodeTitle: "Düğüm nedir?",
+    nodeText: "Düğüm; bir mimariyi, kavramı, standardı, RFC'yi, programlama dilini veya uygulama alanını temsil eden dairedir. Örneğin concept.architecture-description bir kavram, standard.iso-42010-2022 ise bir standart kaydıdır.",
+    relationTitle: "İlişki ve ok ne anlatır?",
+    relationText: "İki düğüm arasındaki çizgi yönlü bir ilişkiyi gösterir. Ok, kaynak düğümden hedef düğüme gider. defined-by ‘tarafından tanımlanır’, obsoletes ‘yerine geçerek geçersiz kılar’, suitable-for ise ‘şu alan için uygundur’ anlamındadır.",
+    interactionTitle: "Nasıl kullanılır?",
+    interactionText: "Düğümleri yalnızca görünümü düzenlemek için sürükleyin; sürüklemek veriyi veya ilişkiyi değiştirmez. Bir düğüme basarak bağlantılarını görün. Arama alanına düğüm kimliği ya da defined-by gibi bir ilişki türü yazarak alttaki ilişki kartlarını filtreleyin.",
+    colorsTitle: "Renkler neyi gösterir?",
+    colorsText: "Turuncu programlama dilini, yeşil mimariyi, mor kavramı, mavi standart veya RFC kaydını, gri ise diğer düğüm türlerini gösterir. Renk yalnızca türü ayırt etmeye yardım eder; önem veya güven puanı değildir.",
+    evidenceTitle: "Kanıt neden gösteriliyor?",
+    evidenceText: "Her ilişki en az bir kaynak kimliği taşır. Varsa claim.* kimliği, ilişkinin dayandığı doğrulanabilir teknik iddiayı gösterir. Kaynak kimliği ilişkinin doğru olduğuna dair kanıt zincirini; konum bilgisi ise ilgili bölüm veya maddeyi bulmayı sağlar.",
+    exampleTitle: "Örnek bir ilişkiyi okuyalım",
+    exampleText: "concept.architecture-description → defined-by → standard.iso-42010-2022 ifadesi şöyle okunur: ‘Mimari açıklama kavramı ISO/IEC/IEEE 42010:2022 standardı tarafından tanımlanır.’ Ok standarda yönelir; kaynak ve iddia kimlikleri bu bağlantının gerekçesini denetlemeyi sağlar.",
+    countTitle: "13 düğüm ve 7 ilişki ne demek?",
+    countText: "Mevcut veri kümesinde ilişkilerin başlangıç veya bitişinde yer alan 13 benzersiz kayıt ve bunları bağlayan 7 yönlü ilişki vardır. Yeni kanıtlı ilişkiler relations.json dosyasına eklendikçe iki sayı da otomatik olarak güncellenir."
   },
   en: {
     eyebrow: "Traceable Relationships",
@@ -31,7 +47,8 @@ const copy = {
     placeholder: "architecture, standard, defined-by…",
     lblFilter: "Search node or relationship",
     summary: `${nodes.length} nodes · ${relations.length} relationships`,
-    instruction: "You can drag nodes and inspect relationships."
+    instruction: "You can drag nodes and inspect relationships.",
+    helpTitle:"How do you read this graph?",helpLead:"The graph is an interactive map of Atlas records and their evidenced connections. The counts show unique records and links currently represented, not the total amount of content.",nodeTitle:"What is a node?",nodeText:"A node is a circle representing an architecture, concept, standard, RFC, programming language, or application domain.",relationTitle:"What do relationships and arrows mean?",relationText:"A line is a directed relationship. The arrow runs from source to target: defined-by means ‘is defined by’, obsoletes means ‘replaces and makes obsolete’, and suitable-for means ‘is suitable for’. ",interactionTitle:"How do I use it?",interactionText:"Drag nodes to arrange the view; dragging never changes data. Select a node to inspect its connections, and use the search field to filter relationship cards by node ID or relationship type.",colorsTitle:"What do the colors mean?",colorsText:"Orange represents languages, green architectures, purple concepts, blue standards or RFCs, and gray other record types. Color identifies type, not importance or confidence.",evidenceTitle:"Why is evidence shown?",evidenceText:"Every relationship carries at least one source ID. A claim.* ID, when present, points to the verifiable technical claim supporting that connection.",exampleTitle:"Reading an example",exampleText:"concept.architecture-description → defined-by → standard.iso-42010-2022 reads: ‘The architecture-description concept is defined by ISO/IEC/IEEE 42010:2022.’",countTitle:"What do 13 nodes and 7 relationships mean?",countText:"The current dataset contains 13 unique records used as relation endpoints and 7 directed links. Both counts update automatically as evidenced relations are added."
   },
   es: {
     eyebrow: "Relaciones trazables",
@@ -40,7 +57,8 @@ const copy = {
     placeholder: "architecture, standard, defined-by…",
     lblFilter: "Buscar nodo o relación",
     summary: `${nodes.length} nodos · ${relations.length} relaciones`,
-    instruction: "Puede arrastrar los nodos e inspeccionar las relaciones."
+    instruction: "Puede arrastrar los nodos e inspeccionar las relaciones.",
+    helpTitle:"¿Cómo se lee este grafo?",helpLead:"El grafo es un mapa interactivo de los registros del Atlas y sus conexiones con evidencia. Los números indican registros y enlaces únicos representados actualmente, no todo el contenido.",nodeTitle:"¿Qué es un nodo?",nodeText:"Un nodo es un círculo que representa una arquitectura, concepto, estándar, RFC, lenguaje o dominio de aplicación.",relationTitle:"¿Qué significan la relación y la flecha?",relationText:"La línea representa una relación dirigida. La flecha va del origen al destino: defined-by significa ‘definido por’, obsoletes ‘reemplaza y deja obsoleto’ y suitable-for ‘adecuado para’. ",interactionTitle:"¿Cómo se usa?",interactionText:"Arrastre los nodos para organizar la vista; esto no modifica los datos. Seleccione un nodo para revisar sus conexiones y use la búsqueda para filtrar las tarjetas.",colorsTitle:"¿Qué significan los colores?",colorsText:"Naranja indica lenguajes, verde arquitecturas, morado conceptos, azul estándares o RFC y gris otros tipos. El color no indica importancia ni confianza.",evidenceTitle:"¿Por qué se muestra evidencia?",evidenceText:"Cada relación contiene al menos un identificador de fuente. Un identificador claim.*, cuando existe, señala la afirmación técnica verificable que respalda la conexión.",exampleTitle:"Ejemplo de lectura",exampleText:"concept.architecture-description → defined-by → standard.iso-42010-2022 se lee: ‘El concepto de descripción de arquitectura está definido por ISO/IEC/IEEE 42010:2022’. ",countTitle:"¿Qué significan 13 nodos y 7 relaciones?",countText:"El conjunto actual contiene 13 registros únicos usados como extremos y 7 enlaces dirigidos. Ambos números se actualizan automáticamente al añadir relaciones con evidencia."
   }
 }[locale];
 ---
@@ -81,6 +99,19 @@ const copy = {
         </article>
       ))}
     </div>
+    <section class="graph-help" aria-labelledby="graph-help-title">
+      <div class="section-head"><div><div class="eyebrow">Graph guide</div><h2 id="graph-help-title">{copy.helpTitle}</h2></div></div>
+      <p class="lead">{copy.helpLead}</p>
+      <div class="grid">
+        <article class="card" style="transform:none"><h3>{copy.countTitle}</h3><p>{copy.countText}</p></article>
+        <article class="card" style="transform:none"><h3>{copy.nodeTitle}</h3><p>{copy.nodeText}</p></article>
+        <article class="card" style="transform:none"><h3>{copy.relationTitle}</h3><p>{copy.relationText}</p></article>
+        <article class="card" style="transform:none"><h3>{copy.interactionTitle}</h3><p>{copy.interactionText}</p></article>
+        <article class="card" style="transform:none"><h3>{copy.colorsTitle}</h3><p>{copy.colorsText}</p><p><span class="graph-key language"></span> Language <span class="graph-key architecture"></span> Architecture <span class="graph-key concept"></span> Concept <span class="graph-key standard"></span> Standard / RFC <span class="graph-key other"></span> Other</p></article>
+        <article class="card" style="transform:none"><h3>{copy.evidenceTitle}</h3><p>{copy.evidenceText}</p></article>
+      </div>
+      <aside class="card graph-example"><div class="eyebrow">Example</div><h3>{copy.exampleTitle}</h3><p><code>concept.architecture-description</code> → <strong>defined-by</strong> → <code>standard.iso-42010-2022</code></p><p>{copy.exampleText}</p></aside>
+    </section>
   </div>
   
   <script is:inline define:vars={{ relations }}>
@@ -351,4 +382,5 @@ const copy = {
     width: 220px;
     z-index: 10;
   }
+  .graph-help{margin-top:4rem}.graph-example{margin-top:1rem;transform:none;border-color:var(--accent2)}.graph-key{display:inline-block;width:.75rem;height:.75rem;border-radius:50%;margin:0 .25rem 0 .65rem;vertical-align:middle}.graph-key.language{background:#f97316}.graph-key.architecture{background:#10b981}.graph-key.concept{background:#8b5cf6}.graph-key.standard{background:#3b82f6}.graph-key.other{background:var(--muted)}
 </style>

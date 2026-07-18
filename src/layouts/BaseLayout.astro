@@ -16,10 +16,10 @@ const getPathForLocale = (loc: string) => {
 };
 
 const labels = locale === "tr"
-  ? { home: "Ana sayfa", catalog: "Katalog", glossary: "Sözlük", compare: "Karşılaştır", decide: "Karar desteği", sources: "Kaynaklar", standards: "Standartlar", status: "Durum", registry: "Veri", graph: "Graf", requirements: "Gereksinimler", research:"Araştırma", author:"Yaz", skipLink: "İçeriğe geç" }
+  ? { home: "Ana sayfa", catalog: "Katalog", glossary: "Sözlük", compare: "Karşılaştır", decide: "Karar desteği", sources: "Kaynaklar", standards: "Standartlar", status: "Durum", registry: "Veri", graph: "Graf", requirements: "Gereksinimler", research:"Araştırma", author:"Yaz", manual:"Kullanım kılavuzu", skipLink: "İçeriğe geç" }
   : locale === "es"
-  ? { home: "Inicio", catalog: "Catálogo", glossary: "Glosario", compare: "Comparar", decide: "Soporte de decisión", sources: "Fuentes", standards: "Estándares", status: "Estado", registry: "Datos", graph: "Grafo", requirements: "Requisitos", research:"Investigación", author:"Escribir", skipLink: "Saltar al contenido" }
-  : { home: "Home", catalog: "Catalog", glossary: "Glossary", compare: "Compare", decide: "Decision support", sources: "Sources", standards: "Standards", status: "Status", registry: "Data", graph: "Graph", requirements: "Requirements", research:"Research", author:"Author", skipLink: "Skip to content" };
+  ? { home: "Inicio", catalog: "Catálogo", glossary: "Glosario", compare: "Comparar", decide: "Soporte de decisión", sources: "Fuentes", standards: "Estándares", status: "Estado", registry: "Datos", graph: "Grafo", requirements: "Requisitos", research:"Investigación", author:"Escribir", manual:"Manual de usuario", skipLink: "Saltar al contenido" }
+  : { home: "Home", catalog: "Catalog", glossary: "Glossary", compare: "Compare", decide: "Decision support", sources: "Sources", standards: "Standards", status: "Status", registry: "Data", graph: "Graph", requirements: "Requirements", research:"Research", author:"Author", manual:"User manual", skipLink: "Skip to content" };
 ---
 <!doctype html>
 <html lang={locale} data-theme="dark" data-env={import.meta.env.MODE}>
@@ -64,7 +64,7 @@ const labels = locale === "tr"
     <footer>
       <div><strong>{projectIdentity.owner.name}</strong><br />{projectIdentity.owner.professionalTitle[locale]}</div>
       <div>{projectIdentity.roles[locale].join(" · ")}</div>
-      <div>v0.1.0 · Local-first</div>
+      <div><a class="footer-help" href={`/${locale}/docs/guide.user-manual/`}>{labels.manual}</a><br />v0.1.0 · Local-first</div>
     </footer>
     <script is:inline>
       const root = document.documentElement;

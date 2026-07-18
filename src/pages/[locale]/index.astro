@@ -38,7 +38,11 @@ const copy = {
     aiDesc: "Model aileleri, eğitim yaşam döngüsü, RAG, agent sistemleri ve güvenlik.",
     section2Eyebrow: "Son içerikler",
     section2Title: "İnceleme kuyruğu görünür",
-    all: "Tümünü gör →"
+    all: "Tümünü gör →",
+    helpEyebrow: "Yardım ve başlangıç",
+    helpTitle: "Atlası nasıl kullanacağınızı öğrenin",
+    helpText: "Menülerin kullanımı, araştırma yöntemleri, notlar, kaynaklar, bilgi grafı ve ADR süreci hikâyesel kılavuzda açıklanır.",
+    helpLink: "Kullanım kılavuzunu aç →"
   },
   en: {
     eyebrow: "Local-first · Multilingual · Source-based",
@@ -61,7 +65,11 @@ const copy = {
     aiDesc: "Model families, training lifecycle, RAG, agent systems, and security.",
     section2Eyebrow: "Recent Content",
     section2Title: "Review queue is visible",
-    all: "See all →"
+    all: "See all →",
+    helpEyebrow: "Help and getting started",
+    helpTitle: "Learn how to use the Atlas",
+    helpText: "The user manual explains navigation, research methods, notes, sources, the knowledge graph, and the ADR workflow.",
+    helpLink: "Open the user manual →"
   },
   es: {
     eyebrow: "Local primero · Multilingüe · Basado en fuentes",
@@ -84,7 +92,11 @@ const copy = {
     aiDesc: "Familias de modelos, ciclo de vida del entrenamiento, RAG, sistemas de agentes y seguridad.",
     section2Eyebrow: "Contenido Reciente",
     section2Title: "Cola de revisión visible",
-    all: "Ver todo →"
+    all: "Ver todo →",
+    helpEyebrow: "Ayuda y primeros pasos",
+    helpTitle: "Aprenda a utilizar el Atlas",
+    helpText: "El manual explica los menús, métodos de investigación, notas, fuentes, el grafo de conocimiento y el proceso ADR.",
+    helpLink: "Abrir el manual de usuario →"
   }
 }[locale];
 ---
@@ -151,5 +163,15 @@ const copy = {
         ))}
       </div>
     </section>
+    <aside class="home-help" aria-labelledby="home-help-title">
+      <div><div class="eyebrow">{copy.helpEyebrow}</div><h2 id="home-help-title">{copy.helpTitle}</h2><p>{copy.helpText}</p></div>
+      <a class="button" href={`/${locale}/docs/guide.user-manual/`}>{copy.helpLink}</a>
+    </aside>
   </div>
 </BaseLayout>
+
+<style>
+  .home-help{margin-top:5rem;padding:1.25rem 0;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:2rem;color:var(--muted)}
+  .home-help h2{font-size:1.2rem;margin:.35rem 0}.home-help p{font-size:.88rem;max-width:720px;margin:0}.home-help .button{font-size:.82rem;white-space:nowrap}
+  @media(max-width:700px){.home-help{align-items:flex-start;flex-direction:column;gap:1rem}}
+</style>

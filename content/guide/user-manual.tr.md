@@ -782,3 +782,453 @@ Kaynak → Okuma → Atomik not → Kanıtlı iddia
 ```
 
 Bu zincir korunduğu sürece Atlas yalnızca büyüyen bir doküman koleksiyonu değil, yaşayan ve denetlenebilir bir öğrenme sistemi olur.
+
+## Menü bazlı hızlı kullanım rehberi
+
+Bu bölüm, Atlas’ın her menüsünü birbirinden bağımsız bir başvuru başlığı olarak açıklar. Belirli bir ekranın ne işe yaradığını öğrenmek istediğinizde doğrudan ilgili başlığa geçebilirsiniz.
+
+## Ana Sayfa menüsü
+
+**Adres:** `/tr/`
+
+### Amacı
+
+Ana Sayfa, Atlas’ın giriş ve yönlendirme ekranıdır. Platformdaki bütün ayrıntıları burada göstermez; içerik durumunu özetler ve en sık kullanılan başlangıç yollarını sunar.
+
+### Nasıl kullanılır?
+
+1. Üst menüden **Ana sayfa** bağlantısını seçin.
+2. “Kanonik belgeler”, “İncelenmiş”, “Kategoriler” ve “Çalışma biçimi” sayaçlarını inceleyin.
+3. **Atlası keşfet** ile Katalog ekranına geçin.
+4. Bir proje seçimi yapmak istiyorsanız **Karar desteğini başlat** bağlantısını kullanın.
+5. Alt bölümdeki son içerik kartlarından bir belgeyi doğrudan açın.
+
+### Örnek
+
+Atlas’ı ilk kez açan Deniz, kaç Türkçe belge bulunduğunu ve bunların kaçının incelendiğini görür. Amacı araştırma yapmak olduğu için “Atlası keşfet” düğmesiyle Katalog’a geçer.
+
+### Dikkat edilmesi gerekenler
+
+Ana sayfadaki “Kanonik belgeler” sayısı tamamlanmış veya doğrulanmış içerik sayısı değildir. İçeriğin güven düzeyi için ayrıca `reviewed` ve `verified` durumlarına bakılmalıdır.
+
+## Katalog menüsü
+
+**Adres:** `/tr/catalog/`
+
+### Amacı
+
+Katalog, Atlas’taki belgeleri bulmak, filtrelemek ve açmak için kullanılan ana içerik tarama ekranıdır.
+
+### Nasıl kullanılır?
+
+1. Arama alanına başlık, kavram, teknoloji veya etiket yazın.
+2. **Belge dili** filtresiyle Türkçe, İngilizce veya İspanyolca belgeleri seçin.
+3. **Kategori** filtresiyle sistem rehberi, programlama dili, mimari veya yapay zekâ gibi bir alan seçin.
+4. **Belge durumu** filtresiyle yalnızca incelenmiş, inceleme gerektiren veya taslak belgeleri gösterin.
+5. Sonuç kartındaki başlık, özet ve durum rozetini kontrol edin.
+6. Kartı seçerek belge ayrıntı sayfasına geçin.
+
+### Örnek
+
+```text
+Arama: modular
+Kategori: Mimari stiller
+Durum: İncelenmiş
+```
+
+Bu filtre, başlık veya özetinde “modular” geçen ve incelemesi tamamlanmış mimari belgeleri daraltır.
+
+### Dikkat edilmesi gerekenler
+
+Pagefind tam metin indeksi üretim derlemesinde hazırlanır. Geliştirme sunucusunda yalnızca metadata araması eksiksiz çalışabilir; tam metin aramasını sınamak için `npm run build` ve `npm run preview` kullanın.
+
+## Belge Okuma ekranı
+
+**Örnek adres:** `/tr/docs/architecture.modular-monolith/`
+
+Belge ekranı üst menüde ayrı bir bağlantı değildir; Katalog, Graf, Araştırma veya diğer belge bağlantılarından açılır.
+
+### Amacı
+
+Bir teknik konunun açıklamasını, metadata’sını, kaynaklarını, iddia–kanıt kayıtlarını, çevirilerini ve kişisel notlarını tek yerde sunar.
+
+### Nasıl kullanılır?
+
+1. Başlık altındaki editoryal, çeviri, olgunluk ve sürüm rozetlerini inceleyin.
+2. Sol taraftaki “Bu belgede” bağlantılarıyla başlıklar arasında ilerleyin.
+3. Varsa diğer dil sürümlerine geçin.
+4. Metin içindeki sözlük terimlerine gelerek kısa tanımlarını açın.
+5. Kaynaklar bölümünde kullanılan resmî veya akademik kayıtları inceleyin.
+6. İddia–kanıt matrisinde kritik iddiaların hangi kaynak konumuna dayandığını görün.
+7. Alt bölümde kişisel not veya flashcard oluşturun.
+
+### Dikkat edilmesi gerekenler
+
+Belge kaynak listesi genel bibliyografyayı, iddia–kanıt matrisi ise belirli teknik ifadelerin kanıtını gösterir. Bunlar aynı şey değildir.
+
+## Sözlük menüsü
+
+**Adres:** `/tr/glossary/`
+
+### Amacı
+
+Sözlük, Atlas genelinde kullanılan teknik terimlerin tercih edilen yazımını, İngilizce karşılığını, kısaltmasını, tanımını ve ilişkilerini merkezî olarak yönetir.
+
+### Nasıl kullanılır?
+
+1. Arama alanına terim veya kısaltma yazın.
+2. Bir terim kartının üzerine gelin, klavyeyle odaklanın veya karta dokunun.
+3. Açılan pencerede tanımı, İngilizce karşılığı, ilişkili terimleri ve kaynak kimliğini okuyun.
+4. Pencereyi `Esc`, kapatma düğmesi veya dış alana tıklayarak kapatın.
+
+### Örnek
+
+`ADR` araması yaptığınızda “Architecture Decision Record” açılımı ve Türkçe karşılığı görüntülenebilir.
+
+### Dikkat edilmesi gerekenler
+
+Sözlükte görünen kaynak kimliği, `sources.json` içindeki kayda işaret eder. Tanımın normatif mi yoksa Atlas tarafından açıklayıcı olarak mı yazıldığı kaynak üzerinden değerlendirilmelidir.
+
+## Karşılaştır menüsü
+
+**Adres:** `/tr/compare/`
+
+### Amacı
+
+Karşılaştır ekranı iki belge veya teknoloji profilini yan yana getirerek aralarındaki farkların sistematik biçimde incelenmesini sağlar.
+
+### Nasıl kullanılır?
+
+1. Karşılaştırılacak belge dilini seçin.
+2. **Birinci profil** alanından ilk belgeyi seçin.
+3. **İkinci profil** alanından diğer belgeyi seçin.
+4. Editoryal durum, olgunluk, sürüm ve çeviri rozetlerini karşılaştırın.
+5. Kalite öznitelikleri ve uygulanabilir alanları inceleyin.
+6. Kaynak kimliklerini kontrol edin.
+7. Ayrıntı gerektiğinde **Belgeyi aç** bağlantısını kullanın.
+
+### Örnek
+
+```text
+Birinci profil: Modüler Monolit
+İkinci profil: Mimari Açıklama
+```
+
+Bu iki kayıt aynı türde olmayabilir. Böyle bir karşılaştırma doğrudan “hangisi daha iyi?” sonucu üretmez; kayıtların kapsam ve metadata farkını gösterir.
+
+### Dikkat edilmesi gerekenler
+
+Karşılaştırma ekranındaki boş alan, verinin ilgili belge profilinde henüz kayıtlı olmadığı anlamına gelebilir. “Boş” değer otomatik olarak olumsuz özellik sayılmamalıdır.
+
+## Karar Desteği menüsü
+
+**Adres:** `/tr/decision/`
+
+### Amacı
+
+Karar Desteği, proje koşullarını yapılandırılmış girdilere dönüştürür ve dil/mimari adaylarını ağırlıklı puanlarla açıklayan bir ön değerlendirme üretir.
+
+### Nasıl kullanılır?
+
+1. Uygulama alanını seçin.
+2. Kullanıcı veya işlem ölçeğini belirleyin.
+3. Ekip deneyimini ve veri hacmini seçin.
+4. Gecikme, dağıtım, güvenlik ve lisans kısıtlarını girin.
+5. Çevrimdışı, gerçek zamanlı, güvenlik kritik, AI/ML ve donanım gereksinimlerini işaretleyin.
+6. Performans, güvenlik, bakım, ölçeklenebilirlik ve maliyet ağırlıklarını ayarlayın.
+7. **Adayları değerlendir** düğmesini seçin.
+8. Puanları, gerekçeleri, alternatifleri, riskleri ve test stratejisini inceleyin.
+9. **ADR indir** ile sonucu Markdown taslağı olarak dışa aktarın.
+
+### Örnek
+
+Bir hastane sistemi için güvenlik ve bakım ağırlıklarını yükseltmek, sistemin bu nitelikleri puanlamada daha etkili kullanmasını sağlar. Ancak mevzuata uygunluk ayrıca uzman tarafından doğrulanmalıdır.
+
+### Dikkat edilmesi gerekenler
+
+Sonuç nihai mimari karar değildir. Gerçek ölçümler, prototip, ekip kapasitesi, bütçe, mevzuat ve tehdit modeliyle birlikte değerlendirilmelidir.
+
+## Graf menüsü
+
+**Adres:** `/tr/graph/`
+
+### Amacı
+
+Graf, mimari, kavram, standart, RFC, dil ve uygulama alanları arasındaki kanıtlı ilişkileri yönlü bir ağ olarak gösterir.
+
+### Nasıl kullanılır?
+
+1. Üstteki “düğüm” ve “ilişki” sayısını inceleyin.
+2. Düğümleri sürükleyerek görsel yerleşimi düzenleyin.
+3. Bir düğüme basarak gelen ve giden ilişkileri görün.
+4. Arama alanına düğüm kimliği veya `defined-by` gibi bir ilişki türü yazın.
+5. Grafın altındaki ilişki kartlarında kaynak ve iddia kimliklerini inceleyin.
+6. En alttaki “Bu graf nasıl okunur?” yardım bölümünü kullanın.
+
+### Örnek
+
+```text
+concept.architecture-description
+  → defined-by →
+standard.iso-42010-2022
+```
+
+Bu ifade, mimari açıklama kavramının ISO/IEC/IEEE 42010:2022 tarafından tanımlandığını anlatır.
+
+### Dikkat edilmesi gerekenler
+
+Düğümü sürüklemek yalnızca görsel konumu değiştirir; `relations.json` verisi değişmez. Graf sayısı toplam belge sayısı değil, ilişkilere katılan benzersiz kayıt sayısıdır.
+
+## Araştırma menüsü
+
+**Adres:** `/tr/research/`
+
+### Amacı
+
+Araştırma ekranı resmî ve akademik kaynakların okuma durumunu yönetir, ayrıca kanonik iddia–kanıt matrisini gösterir.
+
+### Nasıl kullanılır?
+
+1. Bir kaynak kartını seçin ve yayıncı sayfasını açın.
+2. Kaynağın durumunu `queued`, `reading`, `read` veya `synthesized` olarak değiştirin.
+3. İddia–kanıt kartlarında iddia metnini okuyun.
+4. Güven ve inceleme rozetini kontrol edin.
+5. Kaynak kimliği, bölüm/sayfa konumu ve kanıt rolünü inceleyin.
+6. Bağlı teknik belgeye geçin.
+
+### Örnek
+
+Deniz ISO 42010 kaynağını okumaya başladığında durumu `reading`, notlarını belgeye dönüştürdüğünde `synthesized` yapar.
+
+### Dikkat edilmesi gerekenler
+
+Okuma durumu kişiseldir ve `localStorage` içinde tutulur. Başka cihaz veya tarayıcıya otomatik aktarılmaz.
+
+## Yaz menüsü
+
+**Adres:** `/tr/author/`
+
+### Amacı
+
+Yaz ekranı yeni bir teknik belge için şema uyumlu taslak hazırlar, tarayıcıda saklar ve Atlas’a eklenebilecek Markdown dosyası üretir.
+
+### Nasıl kullanılır?
+
+1. Küçük harfli ve boşluksuz bir **Canonical ID** girin.
+2. Belge türünü seçin.
+3. Başlık, kategori ve özet alanlarını doldurun.
+4. Bir veya daha fazla kayıtlı kaynak seçin.
+5. Yeni belge için `draft` durumunu kullanın.
+6. Teknik içeriği Markdown olarak yazın.
+7. Sağdaki güvenli önizlemeyi kontrol edin.
+8. **Taslağı sakla** ile tarayıcıda yerel kopya tutun.
+9. **Markdown indir** ile dosyayı bilgisayarınıza alın.
+10. Dosyayı uygun `content/` klasörüne taşıyıp `npm run verify` çalıştırın.
+
+### Örnek
+
+```text
+Canonical ID: architecture.event-sourcing
+Type: architecture
+Title: Event Sourcing Mimarisi
+Category: architectures
+Status: draft
+```
+
+### Dikkat edilmesi gerekenler
+
+Yaz ekranı dosyayı doğrudan Git deposuna kaydetmez, kaynak üretmez, çeviri yapmaz ve PR açmaz. İndirilen Markdown ayrıca doğrulanmalı ve Git iş akışına alınmalıdır.
+
+## Gereksinimler menüsü
+
+**Adres:** `/tr/requirements/`
+
+### Amacı
+
+Gereksinimler ekranı `program_info.txt` vizyonunun hangi uygulanabilir gereksinimlere dönüştürüldüğünü ve bunların durumunu gösterir.
+
+### Nasıl kullanılır?
+
+1. Gereksinim kimliğini inceleyin; örneğin `REQ-NOTES-001`.
+2. Alan ve öncelik sütunlarını kontrol edin.
+3. Durumun `planned`, `in-progress`, `implemented` veya `deferred` olup olmadığına bakın.
+4. Sorumlu rolü ve kabul ölçütünü okuyun.
+5. Yeni geliştirme planlarken ilgili gereksinime referans verin.
+
+### Örnek
+
+Not özelliğinde değişiklik yapan bir PR açıklamasında `REQ-NOTES-001` kimliğinin belirtilmesi, değişikliğin proje hedefiyle bağlantısını görünür kılar.
+
+### Dikkat edilmesi gerekenler
+
+`implemented`, özelliğin hiçbir zaman geliştirilmeyeceği anlamına gelmez; mevcut kabul ölçütünün karşılandığını ifade eder.
+
+## Standartlar menüsü
+
+**Adres:** `/tr/standards/`
+
+### Amacı
+
+Standartlar ekranı Atlas’ın referans verdiği normatif belgelerin sürüm, yayıncı, durum ve doğrulama bilgilerini gösterir.
+
+### Nasıl kullanılır?
+
+1. Standardın kimliğini ve tam adını inceleyin.
+2. Yayıncı ve sürüm bilgisini kontrol edin.
+3. Standardın aktif, geri çekilmiş veya başka sürümle değiştirilmiş olup olmadığına bakın.
+4. Resmî bağlantıdan yayıncı sayfasına geçin.
+5. İlişkili RFC veya standart zincirlerini inceleyin.
+
+### Örnek
+
+Mimari açıklama araştırmasında ISO/IEC/IEEE 42010:2022 kaydı açılır; eski 2011 baskısının yerini alıp almadığı ayrıca kontrol edilir.
+
+### Dikkat edilmesi gerekenler
+
+Atlas’taki metadata standardın tam metni değildir. Lisanslı standardın normatif gereksinimleri için yetkili yayıncı metni kullanılmalıdır.
+
+## Kaynaklar ekranı
+
+**Adres:** `/tr/sources/`
+
+Kaynaklar ekranı mevcut üst menü yoğunluğu nedeniyle her görünümde doğrudan bağlantı olarak gösterilmeyebilir; doğrudan adresle veya diğer ekranlardaki kaynak bağlantılarıyla açılabilir.
+
+### Amacı
+
+Kaynak kayıtlarının tür, başlık, yayıncı, tarih, sürüm, geçerlilik ve son erişim bilgilerini tek listede gösterir.
+
+### Nasıl kullanılır?
+
+1. Kaynak türü ve durum rozetini inceleyin.
+2. Başlık bağlantısıyla özgün kaynağa gidin.
+3. Yayıncı, tarih ve sürümü doğrulayın.
+4. Kaynağın resmî mi yoksa akademik/ikincil mi olduğuna bakın.
+
+### Dikkat edilmesi gerekenler
+
+Son erişim tarihi, kaynağın içerik olarak hâlâ güncel olduğunu garanti etmez. Sürüm ve yaşam döngüsü ayrıca değerlendirilmelidir.
+
+## Veri menüsü
+
+**Adres:** `/tr/registry/`
+
+### Amacı
+
+Veri ekranı Atlas’ın kendi metadata kayıtlarını ve şemalarını kullanıcıya açarak sistemin nasıl yapılandırıldığını denetlenebilir hâle getirir.
+
+### Nasıl kullanılır?
+
+1. Üst kartlardan Taksonomi, Kaynak, İddia, RFC veya İlişki bölümünü seçin.
+2. Kayıt kimliklerini ve sayıları inceleyin.
+3. Kaynak–iddia–ilişki bağlantılarını karşılaştırın.
+4. Desteklenen belge türlerini görün.
+5. Kullanılan JSON Schema dosyalarının listesini inceleyin.
+
+### Örnek
+
+Graf üzerinde görülen `source.iso-42010` kimliğinin kaynağını doğrulamak için Veri ekranındaki kaynak tablosuna bakılabilir.
+
+### Dikkat edilmesi gerekenler
+
+Bu ekran verileri düzenlemez. Değişiklikler ilgili `data/` veya `schemas/` dosyalarında yapılır ve doğrulama zincirinden geçirilir.
+
+## Durum menüsü
+
+**Adres:** `/tr/status/`
+
+### Amacı
+
+Durum ekranı içerik kapsamı, çeviri eşleri, sürüm uyumu ve araştırma kuyruğunun gerçek tamamlanma seviyesini gösterir.
+
+### Nasıl kullanılır?
+
+1. Türkçe, İngilizce ve İspanyolca belge sayılarını inceleyin.
+2. Eksik çeviri çiftlerini bulun.
+3. Sürümü geride kalan çevirileri kontrol edin.
+4. `draft`, `review-required`, `reviewed` ve `verified` dağılımını değerlendirin.
+5. Taksonomide bulunup henüz belgeye dönüşmemiş alanları araştırma planına alın.
+
+### Dikkat edilmesi gerekenler
+
+Taksonomi kapsamının yüksek olması, doğrulanmış içerik kapsamının yüksek olduğu anlamına gelmez. Durum ekranı bu iki metriği ayırmak için kullanılır.
+
+## Dil seçimi kontrolleri
+
+**Konum:** Üst menüde `TR`, `EN`, `ES`
+
+### Amacı
+
+Aynı ekranın veya belgenin farklı dil sürümüne geçiş sağlar.
+
+### Nasıl kullanılır?
+
+1. Bulunduğunuz sayfada hedef dili seçin.
+2. Sistem rota içindeki dil bölümünü değiştirir.
+3. Bir belgedeyseniz aynı kanonik kimliğin hedef dil sürümü açılır.
+4. Çeviri yoksa Durum ekranından eksik dil kaydını kontrol edin.
+
+### Dikkat edilmesi gerekenler
+
+Çeviriler ayrı belgeler olarak sürümlenir. Bir dilde yapılan güncelleme diğer dilleri otomatik olarak güncellemez.
+
+## Tema düğmesi
+
+**Konum:** Üst menüde `◐`
+
+### Amacı
+
+Açık ve koyu görünüm arasında geçiş yapar.
+
+### Nasıl kullanılır?
+
+Düğmeye her basışınızda tema değişir. Seçim `localStorage` içinde saklandığı için aynı tarayıcıda sonraki açılışta korunur. Kayıt yoksa işletim sisteminin renk tercihi dikkate alınır.
+
+## Çevrimdışı ekranı
+
+**Adres:** `/offline/`
+
+### Amacı
+
+Ağ bağlantısı olmadığında ve istenen içerik cache içinde bulunmadığında kullanıcıya uygulamanın çevrimdışı olduğunu bildirir.
+
+### Nasıl kullanılır?
+
+1. Uygulamayı bağlantı varken en az bir kez açın.
+2. Temel rotaların Service Worker tarafından önbelleğe alınmasını bekleyin.
+3. Daha önce ziyaret ettiğiniz içerikleri çevrimdışı açmayı deneyin.
+4. Bulunmayan içerikte çevrimdışı bilgilendirme ekranı gösterilir.
+
+### Dikkat edilmesi gerekenler
+
+Çevrimdışı destek, bütün içeriklerin ilk kurulumda otomatik indirildiği anlamına gelmez. Daha önce ziyaret edilmemiş içerik cache içinde bulunmayabilir.
+
+## Menüleri birlikte kullanan örnek çalışma
+
+Deniz’in Event Sourcing araştırmasında menüler şu sırayla kullanılır:
+
+```text
+Ana Sayfa
+  ↓ genel durumu gör
+Katalog
+  ↓ mevcut içeriği ara
+Sözlük
+  ↓ bilinmeyen terimleri öğren
+Araştırma
+  ↓ resmî ve akademik kaynakları oku
+Belge ekranı
+  ↓ atomik not ve flashcard oluştur
+Graf
+  ↓ kavram ve standart ilişkilerini incele
+Yaz
+  ↓ kaynaklı Markdown taslağı hazırla
+Karşılaştır
+  ↓ alternatifleri yan yana değerlendir
+Karar Desteği
+  ↓ proje bağlamını puanla ve ADR üret
+Durum
+  ↓ çeviri ve inceleme eksiklerini gör
+Gereksinimler
+  ↓ yapılan çalışmayı proje hedefiyle ilişkilendir
+```
+
+Bu sıra zorunlu değildir. Atlas’ın menüleri aynı bilgi yaşam döngüsünün farklı aşamalarını temsil eder: keşfetmek, anlamak, kanıtlamak, yazmak, karşılaştırmak, karar vermek ve bakım yapmak.

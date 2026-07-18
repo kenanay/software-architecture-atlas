@@ -1,8 +1,12 @@
 [
   {
-    "id":"person.kenan-ay",
-    "name":"Kenan AY",
-    "professionalTitle":{"tr":"Yönetim ve Bilişim Sistemleri Uzmanı","en":"Management and Information Systems Specialist"},
-    "roles":["project-owner","developer","lead-developer","software-architect","architecture-lead","system-designer","researcher","technical-author","editor","reviewer","content-maintainer","terminology-maintainer","translator","translation-reviewer"]
+    "id": "person.kenan-ay",
+    "name": "Kenan AY",
+    "professionalTitle": {
+      "tr": "Yönetim ve Bilişim Sistemleri Uzmanı",
+      "en": "Management and Information Systems Specialist",
+      "es": "Especialista en Gestión y Sistemas de Información"
+    },
+    "roles": ["project-owner", "developer", "lead-developer", "software-architect", "architecture-lead", "system-designer", "researcher", "technical-author", "editor", "reviewer", "content-maintainer", "terminology-maintainer", "translator", "translation-reviewer"]
   }
 ]

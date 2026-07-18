@@ -1,37 +1,23 @@
 ---
-import { getCollection } from "astro:content";
-import BaseLayout from "../layouts/BaseLayout.astro";
-const docs = await getCollection("documents", ({ data }) => data.locale === "tr");
-const reviewed = docs.filter(({ data }) => ["reviewed", "verified"].includes(data.status)).length;
-const categories = new Set(docs.flatMap(({ data }) => data.categories));
 ---
-<BaseLayout>
-  <div class="shell">
-    <section class="hero">
-      <div>
-        <div class="eyebrow">Yerel öncelikli · Çift dilli · Kaynak temelli</div>
-        <h1>Yazılım kararları için yaşayan bir bilgi atlası.</h1>
-        <p class="lead">Programlama dilleri, mimari stiller, yapay zekâ sistemleri ve araç zincirlerini araştırın; proje gereksinimlerinize göre gerekçeli seçenekler üretin.</p>
-        <div class="actions"><a class="button primary" href="/catalog">Atlası keşfet</a><a class="button" href="/decision">Karar desteğini başlat</a></div>
-      </div>
-      <aside class="metric-panel" aria-label="Atlas durumu">
-        <div class="metric"><span>Kanonik belgeler</span><strong>{docs.length}</strong></div>
-        <div class="metric"><span>İncelenmiş</span><strong>{reviewed}</strong></div>
-        <div class="metric"><span>İçerik bulunan kategoriler</span><strong>{categories.size}</strong></div>
-        <div class="metric"><span>Çalışma biçimi</span><strong>Offline</strong></div>
-      </aside>
-    </section>
-    <section>
-      <div class="section-head"><div><div class="eyebrow">Bilgi mimarisi</div><h2>Tek bir ağaç değil, ilişkili bilgi eksenleri</h2></div><p class="muted">Alan, mimari, dil, platform ve kalite öznitelikleri ayrı sınıflandırılır.</p></div>
-      <div class="grid">
-        <a class="card" href="/catalog?category=languages"><span class="tag">03</span><h3>Programlama dilleri</h3><p>Tip sistemi, bellek modeli, çalışma zamanı, ekosistem ve kullanım uygunluğu.</p></a>
-        <a class="card" href="/catalog?category=architectures"><span class="tag">06</span><h3>Mimari stiller</h3><p>Bağımlılık yönü, veri akışı, ödünleşimler, test ve dağıtım yaklaşımları.</p></a>
-        <a class="card" href="/catalog?category=ai"><span class="tag">16</span><h3>Yapay zekâ ve ML</h3><p>Model aileleri, eğitim yaşam döngüsü, RAG, agent sistemleri ve güvenlik.</p></a>
-      </div>
-    </section>
-    <section style="margin-top:4rem">
-      <div class="section-head"><div><div class="eyebrow">Son içerikler</div><h2>İnceleme kuyruğu görünür</h2></div><a href="/catalog">Tümünü gör →</a></div>
-      <div class="grid">{docs.slice(0,3).map(doc => <a class="card" href={`/docs/${doc.data.id}/`}><span class={`status ${doc.data.status}`}>{doc.data.status}</span><h3>{doc.data.title.tr}</h3><p>{doc.data.summary.tr}</p></a>)}</div>
-    </section>
-  </div>
-</BaseLayout>
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta http-equiv="refresh" content="0;url=/tr/" />
+    <script is:inline>
+      const languages = navigator.languages || [navigator.language];
+      let target = "tr";
+      for (const lang of languages) {
+        const prefix = lang.slice(0, 2).toLowerCase();
+        if (["en", "es", "tr"].includes(prefix)) {
+          target = prefix;
+          break;
+        }
+      }
+      location.href = `/${target}/`;
+    </script>
+  </head>
+  <body>
+    <p>Yönlendiriliyorsunuz... / Redirecting...</p>
+  </body>
+</html>

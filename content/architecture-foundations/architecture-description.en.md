@@ -32,7 +32,7 @@ ISO/IEC/IEEE 42010:2022 distinguishes the architecture of an entity of interest 
 - **Stakeholder:** A person, group, or organization with an interest in the system.
 - **Concern:** A requirement, risk, objective, or constraint relevant to a stakeholder.
 - **Viewpoint:** A convention describing how to construct a view addressing selected concerns.
-- **Architecture view:** A work product conforming to a viewpoint and expressing selected stakeholder concerns.
+- **Architecture View:** A work product conforming to a viewpoint and expressing selected stakeholder concerns.
 - **Model kind:** Conventions for representing, interpreting, and analyzing a model.
 
 ## Application rule

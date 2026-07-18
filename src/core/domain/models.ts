@@ -1,15 +1,16 @@
-export type Locale = "tr" | "en";
-export type BilingualText = Record<Locale, string>;
+export type Locale = "tr" | "en" | "es";
+export type BilingualText = Record<"tr" | "en", string> & { es?: string };
 export type TranslationStatus = "original" | "translated" | "review-required" | "reviewed" | "outdated" | "missing";
-export type RelationType = "uses" | "implements" | "extends" | "depends-on" | "runs-on" | "compiled-by" | "interpreted-by" | "defined-by" | "standardized-by" | "suitable-for" | "alternative-to" | "influenced-by" | "supersedes" | "obsoletes" | "updates" | "related-to";
+export type RelationType = "uses" | "implements" | "extends" | "depends-on" | "runs-on" | "compiled-by" | "interpreted-by" | "defined-by" | "standardized-by" | "suitable-for" | "alternative-to" | "influenced-by" | "supersedes" | "obsoletes" | "updates" | "related-to" | "compatible-with";
 
-export interface KnowledgeRelation { from: string; type: RelationType; to: string; evidenceSourceIds: string[]; }
+export interface KnowledgeRelation { from: string; type: RelationType; to: string; evidenceSourceIds: string[]; evidenceClaimIds?: string[]; confidence?: "preliminary"|"supported"|"strong"; locator?: string; }
 
 export interface TranslationHealth {
   key: string;
   trVersion?: string;
   enVersion?: string;
-  status: "synchronized" | "update-required" | "missing-tr" | "missing-en";
+  esVersion?: string;
+  status: "synchronized" | "update-required" | "missing-tr" | "missing-en" | "missing-es";
 }
 
 export interface UserNote {
@@ -17,6 +18,11 @@ export interface UserNote {
   documentId: string;
   body: string;
   tags: string[];
+  type?: "observation" | "question" | "claim" | "quote" | "flashcard";
+  status?: "inbox" | "reviewed" | "integrated" | "rejected";
+  sourceId?: string;
+  locator?: string;
+  answer?: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -24,6 +30,7 @@ export interface UserNote {
 export interface NotesRepository {
   save(note: UserNote): Promise<void>;
   findByDocumentId(documentId: string): Promise<UserNote[]>;
+  findById(noteId: string): Promise<UserNote | undefined>;
   remove(noteId: string): Promise<void>;
   exportAll(): Promise<UserNote[]>;
   importAll(notes: UserNote[]): Promise<number>;

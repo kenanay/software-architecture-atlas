@@ -1,7 +1,7 @@
-const VERSION = "0.2.0";
+const VERSION = "0.3.0";
 const SHELL_CACHE = `atlas-shell-${VERSION}`;
 const CONTENT_CACHE = `atlas-content-${VERSION}`;
-const CORE = ["/", "/tr/", "/en/", "/catalog/", "/glossary/", "/compare/", "/decision/", "/sources/", "/standards/", "/registry/", "/status/", "/offline/", "/manifest.webmanifest", "/icons/atlas.svg"];
+const CORE = ["/", "/tr/", "/en/", "/es/", "/tr/catalog/", "/tr/glossary/", "/tr/compare/", "/tr/decision/", "/tr/research/", "/tr/author/", "/tr/sources/", "/tr/standards/", "/tr/registry/", "/tr/status/", "/offline/", "/manifest.webmanifest", "/icons/atlas.svg"];
 
 self.addEventListener("install", event => {
   event.waitUntil(caches.open(SHELL_CACHE).then(cache => Promise.allSettled(CORE.map(url => cache.add(url)))).then(() => self.skipWaiting()));

@@ -1,0 +1,83 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import requirements from "../../../data/requirements/requirements.json";
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: "tr" } },
+    { params: { locale: "en" } },
+    { params: { locale: "es" } },
+  ];
+}
+
+const { locale } = Astro.params as { locale: "tr" | "en" | "es" };
+
+const copy = {
+  tr: {
+    eyebrow: "Program izlenebilirliği",
+    title: "Gereksinim kaydı",
+    lead: "Vizyon maddelerini sahip, öncelik, durum ve kabul ölçütleriyle izleyen yaşayan kayıt.",
+    tblId: "Kimlik",
+    tblArea: "Alan",
+    tblPriority: "Öncelik",
+    tblStatus: "Durum",
+    tblOwner: "Sahip",
+    tblAcceptance: "Kabul ölçütü"
+  },
+  en: {
+    eyebrow: "Program Traceability",
+    title: "Requirements registry",
+    lead: "Living registry tracking vision items with owner, priority, status, and acceptance criteria.",
+    tblId: "ID",
+    tblArea: "Area",
+    tblPriority: "Priority",
+    tblStatus: "Status",
+    tblOwner: "Owner",
+    tblAcceptance: "Acceptance criteria"
+  },
+  es: {
+    eyebrow: "Trazabilidad del programa",
+    title: "Registro de requisitos",
+    lead: "Registro vivo que sigue los elementos de visión con propietario, prioridad, estado y criterios de aceptación.",
+    tblId: "ID",
+    tblArea: "Área",
+    tblPriority: "Prioridad",
+    tblStatus: "Estado",
+    tblOwner: "Propietario",
+    tblAcceptance: "Criterio de aceptación"
+  }
+}[locale];
+---
+<BaseLayout title={copy.title} locale={locale}>
+  <div class="shell">
+    <div class="eyebrow">{copy.eyebrow}</div>
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.lead}</p>
+    <div style="overflow:auto">
+      <table class="registry-table">
+        <thead>
+          <tr>
+            <th>{copy.tblId}</th>
+            <th>{copy.tblArea}</th>
+            <th>{copy.tblPriority}</th>
+            <th>{copy.tblStatus}</th>
+            <th>{copy.tblOwner}</th>
+            <th>{copy.tblAcceptance}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {requirements.map(r => (
+            <tr>
+              <td><code>{r.id}</code></td>
+              <td>{r.area}</td>
+              <td>{r.priority}</td>
+              <td><span class="badge">{r.status}</span></td>
+              <td>{r.owner}</td>
+              <td>{r.acceptance}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</BaseLayout>

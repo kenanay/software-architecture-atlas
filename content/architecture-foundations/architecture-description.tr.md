@@ -24,14 +24,14 @@ applicableDomains: [software, systems, enterprise]
 ---
 ## Temel ayrım
 
-ISO/IEC/IEEE 42010:2022, bir ilgi konusu varlığın mimarisi ile bu mimariyi ifade eden **Mimari Açıklama (Architecture Description, AD)** arasında ayrım yapar. Standart bir mimari yöntem, notasyon veya dosya biçimi dayatmaz; AD, bakış açısı, model türü, mimari çerçeve ve mimari açıklama dili için gereksinimler tanımlar.
+ISO/IEC/IEEE 42010:2022, bir ilgi konusu varlığın mimarisi ile bu mimariyi ifade eden **Mimari Açıklama (Architecture Description, AD)** arasında ayrım yapar. Standart bir mimari yöntem, notasyon veya dosya biçimi dayatmaz; AD, Bakış Açısı, model türü, mimari çerçeve ve mimari açıklama dili için gereksinimler tanımlar.
 
 ## Kavramlar
 
 - **Paydaş (Stakeholder):** Sisteme ilişkin ilgisi bulunan kişi, grup veya kuruluş.
 - **Kaygı (Concern):** Paydaş açısından önemli olan gereksinim, risk, hedef veya kısıt.
-- **Bakış açısı (Viewpoint):** Belirli kaygıları ele alan bir görünümün nasıl oluşturulacağını tanımlayan sözleşme.
-- **Mimari görünüm (Architecture View):** Bir bakış açısına uyan, belirli paydaş kaygılarını ifade eden çalışma ürünü.
+- **Bakış Açısı (Viewpoint):** Belirli kaygıları ele alan bir görünümün nasıl oluşturulacağını tanımlayan sözleşme.
+- **Mimari Görünüm (Architecture View):** Bir bakış açısına uyan, belirli paydaş kaygılarını ifade eden çalışma ürünü.
 - **Model türü (Model Kind):** Modelin gösterim, yorumlama ve analiz kuralları.
 
 ## Uygulama kuralı

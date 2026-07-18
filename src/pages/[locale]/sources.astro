@@ -1,0 +1,61 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import sources from "../../../data/sources/sources.json";
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: "tr" } },
+    { params: { locale: "en" } },
+    { params: { locale: "es" } },
+  ];
+}
+
+const { locale } = Astro.params as { locale: "tr" | "en" | "es" };
+
+const copy = {
+  tr: {
+    eyebrow: "İzlenebilir bilgi",
+    title: "Kaynak kayıtları",
+    lead: "Kaynak türü, yayın tarihi, sürüm, geçerlilik durumu ve son erişim tarihi yapılandırılmış kayıtlar olarak tutulur.",
+    lblAccess: "Son erişim",
+    lblOfficial: "Resmî referans",
+    lblSecondary: "Akademik/ikincil referans"
+  },
+  en: {
+    eyebrow: "Traceable information",
+    title: "Source records",
+    lead: "Source type, publication date, version, validity status, and last access date are kept as structured records.",
+    lblAccess: "Last access",
+    lblOfficial: "Official reference",
+    lblSecondary: "Academic/secondary reference"
+  },
+  es: {
+    eyebrow: "Información trazable",
+    title: "Registros de fuentes",
+    lead: "El tipo de fuente, la fecha de publicación, la versión, el estado de validez y la fecha de último acceso se registran en registros estructurados.",
+    lblAccess: "Último acceso",
+    lblOfficial: "Referencia oficial",
+    lblSecondary: "Referencia académica/secundaria"
+  }
+}[locale];
+---
+<BaseLayout title={copy.title} locale={locale}>
+  <div class="shell">
+    <div class="eyebrow">{copy.eyebrow}</div>
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.lead}</p>
+    <ul class="source-list">
+      {sources.map(source => (
+        <li>
+          <span class={`status ${source.status}`}>{source.status}</span>
+          <span class="tag">{source.type}</span>
+          <h3><a href={source.url}>{source.title}</a></h3>
+          <p>{source.publisher} · {source.publication_date}{"version" in source ? ` · v${source.version}` : ""}</p>
+          <small class="muted">
+            {copy.lblAccess}: {source.accessed_at} · {source.official_reference ? copy.lblOfficial : copy.lblSecondary}
+          </small>
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>

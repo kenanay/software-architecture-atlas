@@ -1,0 +1,204 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import taxonomy from "../../../data/taxonomy/taxonomy.json";
+import requestMap from "../../../data/taxonomy/request-map.json";
+import standards from "../../../data/standards/standards.json";
+import rfcs from "../../../data/rfcs/rfcs.json";
+import terms from "../../../data/glossary/glossary.json";
+import { calculateTranslationHealth } from "../../modules/catalog/domain/translation-health";
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: "tr" } },
+    { params: { locale: "en" } },
+    { params: { locale: "es" } },
+  ];
+}
+
+const { locale } = Astro.params as { locale: "tr" | "en" | "es" };
+
+const docs = await getCollection("documents");
+const localeDocs = docs.filter(doc => doc.data.locale === locale);
+const health = calculateTranslationHealth(docs);
+const covered = new Set(localeDocs.flatMap(doc => doc.data.categories));
+
+const coverage = taxonomy.map(section => {
+  const sectionDocs = localeDocs.filter(doc => doc.data.categories.includes(section.id));
+  const reviewedCount = sectionDocs.filter(doc => ["reviewed", "verified"].includes(doc.data.status)).length;
+  return {
+    ...section,
+    implemented: covered.has(section.id),
+    documentCount: sectionDocs.length,
+    reviewedCount,
+    targetDocuments: section.topics.length
+  };
+});
+
+const synchronized = health.filter(item => item.status === "synchronized").length;
+
+const copy = {
+  tr: {
+    eyebrow: "Program_info uygulama matrisi",
+    title: "Kapsam ve doğrulama durumu",
+    lead: "Bu pano platform özelliği ile araştırılmış içerik kapsamını ayırır. Bir kategori şemada mevcut olabilir; içerik incelemesi tamamlanmadan “kapsanmış” sayılmaz.",
+    lblSection: "Ana bölüm",
+    lblDoc: "Teknik belge",
+    lblStds: "Standart + RFC",
+    transHealthTitle: "Çeviri sağlığı",
+    transHealthDesc: "Aynı translationKey altındaki Türkçe, İngilizce ve İspanyolca sürümler karşılaştırılır.",
+    transSynced: "eşzamanlı",
+    coverageTitle: "İçerik kapsamı",
+    coverageDesc: `${terms.length} sözlük kaydı mevcut. Eksik bölümler araştırma kuyruğundadır.`,
+    lblReviewed: "İncelenmiş",
+    lblTotal: "Toplam",
+    lblTarget: "Hedef, bölümdeki planlı konu profili sayısıdır.",
+    mapTitle: "28 gereksinim → 26 kanonik bölüm eşlemesi",
+    mapDesc: "Birleştirilen ve bölünen başlıklar açık biçimde izlenir; hiçbir istek başlığı kaybolmaz.",
+    tblReq: "İstenen başlık",
+    tblCanonical: "Kanonik bölüm",
+    tblMapping: "Eşleme"
+  },
+  en: {
+    eyebrow: "Program_info implementation matrix",
+    title: "Scope and verification status",
+    lead: "This dashboard separates platform functionality from researched content scope. A category might exist in the schema, but is not 'covered' until content review is complete.",
+    lblSection: "Main section",
+    lblDoc: "Technical document",
+    lblStds: "Standard + RFC",
+    transHealthTitle: "Translation health",
+    transHealthDesc: "Turkish, English, and Spanish versions under the same translationKey are compared.",
+    transSynced: "synchronized",
+    coverageTitle: "Content coverage",
+    coverageDesc: `${terms.length} glossary records exist. Missing sections are in the research queue.`,
+    lblReviewed: "Reviewed",
+    lblTotal: "Total",
+    lblTarget: "Target is the number of planned topic profiles in the section.",
+    mapTitle: "28 requirements → 26 canonical sections mapping",
+    mapDesc: "Merged and split headings are explicitly tracked; no request heading is lost.",
+    tblReq: "Requested heading",
+    tblCanonical: "Canonical section",
+    tblMapping: "Mapping"
+  },
+  es: {
+    eyebrow: "Matriz de implementación de program_info",
+    title: "Estado de alcance y verificación",
+    lead: "Este panel separa la funcionalidad de la plataforma del alcance del contenido investigado. Una categoría puede existir en el esquema, pero no se considera 'cubierta' hasta que se completa la revisión del contenido.",
+    lblSection: "Sección principal",
+    lblDoc: "Documento técnico",
+    lblStds: "Estándar + RFC",
+    transHealthTitle: "Salud de la traducción",
+    transHealthDesc: "Se comparan las versiones en turco, inglés y español bajo la misma clave de traducción (translationKey).",
+    transSynced: "sincronizado",
+    coverageTitle: "Cobertura de contenido",
+    coverageDesc: `${terms.length} registros de glosario existentes. Las secciones faltantes están en la cola de investigación.`,
+    lblReviewed: "Revisado",
+    lblTotal: "Total",
+    lblTarget: "El objetivo es el número de perfiles de temas planificados en la sección.",
+    mapTitle: "Mapeo de 28 requisitos → 26 secciones canónicas",
+    mapDesc: "Los encabezados combinados y divididos se rastrean explícitamente; no se pierde ningún encabezado de solicitud.",
+    tblReq: "Encabezado solicitado",
+    tblCanonical: "Sección canónica",
+    tblMapping: "Mapeo"
+  }
+}[locale];
+---
+<BaseLayout title={copy.title} locale={locale}>
+  <div class="shell">
+    <div class="eyebrow">{copy.eyebrow}</div>
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.lead}</p>
+    
+    <div class="grid">
+      <div class="metric-panel">
+        <div class="metric"><span>{copy.lblSection}</span><strong>{taxonomy.length}</strong></div>
+      </div>
+      <div class="metric-panel">
+        <div class="metric"><span>{copy.lblDoc}</span><strong>{docs.length}</strong></div>
+      </div>
+      <div class="metric-panel">
+        <div class="metric"><span>{copy.lblStds}</span><strong>{standards.length + rfcs.length}</strong></div>
+      </div>
+    </div>
+    
+    <div class="section-head">
+      <div>
+        <h2>{copy.transHealthTitle}</h2>
+        <p class="muted">{copy.transHealthDesc}</p>
+      </div>
+      <span class="tag">{synchronized}/{health.length} {copy.transSynced}</span>
+    </div>
+    
+    <div class="grid">
+      {health.map(item => (
+        <article class="card" style="transform:none">
+          <span class={`status ${item.status === "synchronized" ? "reviewed" : "draft"}`}>{item.status}</span>
+          <h3>{item.key}</h3>
+          <p>
+            TR: {item.trVersion ?? "eksik"} · 
+            EN: {item.enVersion ?? "missing"} · 
+            ES: {item.esVersion ?? "missing"}
+          </p>
+        </article>
+      ))}
+    </div>
+    
+    <div class="section-head" style="margin-top:4rem">
+      <div>
+        <h2>{copy.coverageTitle}</h2>
+        <p class="muted">{copy.coverageDesc}</p>
+      </div>
+    </div>
+    
+    <div class="grid">
+      {coverage.map(item => (
+        <article class="card" style="transform:none">
+          <div class="badge-group">
+            <span class={`badge ${item.reviewedCount > 0 ? "is-current" : "needs-review"}`}>
+              <span class="badge-kind">{copy.lblReviewed}</span>{item.reviewedCount}/{item.targetDocuments}
+            </span>
+            <span class="badge"><span class="badge-kind">{copy.lblTotal}</span>{item.documentCount}</span>
+            <span class="tag">{String(item.order).padStart(2,"0")}</span>
+          </div>
+          <h3>{(item.label as any)[locale] || item.label.en}</h3>
+          <p>{item.topics.slice(0,5).join(" · ")}{item.topics.length > 5 ? " …" : ""}</p>
+          <small class="muted">{copy.lblTarget}</small>
+        </article>
+      ))}
+    </div>
+    
+    <div id="taxonomy-map" class="section-head" style="margin-top:4rem">
+      <div>
+        <h2>{copy.mapTitle}</h2>
+        <p class="muted">{copy.mapDesc}</p>
+      </div>
+      <span class="tag">{requestMap.length} requests</span>
+    </div>
+    
+    <div style="overflow:auto">
+      <table class="registry-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>{copy.tblReq}</th>
+            <th>{copy.tblCanonical}</th>
+            <th>{copy.tblMapping}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {requestMap.map(item => (
+            <tr>
+              <td>{item.requestOrder}</td>
+              <td>
+                {(item.requested as any)[locale] || item.requested.en}<br/>
+                <small class="muted" lang="en">{item.requested.en}</small>
+              </td>
+              <td>{item.canonicalIds.map(id => <code>{id}</code>)}</td>
+              <td><span class="tag">{item.mapping}</span></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</BaseLayout>

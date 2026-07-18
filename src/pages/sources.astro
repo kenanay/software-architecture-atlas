@@ -1,9 +1,0 @@
----
-import BaseLayout from "../layouts/BaseLayout.astro";
-import sources from "../../data/sources/sources.json";
----
-<BaseLayout title="Kaynak Sistemi">
-  <div class="shell"><div class="eyebrow">İzlenebilir bilgi</div><h1>Kaynak kayıtları</h1><p class="lead">Kaynak türü, yayın tarihi, sürüm, geçerlilik durumu ve son erişim tarihi yapılandırılmış kayıtlar olarak tutulur.</p>
-    <ul class="source-list">{sources.map(source=><li><span class={`status ${source.status}`}>{source.status}</span><span class="tag">{source.type}</span><h3><a href={source.url}>{source.title}</a></h3><p>{source.publisher} · {source.publication_date}{"version" in source ? ` · v${source.version}` : ""}</p><small class="muted">Son erişim: {source.accessed_at} · {source.official_reference ? "Resmî referans" : "Akademik/ikincil referans"}</small></li>)}</ul>
-  </div>
-</BaseLayout>

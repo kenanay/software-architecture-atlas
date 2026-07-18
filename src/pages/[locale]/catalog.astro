@@ -1,0 +1,196 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: "tr" } },
+    { params: { locale: "en" } },
+    { params: { locale: "es" } },
+  ];
+}
+
+const { locale } = Astro.params as { locale: "tr" | "en" | "es" };
+
+const docs = (await getCollection("documents")).sort((a,b) => {
+  const titleA = a.data.title[a.data.locale] || a.data.title.en;
+  const titleB = b.data.title[b.data.locale] || b.data.title.en;
+  return titleA.localeCompare(titleB, a.data.locale);
+});
+
+const payload = docs.map(d => ({
+  id: d.data.id,
+  canonicalId: d.data.canonicalId,
+  locale: d.data.locale,
+  title: d.data.title[d.data.locale] || d.data.title.en,
+  alternateTitle: d.data.title[d.data.locale === "tr" ? "en" : "tr"] || d.data.title.en,
+  summary: d.data.summary[d.data.locale] || d.data.summary.en,
+  categories: d.data.categories,
+  tags: d.data.tags,
+  type: d.data.type,
+  status: d.data.status
+}));
+
+const copy = {
+  tr: {
+    eyebrow: "Katalog",
+    title: "Bilgi tabanını keşfedin",
+    lead: "Başlık, İngilizce karşılık, etiket ve özet içinde arayın; belge türüne veya durumuna göre daraltın.",
+    placeholder: "Örn. Rust, modüler, RAG…",
+    lblLang: "Belge dili",
+    lblCategory: "Kategori",
+    lblStatus: "Belge durumu",
+    optAllLangs: "Türkçe + English + Spanish",
+    optAllCats: "Tüm kategoriler",
+    optAllStats: "Tüm durumlar",
+    optCatGuide: "Sistem rehberi",
+    optCatLang: "Programlama dilleri",
+    optCatArch: "Mimari stiller",
+    optCatAi: "Yapay zekâ",
+    optStatReviewed: "İncelenmiş",
+    optStatReviewReq: "İnceleme gerekli",
+    optStatDraft: "Taslak",
+    fulltextTitle: "Tam metin sonuçları",
+    fulltextDesc: "Pagefind, statik üretim sırasında belge gövdelerini indeksler."
+  },
+  en: {
+    eyebrow: "Catalog",
+    title: "Explore the knowledge base",
+    lead: "Search in title, translation, tags, and summary; refine by document type or status.",
+    placeholder: "e.g., Rust, modular, RAG...",
+    lblLang: "Document language",
+    lblCategory: "Category",
+    lblStatus: "Document status",
+    optAllLangs: "Turkish + English + Spanish",
+    optAllCats: "All categories",
+    optAllStats: "All statuses",
+    optCatGuide: "System guide",
+    optCatLang: "Programming languages",
+    optCatArch: "Architectural styles",
+    optCatAi: "Artificial intelligence",
+    optStatReviewed: "Reviewed",
+    optStatReviewReq: "Review required",
+    optStatDraft: "Draft",
+    fulltextTitle: "Full-text results",
+    fulltextDesc: "Pagefind indexes document bodies during static build."
+  },
+  es: {
+    eyebrow: "Catálogo",
+    title: "Explorar la base de conocimientos",
+    lead: "Busque en el título, traducción, etiquetas y resumen; filtre por tipo de documento o estado.",
+    placeholder: "ej., Rust, modular, RAG...",
+    lblLang: "Idioma del documento",
+    lblCategory: "Categoría",
+    lblStatus: "Estado del documento",
+    optAllLangs: "Turco + Inglés + Español",
+    optAllCats: "Todas las categorías",
+    optAllStats: "Todos los estados",
+    optCatGuide: "Guía del sistema",
+    optCatLang: "Lenguajes de programación",
+    optCatArch: "Estilos arquitectónicos",
+    optCatAi: "Inteligencia artificial",
+    optStatReviewed: "Revisado",
+    optStatReviewReq: "Revisión requerida",
+    optStatDraft: "Borrador",
+    fulltextTitle: "Resultados de texto completo",
+    fulltextDesc: "Pagefind indexa los cuerpos de los documentos durante la compilación estática."
+  }
+}[locale];
+---
+<BaseLayout title={copy.title} locale={locale}>
+  <div class="shell">
+    <div class="eyebrow">{copy.eyebrow}</div>
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.lead}</p>
+    <div class="searchbar">
+      <input id="search" type="search" placeholder={copy.placeholder} autocomplete="off" />
+    </div>
+    <div class="form-grid">
+      <div class="field">
+        <label for="locale">{copy.lblLang}</label>
+        <select id="locale">
+          <option value="">{copy.optAllLangs}</option>
+          <option value="tr">Türkçe</option>
+          <option value="en">English</option>
+          <option value="es">Español</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="category">{copy.lblCategory}</label>
+        <select id="category">
+          <option value="">{copy.optAllCats}</option>
+          <option value="guide">{copy.optCatGuide}</option>
+          <option value="languages">{copy.optCatLang}</option>
+          <option value="architectures">{copy.optCatArch}</option>
+          <option value="ai">{copy.optCatAi}</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="status">{copy.lblStatus}</label>
+        <select id="status">
+          <option value="">{copy.optAllStats}</option>
+          <option value="reviewed">{copy.optStatReviewed}</option>
+          <option value="review-required">{copy.optStatReviewReq}</option>
+          <option value="draft">{copy.optStatDraft}</option>
+        </select>
+      </div>
+    </div>
+    <p id="count" class="muted"></p>
+    <div id="results" class="grid"></div>
+    <section id="fulltext-section" hidden style="margin-top:3rem">
+      <div class="section-head">
+        <div>
+          <h2>{copy.fulltextTitle}</h2>
+          <p class="muted">{copy.fulltextDesc}</p>
+        </div>
+        <span id="fulltext-count" class="tag"></span>
+      </div>
+      <div id="fulltext-results" class="grid"></div>
+    </section>
+  </div>
+  <script is:inline define:vars={{ payload, locale }}>
+    const q = document.querySelector("#search"), langEl = document.querySelector("#locale"), category = document.querySelector("#category"), status = document.querySelector("#status"), results = document.querySelector("#results"), count = document.querySelector("#count");
+    const params = new URLSearchParams(location.search);
+    category.value = params.get("category") || "";
+    const escapeHtml = value => value.replace(/[&<>'"]/g, char => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[char]);
+    let searchToken=0;
+    
+    async function fullText(term){
+      const token=++searchToken, section=document.querySelector("#fulltext-section"), container=document.querySelector("#fulltext-results"), badge=document.querySelector("#fulltext-count");
+      if(term.length<2){section.hidden=true;return;}
+      try{
+        const pagefind=await import("/pagefind/pagefind.js");
+        const response=await pagefind.search(term);
+        const entries=await Promise.all(response.results.slice(0,12).map(item=>item.data()));
+        if(token!==searchToken)return;
+        badge.textContent=`${response.results.length} matches`;
+        container.innerHTML=entries.map(item=>`<a class="card" href="${item.url}"><span class="tag">full text</span><h3>${escapeHtml(item.meta.title||"Document")}</h3><p>${item.excerpt}</p></a>`).join("");
+        section.hidden=false;
+      }catch{
+        section.hidden=true;
+      }
+    }
+    
+    function render(){
+      const term=q.value.toLocaleLowerCase("tr").trim();
+      const filtered=payload.filter(d => 
+        (!term || `${d.title} ${d.alternateTitle} ${d.summary} ${d.tags.join(" ")}`.toLocaleLowerCase("tr").includes(term)) &&
+        (!langEl.value || d.locale===langEl.value) &&
+        (!category.value || d.categories.includes(category.value)) &&
+        (!status.value || d.status===status.value)
+      );
+      
+      const lblDocs = locale === "tr" ? "belge gösteriliyor" : locale === "es" ? "documentos mostrados" : "documents shown";
+      const lblEmpty = locale === "tr" ? "Bu ölçütlerle eşleşen belge bulunamadı." : locale === "es" ? "No se encontraron documentos con estos criterios." : "No documents found matching these criteria.";
+      
+      count.textContent=`${filtered.length} ${lblDocs}`;
+      results.innerHTML=filtered.length
+        ? filtered.map(d=>`<a class="card" href="/${locale}/docs/${encodeURIComponent(d.canonicalId)}/"><span class="tag">${escapeHtml(d.locale.toUpperCase())}</span><span class="status ${d.status}">${escapeHtml(d.status)}</span><span class="tag">${escapeHtml(d.type)}</span><h3>${escapeHtml(d.title)}</h3><p>${escapeHtml(d.summary)}</p></a>`).join("")
+        : `<div class="empty" style="grid-column:1/-1">${lblEmpty}</div>`;
+      fullText(term);
+    }
+    
+    [q,langEl,category,status].forEach(el=>el.addEventListener("input",render));
+    render();
+  </script>
+</BaseLayout>

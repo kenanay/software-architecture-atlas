@@ -1,45 +1,57 @@
 # Software Architecture Atlas
 
-A local-first bilingual documentation platform for software architectures, programming languages, frameworks, AI systems, standards, RFCs, and software development practices.
+A local-first, trilingual (Turkish, English, Spanish) documentation platform for software architectures, programming languages, frameworks, AI systems, standards, RFCs, and software development practices.
 
 **Project Owner and Architecture Lead:** Kenan AY — Management and Information Systems Specialist  
-**Mimari:** Content-Driven Local-First Modular Monolith · Feature-Based Modules · Ports and Adapters
+**Architecture:** Content-Driven Local-First Modular Monolith · Feature-Based Modules · Ports and Adapters
 
-## Özellikler
+## Özellikler / Features
 
-- Astro Content Collections ile şema doğrulamalı Markdown içerik
-- Türkçe–İngilizce bağlantılı belge modeli ve merkezi terim sözlüğü
-- Arama, kategori ve inceleme durumu filtreleri
-- Pagefind ile üretim sonrası sunucusuz tam metin arama indeksi
-- Teknoloji/mimari karşılaştırması ve gerekçeli karar desteği
-- IndexedDB kişisel notları, yer imleri ve JSON dışa aktarma
-- PWA service worker ile çevrimdışı kullanım
-- Yapılandırılmış kaynak, terminoloji ve sınıflandırma kayıtları
-- 26 bölümlü kapsam taksonomisi ve program_info uygulama durumu panosu
-- ISO/W3C/NIST/SPDX/SWEBOK standart kayıtları ve RFC ilişki takibi
-- Çeviri sürüm farkı, katkı rolleri ve belge olgunluk durumları
-- JSON Schema dosyaları ve çapraz veri referansı doğrulaması
+- **Astro Content Collections**: Zod ile şema doğrulamalı Markdown içerik.
+- **Trilingual Routing (`/tr/`, `/en/`, `/es/`)**: Akıllı tarayıcı dili algılama yönlendirmesi ve diller arası geçiş paneli.
+- **Auto-Glossary Tooltips**: Makale metinlerinde geçen teknik terimlerin otomatik algılanıp WCAG 2.2 uyumlu, hover/odaklanabilir popover ipuçları ile Türkçe, İngilizce ve İspanyolca açılımlarının gösterilmesi.
+- **Interactive SVG Graph**: Çevrimdışı çalışan, sürükle-bırak ve tıklama ile ilişki detaylarını inceleme destekli kuvvet yönelimli (force-directed) ilişkisel ağ diyagramı.
+- **Pagefind**: Üretim sonrası sunucusuz tam metin arama indeksi.
+- **Decision Matrix**: Uygulama alanına, ölçeğe, lisansa ve kalite gereksinimlerine göre mimari/dil önerisi sunan karar destek sistemi ve ADR (Mimari Karar Kaydı) dışa aktarımı.
+- **Offline PWA**: Service Worker ile çevrimdışı önbellekleme ve yedekleme stratejileri.
+- **IndexedDB Notes**: Makalelere özel tarayıcıda saklanan yerel notlar, yer imleri ve JSON veri dışa aktarımı.
+- **Validation Pipeline**: JSON şema doğrulamaları, çapraz doküman bağlantı kontrolü ve terim yazım standardizasyon kontrolcüleri.
 
-## Çalıştırma
+## Çalıştırma / Booting
+
+Uygulamayı tüm bağımlılık kontrolleri ve doğrulama testleri ile birlikte başlatmak için hazırlanan kolay başlatma betiğini kullanabilirsiniz:
+
+- **Linux / macOS**:
+  ```bash
+  chmod +x start.sh
+  ./start.sh
+  ```
+- **Windows**:
+  ```cmd
+  start.bat
+  ```
+
+Alternatif olarak, komutları manuel olarak çalıştırabilirsiniz:
 
 ```bash
+# Bağımlılıkları yükleyin
 npm install
+
+# Yerel geliştirme sunucusu
 npm run dev
-```
 
-Üretim doğrulaması:
-
-```bash
-npm test
-npm run build
+# Doğrulama testlerini çalıştırın
 npm run verify
+
+# Statik sürümü derleyin ve arama indeksini oluşturun
+npm run build
 ```
 
-## Veri sınırları
+## Veri Sınırları / Data Boundaries
 
 Kanonik içerik `content/` ve `data/` altında Git ile sürümlenir. Kişisel notlar ve yer imleri tarayıcıda saklanır; kanonik içerikle karıştırılmaz.
 
-## İçerik durumu
+## İçerik Durumu / Content Status
 
 Başlangıç kayıtları platform davranışını göstermek için sınırlı bir çekirdek oluşturur. `draft` ve `review-required` belgeleri doğrulanmış bilgi olarak değerlendirilmemelidir.
 

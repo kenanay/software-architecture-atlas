@@ -34,6 +34,10 @@ export class IndexedDbNotesRepository implements NotesRepository {
     const db = await database();
     return requestResult<UserNote[]>(db.transaction(STORE).objectStore(STORE).index("documentId").getAll(documentId));
   }
+  async findById(noteId: string) {
+    const db = await database();
+    return requestResult<UserNote | undefined>(db.transaction(STORE).objectStore(STORE).get(noteId));
+  }
   async remove(noteId: string) {
     const db = await database();
     await requestResult(db.transaction(STORE, "readwrite").objectStore(STORE).delete(noteId));
@@ -43,7 +47,7 @@ export class IndexedDbNotesRepository implements NotesRepository {
     return requestResult<UserNote[]>(db.transaction(STORE).objectStore(STORE).getAll());
   }
   async importAll(notes: UserNote[]) {
-    const valid = notes.filter(note => note && typeof note.id === "string" && typeof note.documentId === "string" && typeof note.body === "string" && Array.isArray(note.tags) && !Number.isNaN(Date.parse(note.updatedAt)));
+    const valid = notes.filter(note => note && typeof note.id === "string" && typeof note.documentId === "string" && typeof note.body === "string" && Array.isArray(note.tags) && !Number.isNaN(Date.parse(note.updatedAt))).map(note => ({ ...note, type: note.type ?? "observation", status: note.status ?? "inbox" }));
     const db = await database();
     const transaction = db.transaction(STORE, "readwrite");
     const store = transaction.objectStore(STORE);

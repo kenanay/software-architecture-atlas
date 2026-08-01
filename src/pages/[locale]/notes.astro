@@ -1,0 +1,184 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return [
+    { params: { locale: "tr" } },
+    { params: { locale: "en" } },
+    { params: { locale: "es" } },
+  ];
+}
+
+const { locale } = Astro.params as { locale: "tr" | "en" | "es" };
+
+const copy = {
+  tr: {
+    eyebrow: "Yerel Öncelikli Çalışma Alanı",
+    title: "Yerel Notlar ve Yer İmleri Paneli",
+    lead: "Tarayıcınızın yerel depolamasında (IndexedDB) saklanan kişisel notlarınız, gözlemleriniz ve yer imleriniz. Verileriniz tamamen gizli kalır ve cihazınızda saklanır.",
+    searchPlaceholder: "Notlarda veya etiketlerde ara...",
+    btnExport: "JSON Olarak Dışa Aktar",
+    btnImport: "JSON İçe Aktar",
+    emptyState: "Henüz saklanmış bir not bulunmuyor. Doküman sayfalarındaki 'Not Ekle' butonunu kullanarak not ekleyebilirsiniz.",
+    colDoc: "Doküman",
+    colBody: "Not İçeriği",
+    colTags: "Etiketler",
+    colDate: "Tarih",
+    colActions: "İşlemler",
+    btnDelete: "Sil"
+  },
+  en: {
+    eyebrow: "Local-First Workspace",
+    title: "Local Notes & Bookmarks Workspace",
+    lead: "Your personal notes, observations, and bookmarks stored privately in your browser's IndexedDB. Data remains 100% local and offline.",
+    searchPlaceholder: "Search notes or tags...",
+    btnExport: "Export JSON",
+    btnImport: "Import JSON",
+    emptyState: "No saved notes found yet. Use the 'Add Note' popover on documentation pages to capture notes.",
+    colDoc: "Document",
+    colBody: "Note Content",
+    colTags: "Tags",
+    colDate: "Date",
+    colActions: "Actions",
+    btnDelete: "Delete"
+  },
+  es: {
+    eyebrow: "Espacio de trabajo local",
+    title: "Panel de Notas Locales y Marcadores",
+    lead: "Sus notas personales, observaciones y marcadores guardados de forma privada en el IndexedDB de su navegador. Sus datos permanecen 100% locales.",
+    searchPlaceholder: "Buscar notas o etiquetas...",
+    btnExport: "Exportar JSON",
+    btnImport: "Importar JSON",
+    emptyState: "No se encontraron notas guardadas. Use el botón 'Agregar nota' en las páginas de documentación.",
+    colDoc: "Documento",
+    colBody: "Contenido de la nota",
+    colTags: "Etiquetas",
+    colDate: "Fecha",
+    colActions: "Acciones",
+    btnDelete: "Eliminar"
+  }
+}[locale];
+---
+
+<BaseLayout title={copy.title} locale={locale}>
+  <div class="shell">
+    <div class="eyebrow">{copy.eyebrow}</div>
+    <h1>{copy.title}</h1>
+    <p class="lead">{copy.lead}</p>
+
+    <div class="workspace-toolbar" style="display:flex; gap:12px; margin-bottom:20px; align-items:center;">
+      <input type="text" id="notes-search-input" placeholder={copy.searchPlaceholder} style="flex:1; padding:10px 14px; border-radius:6px; border:1px solid #ccc;" />
+      <button id="btn-export-notes" class="btn" style="padding:10px 16px;">{copy.btnExport}</button>
+      <label class="btn" style="padding:10px 16px; cursor:pointer;">
+        {copy.btnImport}
+        <input type="file" id="import-notes-file" accept=".json" style="display:none;" />
+      </label>
+    </div>
+
+    <div id="notes-container" style="overflow:auto;">
+      <table class="registry-table">
+        <thead>
+          <tr>
+            <th>{copy.colDoc}</th>
+            <th>{copy.colBody}</th>
+            <th>{copy.colTags}</th>
+            <th>{copy.colDate}</th>
+            <th>{copy.colActions}</th>
+          </tr>
+        </thead>
+        <tbody id="notes-table-body">
+          <tr>
+            <td colspan="5" style="text-align:center; color:#777; padding:24px;">{copy.emptyState}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    import { IndexedDbNotesRepository } from "../../modules/notes/adapters/indexed-db-notes";
+    import type { UserNote } from "../../core/domain/models";
+
+    const repo = new IndexedDbNotesRepository();
+
+    async function loadAndRenderNotes(filterText = "") {
+      const tbody = document.getElementById("notes-table-body");
+      if (!tbody) return;
+
+      try {
+        const notes = await repo.exportAll();
+        const filtered = notes.filter((n: UserNote) => 
+          !filterText || 
+          n.body.toLowerCase().includes(filterText.toLowerCase()) ||
+          n.documentId.toLowerCase().includes(filterText.toLowerCase()) ||
+          (n.tags && n.tags.some((t: string) => t.toLowerCase().includes(filterText.toLowerCase())))
+        );
+
+        if (filtered.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#777; padding:24px;">No notes found.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = filtered.map((n: UserNote) => `
+          <tr>
+            <td><code>${n.documentId}</code></td>
+            <td>${n.body}</td>
+            <td>${(n.tags || []).map((t: string) => `<span class="badge">${t}</span>`).join(" ")}</td>
+            <td><small>${new Date(n.updatedAt).toLocaleDateString()}</small></td>
+            <td>
+              <button class="btn btn-delete-note" data-note-id="${n.id}" style="padding:4px 8px; font-size:12px; background:#e74c3c; color:#fff; border:none; border-radius:4px; cursor:pointer;">Delete</button>
+            </td>
+          </tr>
+        `).join("");
+
+        document.querySelectorAll(".btn-delete-note").forEach(btn => {
+          btn.addEventListener("click", async (e) => {
+            const target = e.currentTarget as HTMLElement;
+            const noteId = target.getAttribute("data-note-id");
+            if (noteId) {
+              await repo.remove(noteId);
+              loadAndRenderNotes(filterText);
+            }
+          });
+        });
+
+      } catch (e) {
+        console.error("Failed to load IndexedDB notes:", e);
+      }
+    }
+
+    document.getElementById("notes-search-input")?.addEventListener("input", (e) => {
+      const val = (e.target as HTMLInputElement).value;
+      loadAndRenderNotes(val);
+    });
+
+    document.getElementById("btn-export-notes")?.addEventListener("click", async () => {
+      const notes = await repo.exportAll();
+      const blob = new Blob([JSON.stringify(notes, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `architecture-atlas-notes-${new Date().toISOString().slice(0, 10)}.json`;
+      a.click();
+    });
+
+    document.getElementById("import-notes-file")?.addEventListener("change", async (e) => {
+      const input = e.target as HTMLInputElement;
+      if (input.files && input.files[0]) {
+        const text = await input.files[0].text();
+        try {
+          const notes = JSON.parse(text);
+          if (Array.isArray(notes)) {
+            await repo.importAll(notes);
+            loadAndRenderNotes();
+            alert("Notes imported successfully!");
+          }
+        } catch (err) {
+          alert("Invalid JSON file!");
+        }
+      }
+    });
+
+    loadAndRenderNotes();
+  </script>
+</BaseLayout>

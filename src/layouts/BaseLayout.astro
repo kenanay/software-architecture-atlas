@@ -16,10 +16,10 @@ const getPathForLocale = (loc: string) => {
 };
 
 const labels = locale === "tr"
-  ? { home: "Ana sayfa", catalog: "Katalog", glossary: "Sözlük", compare: "Karşılaştır", decide: "Karar desteği", sources: "Kaynaklar", standards: "Standartlar", status: "Durum", registry: "Veri", graph: "Graf", requirements: "Gereksinimler", research:"Araştırma", author:"Yaz", manual:"Kullanım kılavuzu", skipLink: "İçeriğe geç" }
+  ? { home: "Ana sayfa", catalog: "Katalog", glossary: "Sözlük", compare: "Karşılaştır", decide: "Karar desteği", sources: "Kaynaklar", standards: "Standartlar", status: "Durum", registry: "Veri", graph: "Graf", requirements: "Gereksinimler", research:"Araştırma", author:"Yaz", notes: "Notlar", manual:"Kullanım kılavuzu", skipLink: "İçeriğe geç" }
   : locale === "es"
-  ? { home: "Inicio", catalog: "Catálogo", glossary: "Glosario", compare: "Comparar", decide: "Soporte de decisión", sources: "Fuentes", standards: "Estándares", status: "Estado", registry: "Datos", graph: "Grafo", requirements: "Requisitos", research:"Investigación", author:"Escribir", manual:"Manual de usuario", skipLink: "Saltar al contenido" }
-  : { home: "Home", catalog: "Catalog", glossary: "Glossary", compare: "Compare", decide: "Decision support", sources: "Sources", standards: "Standards", status: "Status", registry: "Data", graph: "Graph", requirements: "Requirements", research:"Research", author:"Author", manual:"User manual", skipLink: "Skip to content" };
+  ? { home: "Inicio", catalog: "Catálogo", glossary: "Glosario", compare: "Comparar", decide: "Soporte de decisión", sources: "Fuentes", standards: "Estándares", status: "Estado", registry: "Datos", graph: "Grafo", requirements: "Requisitos", research:"Investigación", author:"Escribir", notes: "Notas", manual:"Manual de usuario", skipLink: "Saltar al contenido" }
+  : { home: "Home", catalog: "Catalog", glossary: "Glossary", compare: "Compare", decide: "Decision support", sources: "Sources", standards: "Standards", status: "Status", registry: "Data", graph: "Graph", requirements: "Requirements", research:"Research", author:"Author", notes: "Notes", manual:"User manual", skipLink: "Skip to content" };
 ---
 <!doctype html>
 <html lang={locale} data-theme="dark" data-env={import.meta.env.MODE}>
@@ -44,8 +44,9 @@ const labels = locale === "tr"
         <a href={`/${locale}/catalog/`}>{labels.catalog}</a>
         <a href={`/${locale}/glossary/`}>{labels.glossary}</a>
         <a href={`/${locale}/compare/`}>{labels.compare}</a>
-        <a href={`/${locale}/decision/`}>{labels.decide}</a>
+        <a href={`/${locale}/decide/`}>{labels.decide}</a>
         <a href={`/${locale}/graph/`}>{labels.graph}</a>
+        <a href={`/${locale}/notes/`}>{labels.notes}</a>
         <a href={`/${locale}/research/`}>{labels.research}</a>
         <a href={`/${locale}/author/`}>{labels.author}</a>
         <a href={`/${locale}/requirements/`}>{labels.requirements}</a>

@@ -1,0 +1,64 @@
+{
+  "architecture": {
+    "label": { "tr": "Mimari Kalıp Profili", "en": "Architecture Pattern Profile" },
+    "requiredSections": [
+      "definition",
+      "components",
+      "data-flow",
+      "use-cases",
+      "trade-offs",
+      "production",
+      "security",
+      "testing",
+      "observability",
+      "alternatives",
+      "sources"
+    ]
+  },
+  "ai-system": {
+    "label": { "tr": "Yapay Zeka Sistem Profili", "en": "AI System Profile" },
+    "requiredSections": [
+      "definition",
+      "model-data-flow",
+      "evaluation",
+      "security",
+      "cost",
+      "serving"
+    ]
+  },
+  "ai-retrieval": {
+    "label": { "tr": "Yapay Zeka Bilgi Geri Getirim Profili", "en": "AI Retrieval Profile" },
+    "requiredSections": [
+      "embedding",
+      "indexing",
+      "retrieval-query",
+      "recall-latency-tradeoffs"
+    ]
+  },
+  "ai-training": {
+    "label": { "tr": "Yapay Zeka Model Eğitimi Profili", "en": "AI Training Profile" },
+    "requiredSections": [
+      "data-prep",
+      "training-method",
+      "evaluation",
+      "compute"
+    ]
+  },
+  "ai-safety": {
+    "label": { "tr": "Yapay Zeka Güvenlik Profili", "en": "AI Safety Profile" },
+    "requiredSections": [
+      "threat-model",
+      "controls",
+      "evaluation",
+      "incident-management"
+    ]
+  },
+  "guide": {
+    "label": { "tr": "Rehber ve Sistem İlkesi Profili", "en": "Guide and Principle Profile" },
+    "requiredSections": [
+      "principles",
+      "directory-layout",
+      "code-examples"
+    ]
+  }
+}

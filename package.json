@@ -11,8 +11,20 @@
     "test": "node --test tests/*.test.mjs tests/e2e/*.spec.mjs",
     "validate:data": "node scripts/validate-data.mjs",
     "validate:links": "node scripts/validate-links.mjs",
+    "validate:frontmatter": "node scripts/validate-frontmatter.mjs --report",
+    "validate:frontmatter:changed": "node scripts/validate-frontmatter.mjs --strict --changed",
+    "validate:frontmatter:strict": "node scripts/validate-frontmatter.mjs --strict",
+    "validate:translations": "node scripts/validate-translations.mjs --report",
+    "validate:translations:changed": "node scripts/validate-translations.mjs --strict --changed",
+    "validate:translations:strict": "node scripts/validate-translations.mjs --strict",
     "validate:terminology": "node scripts/check-terminology.mjs",
-    "verify": "npm run validate:data && npm run validate:links && npm run validate:terminology && npm test && npm run build"
+    "validate:diagrams": "node scripts/validate-diagrams.mjs",
+    "validate:profiles": "node scripts/validate-content-profiles.mjs --report",
+    "validate:profiles:changed": "node scripts/validate-content-profiles.mjs --strict --changed",
+    "validate:profiles:strict": "node scripts/validate-content-profiles.mjs --strict",
+    "verify": "npm run validate:data && npm run validate:links && npm run validate:frontmatter && npm run validate:translations && npm run validate:terminology && npm run validate:diagrams && npm run validate:profiles && npm test && npm run build",
+    "verify:changed": "npm run validate:data && npm run validate:links && npm run validate:frontmatter:changed && npm run validate:translations:changed && npm run validate:terminology && npm run validate:diagrams && npm run validate:profiles:changed && npm test && npm run build",
+    "verify:strict": "npm run validate:data && npm run validate:links && npm run validate:frontmatter:strict && npm run validate:translations:strict && npm run validate:terminology && npm run validate:diagrams && npm run validate:profiles:strict && npm test && npm run build"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.3",

@@ -25,5 +25,13 @@
   {"from":"architecture.cyber-security","type":"defined-by","to":"standard.iso-25010-2023","confidence":"strong","locator":"Security Attribute Section","evidenceSourceIds":["source.swebok-v4"]},
   {"from":"architecture.network-architecture","type":"suitable-for","to":"domain.cloud-native","evidenceSourceIds":["source.swebok-v4"]},
   {"from":"concept.multi-agent-systems","type":"defined-by","to":"standard.nist-ai-rmf-1.0","confidence":"strong","locator":"Govern & Manage Functions","evidenceSourceIds":["source.nist.ai-rmf-1"]},
-  {"from":"protocol.oauth21-oidc","type":"defined-by","to":"standard.iso-25010-2023","confidence":"strong","locator":"Security Attribute Section","evidenceSourceIds":["source.swebok-v4"]}
+  {"from":"protocol.oauth21-oidc","type":"defined-by","to":"standard.iso-25010-2023","confidence":"strong","locator":"Security Attribute Section","evidenceSourceIds":["source.swebok-v4"]},
+  {"from":"architecture.microservices","type":"defined-by","to":"source.fowler.microservices","confidence":"strong","locator":"Microservices Architectural Style","evidenceSourceIds":["source.fowler.microservices"]},
+  {"from":"architecture.saga-pattern","type":"defined-by","to":"source.paper.saga","confidence":"strong","locator":"Sagas ACM SIGMOD","evidenceSourceIds":["source.paper.saga"]},
+  {"from":"architecture.transactional-outbox","type":"defined-by","to":"source.debezium.outbox","confidence":"strong","locator":"Outbox Event Router Pattern","evidenceSourceIds":["source.debezium.outbox"]},
+  {"from":"architecture.service-mesh","type":"defined-by","to":"source.docs.istio","confidence":"strong","locator":"Service Mesh Architecture","evidenceSourceIds":["source.docs.istio"]},
+  {"from":"architecture.database-sharding","type":"defined-by","to":"source.docs.postgresql.partitioning","confidence":"strong","locator":"Table Partitioning & Sharding","evidenceSourceIds":["source.docs.postgresql.partitioning"]},
+  {"from":"ai.fine-tuning-peft","type":"defined-by","to":"source.paper.lora","confidence":"strong","locator":"LoRA Paper arXiv:2106.09685","evidenceSourceIds":["source.paper.lora"]},
+  {"from":"ai.vector-databases","type":"defined-by","to":"source.paper.hnsw","confidence":"strong","locator":"HNSW Graph Index Paper","evidenceSourceIds":["source.paper.hnsw"]},
+  {"from":"ai.llm-guardrails","type":"defined-by","to":"source.owasp.llm","confidence":"strong","locator":"OWASP LLM Top 10 Security Risks","evidenceSourceIds":["source.owasp.llm"]}
 ]

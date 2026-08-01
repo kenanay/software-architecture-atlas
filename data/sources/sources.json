@@ -34,16 +34,51 @@
     "official_reference": false
   },
   {
-    "id":"source.w3c.wcag22","type":"normative_specification","title":"Web Content Accessibility Guidelines (WCAG) 2.2","publisher":"W3C","publication_date":"2024-12-12","version":"2.2","status":"recommendation","accessed_at":"2026-07-17","url":"https://www.w3.org/TR/WCAG22/","official_reference":true
+    "id": "source.w3c.wcag22",
+    "type": "normative_specification",
+    "title": "Web Content Accessibility Guidelines (WCAG) 2.2",
+    "publisher": "W3C",
+    "publication_date": "2024-12-12",
+    "version": "2.2",
+    "status": "recommendation",
+    "accessed_at": "2026-07-17",
+    "url": "https://www.w3.org/TR/WCAG22/",
+    "official_reference": true
   },
   {
-    "id":"source.nist.ai-rmf-1","type":"government_framework","title":"Artificial Intelligence Risk Management Framework 1.0","publisher":"NIST","publication_date":"2023-01","version":"1.0","status":"active-revision-in-progress","accessed_at":"2026-07-17","url":"https://airc.nist.gov/airmf-resources/airmf/5-sec-core/","official_reference":true
+    "id": "source.nist.ai-rmf-1",
+    "type": "government_framework",
+    "title": "Artificial Intelligence Risk Management Framework 1.0",
+    "publisher": "NIST",
+    "publication_date": "2023-01",
+    "version": "1.0",
+    "status": "active-revision-in-progress",
+    "accessed_at": "2026-07-17",
+    "url": "https://airc.nist.gov/airmf-resources/airmf/5-sec-core/",
+    "official_reference": true
   },
   {
-    "id":"source.spdx.3","type":"normative_specification","title":"SPDX Specification 3.0","publisher":"Linux Foundation SPDX","publication_date":"2024-04","version":"3.0","status":"current","accessed_at":"2026-07-17","url":"https://spdx.dev/use/specifications/","official_reference":true
+    "id": "source.spdx.3",
+    "type": "normative_specification",
+    "title": "SPDX Specification 3.0",
+    "publisher": "Linux Foundation SPDX",
+    "publication_date": "2024-04",
+    "version": "3.0",
+    "status": "current",
+    "accessed_at": "2026-07-17",
+    "url": "https://spdx.dev/use/specifications/",
+    "official_reference": true
   },
   {
-    "id":"source.rfc-editor","type":"official_documentation","title":"RFC Editor — Official Home of RFCs","publisher":"RFC Editor","publication_date":"continuous","status":"active","accessed_at":"2026-07-17","url":"https://www.rfc-editor.org/","official_reference":true
+    "id": "source.rfc-editor",
+    "type": "official_documentation",
+    "title": "RFC Editor — Official Home of RFCs",
+    "publisher": "RFC Editor",
+    "publication_date": "continuous",
+    "status": "active",
+    "accessed_at": "2026-07-17",
+    "url": "https://www.rfc-editor.org/",
+    "official_reference": true
   },
   {
     "id": "source.rfc2026",
@@ -65,6 +100,210 @@
     "status": "published",
     "accessed_at": "2026-07-24",
     "url": "https://pubs.opengroup.org/onlinepubs/9799919799/",
+    "official_reference": true
+  },
+  {
+    "id": "source.fowler.microservices",
+    "type": "technical_article",
+    "title": "Microservices: a definition of this new architectural term",
+    "authors": ["Martin Fowler", "James Lewis"],
+    "publisher": "Martinfowler.com",
+    "publication_date": "2014-03-25",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://martinfowler.com/articles/microservices.html",
+    "official_reference": false
+  },
+  {
+    "id": "source.fowler.cqrs",
+    "type": "technical_article",
+    "title": "CQRS — Command Query Responsibility Segregation",
+    "authors": ["Martin Fowler"],
+    "publisher": "Martinfowler.com",
+    "publication_date": "2011-07-14",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://martinfowler.com/bliki/CQRS.html",
+    "official_reference": false
+  },
+  {
+    "id": "source.fowler.event-sourcing",
+    "type": "technical_article",
+    "title": "Event Sourcing Architectural Pattern",
+    "authors": ["Martin Fowler"],
+    "publisher": "Martinfowler.com",
+    "publication_date": "2005-12-12",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://martinfowler.com/eaaDev/EventSourcing.html",
+    "official_reference": false
+  },
+  {
+    "id": "source.paper.saga",
+    "type": "peer_reviewed_article",
+    "title": "Sagas: A Mechanism for Long Lived Transactions",
+    "authors": ["Hector Garcia-Molina", "Kenneth Salem"],
+    "publisher": "ACM SIGMOD",
+    "publication_date": "1987-05",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://doi.org/10.1145/38713.38742",
+    "official_reference": true
+  },
+  {
+    "id": "source.debezium.outbox",
+    "type": "official_documentation",
+    "title": "Debezium Outbox Event Router Specification",
+    "publisher": "Red Hat Debezium Project",
+    "publication_date": "2024-01",
+    "version": "2.5",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://debezium.io/documentation/reference/stable/transformations/outbox-event-router.html",
+    "official_reference": true
+  },
+  {
+    "id": "source.paper.lora",
+    "type": "peer_reviewed_article",
+    "title": "LoRA: Low-Rank Adaptation of Large Language Models",
+    "authors": ["Edward J. Hu", "Yelong Shen", "Phillip Wallis", "Zeyuan Allen-Zhu", "Yuanzhi Li", "Shean Wang", "Lu Wang", "Weizhu Chen"],
+    "publisher": "arXiv / ICLR 2022",
+    "publication_date": "2021-10-16",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://arxiv.org/abs/2106.09685",
+    "official_reference": true
+  },
+  {
+    "id": "source.paper.qlora",
+    "type": "peer_reviewed_article",
+    "title": "QLoRA: Efficient Finetuning of Quantized LLMs",
+    "authors": ["Tim Dettmers", "Artidoro Pagnoni", "Ari Holtzman", "Luke Zettlemoyer"],
+    "publisher": "arXiv / NeurIPS 2023",
+    "publication_date": "2023-05-23",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://arxiv.org/abs/2305.14314",
+    "official_reference": true
+  },
+  {
+    "id": "source.paper.hnsw",
+    "type": "peer_reviewed_article",
+    "title": "Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs",
+    "authors": ["Yu. A. Malkov", "D. A. Yashunin"],
+    "publisher": "IEEE Transactions on Pattern Analysis and Machine Intelligence (TPAMI)",
+    "publication_date": "2018-03",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://doi.org/10.1109/TPAMI.2018.2889473",
+    "official_reference": true
+  },
+  {
+    "id": "source.paper.ivf",
+    "type": "peer_reviewed_article",
+    "title": "Product Quantization for Nearest Neighbor Search",
+    "authors": ["Herve Jegou", "Matthijs Douze", "Cordelia Schmid"],
+    "publisher": "IEEE TPAMI",
+    "publication_date": "2011-01",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://doi.org/10.1109/TPAMI.2010.57",
+    "official_reference": true
+  },
+  {
+    "id": "source.docs.pgvector",
+    "type": "official_documentation",
+    "title": "pgvector — Open-source Vector Similarity Search for Postgres",
+    "publisher": "pgvector Project",
+    "publication_date": "2026-01",
+    "version": "0.7.0",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://github.com/pgvector/pgvector",
+    "official_reference": true
+  },
+  {
+    "id": "source.docs.qdrant",
+    "type": "official_documentation",
+    "title": "Qdrant Vector Database Documentation",
+    "publisher": "Qdrant Solutions GmbH",
+    "publication_date": "2026-01",
+    "version": "1.9",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://qdrant.tech/documentation/",
+    "official_reference": true
+  },
+  {
+    "id": "source.docs.postgresql.partitioning",
+    "type": "official_documentation",
+    "title": "PostgreSQL 16 Documentation — Chapter 5.11. Table Partitioning",
+    "publisher": "PostgreSQL Global Development Group",
+    "publication_date": "2024-05",
+    "version": "16",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://www.postgresql.org/docs/current/ddl-partitioning.html",
+    "official_reference": true
+  },
+  {
+    "id": "source.docs.mongodb.sharding",
+    "type": "official_documentation",
+    "title": "MongoDB Manual — Sharded Cluster Architecture",
+    "publisher": "MongoDB Inc.",
+    "publication_date": "2025-11",
+    "version": "7.0",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://www.mongodb.com/docs/manual/sharding/",
+    "official_reference": true
+  },
+  {
+    "id": "source.docs.istio",
+    "type": "official_documentation",
+    "title": "Istio Service Mesh Architecture & Concepts",
+    "publisher": "Istio Authors / CNCF",
+    "publication_date": "2025-10",
+    "version": "1.22",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://istio.io/latest/docs/concepts/what-is-istio/",
+    "official_reference": true
+  },
+  {
+    "id": "source.docs.envoy",
+    "type": "official_documentation",
+    "title": "Envoy Proxy Architecture Specification",
+    "publisher": "Envoy Project / CNCF",
+    "publication_date": "2025-12",
+    "version": "1.30",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://www.envoyproxy.io/docs/envoy/latest/intro/intro",
+    "official_reference": true
+  },
+  {
+    "id": "source.docs.huggingface.peft",
+    "type": "official_documentation",
+    "title": "Hugging Face PEFT — Parameter-Efficient Fine-Tuning Library",
+    "publisher": "Hugging Face Inc.",
+    "publication_date": "2025-09",
+    "version": "0.10.0",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://huggingface.co/docs/peft/index",
+    "official_reference": true
+  },
+  {
+    "id": "source.owasp.llm",
+    "type": "official_documentation",
+    "title": "OWASP Top 10 for Large Language Model Applications v2.0",
+    "publisher": "OWASP Foundation",
+    "publication_date": "2025-01",
+    "version": "2.0",
+    "status": "active",
+    "accessed_at": "2026-08-01",
+    "url": "https://owasp.org/www-project-top-10-for-large-language-model-applications/",
     "official_reference": true
   }
 ]

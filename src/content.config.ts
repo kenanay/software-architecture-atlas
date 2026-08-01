@@ -9,6 +9,7 @@ const documents = defineCollection({
   schema: z.object({
     id: z.string(),
     type: z.enum(["guide", "history", "concept", "programming-language", "architecture", "framework", "tool", "platform", "protocol", "standard", "rfc", "algorithm", "ai-model", "comparison", "application-domain-guide", "directory-template", "architecture-decision-record", "case-study", "academic-source-summary", "historical-event", "glossary-entry", "research-note", "unverified-draft", "decision-guide"]),
+    contentProfile: z.enum(["architecture", "ai-system", "ai-retrieval", "ai-training", "ai-safety", "guide"]).optional(),
     title: trilingual,
     summary: trilingual,
     status: z.enum(["draft", "review-required", "reviewed", "verified", "deprecated", "historical", "archived"]),

@@ -43,6 +43,7 @@
     "canonical_tr": "Mimari Açıklama",
     "canonical_en": "Architecture Description",
     "canonical_es": "Descripción de la Arquitectura",
+    "aliases_tr": ["mimari açıklama", "mimari açıklaması", "mimari açıklamaları"],
     "abbreviation": "AD",
     "definition_tr": "Bir ilgi konusu varlığın mimarisini ifade etmek için kullanılan çalışma ürünüdür.",
     "definition_en": "A work product used to express the architecture of an entity of interest.",
@@ -139,8 +140,14 @@
   {
     "id": "cloud-native",
     "canonical_tr": "Bulut Yerel",
-    "canonical_en": "Cloud-Native",
+    "canonical_en": "Cloud Native",
     "canonical_es": "Nativo de la Nube",
+    "aliases_tr": ["Cloud Native", "bulut yerel mimari"],
+    "variants": {
+      "title": ["Cloud Native", "Cloud-Native"],
+      "adjective": ["cloud-native"]
+    },
+    "forbidden": ["cloud native architecture"],
     "abbreviation": "",
     "definition_tr": "Dinamik, ölçeklenebilir ve esnek ortamlarda mikroservisler, konteynerler ve bildirimsel API'ler kullanarak uygulama oluşturma yaklaşımıdır.",
     "definition_en": "An approach to building and running scalable applications in dynamic environments using microservices, containers, and declarative APIs.",

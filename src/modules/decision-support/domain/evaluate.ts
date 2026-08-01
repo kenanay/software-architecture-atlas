@@ -1,4 +1,4 @@
-import type { DecisionInput, DecisionResult } from "../../../core/domain/models";
+import type { DecisionInput, DecisionResult, ScoredCandidate } from "../../../core/domain/models";
 
 const domainChoices = {
   web: { languages: ["TypeScript", "Python"], architectures: ["Modüler Monolit", "Katmanlı Mimari"], qualities: ["maintainability", "accessibility"], sourceId: "source.swebok-v4" },
@@ -58,6 +58,46 @@ export function evaluateDecision(input: DecisionInput): DecisionResult {
   };
   const scoredLanguages = [...choice.languages].map((name, rank) => score(name, rank)).sort((a,b)=>b.score-a.score);
   const scoredArchitectures = [...new Set(architectures)].map((name, rank) => score(name, rank, true)).sort((a,b)=>b.score-a.score);
+  
+  // Multi-language Framework scoring
+  const frameworkRecommendations: ScoredCandidate[] = [
+    {
+      name: "FastAPI (Python)",
+      score: input.domain === "web" || input.domain === "ai" ? 92 : input.domain === "data" ? 85 : 70,
+      reasons: ["Asenkron yüksek performans", "Pydantic doğrulama & OpenAPI", "Clean / Hexagonal mimariye tam uyum"]
+    },
+    {
+      name: "Django MVT (Python)",
+      score: input.domain === "web" && input.scale !== "small" ? 90 : input.domain === "web" ? 82 : 65,
+      reasons: ["Dahili ORM ve Admin paneli", "Gelişmiş yetkilendirme", "Bütünleşik MVT mimarisi"]
+    },
+    {
+      name: "Spring Boot 3 (Java)",
+      score: input.domain === "server-cloud" || input.domain === "web" ? 94 : 75,
+      reasons: ["Kurumsal Mikroservis standardı", "Geniş Spring ekosistemi", "Clean / Hexagonal mimari uyumu"]
+    },
+    {
+      name: "ASP.NET Core 8/9 (C#)",
+      score: input.domain === "server-cloud" || input.domain === "web" || input.domain === "desktop" ? 93 : 72,
+      reasons: ["Yüksek async/await performansı", "Bütünleşik Dependency Injection", "Clean Architecture & CQRS desteği"]
+    },
+    {
+      name: "Jetpack Compose + MVVM (Kotlin)",
+      score: input.domain === "mobile" ? 96 : 40,
+      reasons: ["Android resmi dekleratif UI standardı", "Coroutines & Flow asenkron mimarisi"]
+    },
+    {
+      name: "SwiftUI + TCA (Swift)",
+      score: input.domain === "mobile" || input.domain === "desktop" ? 95 : 35,
+      reasons: ["Apple platformları dekleratif UI standardı", "The Composable Architecture (TCA) modülerliği"]
+    },
+    {
+      name: "HAL Driver Architecture (C)",
+      score: input.domain === "embedded" ? 98 : 30,
+      reasons: ["MISRA C güvenliği", "Donanıma doğrudan erişim ve asgari bellek ayak izi"]
+    }
+  ].sort((a, b) => b.score - a.score);
+
   return {
     languages: [...choice.languages],
     architectures: [...new Set(architectures)],
@@ -73,5 +113,6 @@ export function evaluateDecision(input: DecisionInput): DecisionResult {
     confidence,
     scoredLanguages,
     scoredArchitectures,
+    frameworkRecommendations,
   };
 }

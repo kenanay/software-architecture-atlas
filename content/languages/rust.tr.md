@@ -12,10 +12,10 @@ translationKey: rust
 canonicalId: language.rust
 translationStatus: original
 translationMethod: original
-version: 0.1.0
-lastReviewedAt: 2026-07-17
-sources: []
-related: [architecture.modular-monolith.tr]
+version: 1.0.0
+lastReviewedAt: 2026-07-24
+sources: [source.swebok-v4]
+related: [architecture.modular-monolith.tr, guide.rust-architecture-guide.tr]
 contributors:
   - personId: person.kenan-ay
     roles: [researcher, technical-author, editor]

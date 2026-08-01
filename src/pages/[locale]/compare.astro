@@ -85,10 +85,20 @@ const copy = {
         <select id="right"></select>
       </div>
     </div>
+    <div id="radar-container" class="card" style="margin-top:2rem;padding:1.5rem;border-color:var(--accent2)">
+      <h3 style="margin-top:0">{locale === 'tr' ? 'Kalite ve Uyum Radar Grafiği' : locale === 'es' ? 'Gráfico de Radar de Calidad' : 'Quality & Attribute Radar Chart'}</h3>
+      <p class="muted" style="margin-bottom:1rem">{locale === 'tr' ? 'Seçilen iki profilin Kalite Öznitelikleri ve Uygulanabilir Alanlar karşılaştırması:' : 'Quality Attributes and Applicable Domains breakdown between selected profiles:'}</p>
+      <div style="display:flex;justify-content:center;align-items:center;min-height:260px">
+        <svg id="radar-svg" width="340" height="260" viewBox="0 0 340 260" style="overflow:visible"></svg>
+      </div>
+      <div id="radar-legend" style="display:flex;gap:1.5rem;justify-content:center;margin-top:0.75rem;font-size:0.875rem"></div>
+    </div>
+    
     <div id="comparison" class="grid" style="grid-template-columns:1fr 1fr;margin-top:2rem"></div>
   </div>
   <script is:inline define:vars={{ docs, locale }}>
     const left=document.querySelector("#left"),right=document.querySelector("#right"),localeSelect=document.querySelector("#compare-locale"),out=document.querySelector("#comparison");
+    const radarSvg=document.querySelector("#radar-svg"),radarLegend=document.querySelector("#radar-legend");
     const esc=v=>String(v).replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"})[c]);
     
     const card=d=>`
@@ -114,6 +124,65 @@ const copy = {
         <a href="/${locale}/docs/${encodeURIComponent(d.canonicalId)}/">Open document →</a>
       </article>`;
       
+    function renderRadar(d1, d2) {
+      if(!d1 || !d2) return;
+      const dimensions = [
+        { label: "Performance", key: "performance" },
+        { label: "Security", key: "security" },
+        { label: "Maintainability", key: "maintainability" },
+        { label: "Scalability", key: "scalability" },
+        { label: "Usability", key: "usability" }
+      ];
+      
+      const calcScore = (doc, dim) => {
+        let score = 3;
+        const all = [...(doc.qualityAttributes||[]), ...(doc.tags||[]), ...(doc.categories||[])].map(x=>x.toLowerCase());
+        if(all.some(x=>x.includes(dim))) score += 4;
+        if(doc.maturity === "mature" || doc.maturity === "active") score += 2;
+        if(doc.sources && doc.sources.length > 0) score += 1;
+        return Math.min(score, 10);
+      };
+      
+      const cx = 170, cy = 130, r = 90;
+      const numPoints = dimensions.length;
+      let gridSvg = "", p1Coords = [], p2Coords = [];
+      
+      for(let level = 1; level <= 4; level++) {
+        const lr = (r / 4) * level;
+        const points = [];
+        for(let i = 0; i < numPoints; i++) {
+          const angle = (Math.PI * 2 / numPoints) * i - Math.PI / 2;
+          points.push(`${cx + lr * Math.cos(angle)},${cy + lr * Math.sin(angle)}`);
+        }
+        gridSvg += `<polygon points="${points.join(" ")}" fill="none" stroke="var(--line)" stroke-dasharray="2,2" opacity="0.4"/>`;
+      }
+      
+      dimensions.forEach((dim, i) => {
+        const angle = (Math.PI * 2 / numPoints) * i - Math.PI / 2;
+        const x2 = cx + r * Math.cos(angle);
+        const y2 = cy + r * Math.sin(angle);
+        gridSvg += `<line x1="${cx}" y1="${cy}" x2="${x2}" y2="${y2}" stroke="var(--line)" opacity="0.3"/>`;
+        
+        const lx = cx + (r + 22) * Math.cos(angle);
+        const ly = cy + (r + 14) * Math.sin(angle);
+        gridSvg += `<text x="${lx}" y="${ly}" fill="var(--text)" font-size="11" text-anchor="middle" dominant-baseline="middle">${dim.label}</text>`;
+        
+        const s1 = calcScore(d1, dim.key);
+        const s2 = calcScore(d2, dim.key);
+        p1Coords.push(`${cx + (r * (s1/10)) * Math.cos(angle)},${cy + (r * (s1/10)) * Math.sin(angle)}`);
+        p2Coords.push(`${cx + (r * (s2/10)) * Math.cos(angle)},${cy + (r * (s2/10)) * Math.sin(angle)}`);
+      });
+      
+      const p1Svg = `<polygon points="${p1Coords.join(" ")}" fill="#ff9900" fill-opacity="0.25" stroke="#ff9900" stroke-width="2.5"/>`;
+      const p2Svg = `<polygon points="${p2Coords.join(" ")}" fill="#33cc99" fill-opacity="0.25" stroke="#33cc99" stroke-width="2.5"/>`;
+      
+      radarSvg.innerHTML = gridSvg + p1Svg + p2Svg;
+      radarLegend.innerHTML = `
+        <span style="color:#ff9900;font-weight:600">■ [${esc(d1.locale.toUpperCase())}] ${esc(d1.title)}</span>
+        <span style="color:#33cc99;font-weight:600">■ [${esc(d2.locale.toUpperCase())}] ${esc(d2.title)}</span>
+      `;
+    }
+    
     function options(){
       const filtered=docs.filter(d=>localeSelect.value==="all"||d.locale===localeSelect.value);
       const previous=[left.value,right.value];
@@ -126,7 +195,10 @@ const copy = {
     }
     
     function render(){
-      out.innerHTML=[left.value,right.value].map(id=>docs.find(d=>d.id===id)).filter(Boolean).map(card).join("");
+      const d1 = docs.find(d=>d.id===left.value);
+      const d2 = docs.find(d=>d.id===right.value);
+      out.innerHTML=[d1,d2].filter(Boolean).map(card).join("");
+      renderRadar(d1, d2);
     }
     
     [left,right].forEach(el=>el.addEventListener("change",render));

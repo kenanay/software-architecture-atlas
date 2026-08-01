@@ -25,9 +25,9 @@ applicableDomains: [documentation, education, software-architecture, research]
 
 ## Bu kılavuzun anlattığı hikâye
 
-Deniz, orta büyüklükte bir yazılım ekibinde çalışan geliştiricidir. Ekibi yeni bir sipariş sistemi tasarlamaktadır. Toplantılarda “Modüler Monolit”, “Event Sourcing”, “mikroservis”, “Yerel Öncelikli”, “ADR” gibi kavramlar geçer; fakat aynı sözcükler farklı kişiler için farklı anlamlara gelmektedir.
+Ömer, orta büyüklükte bir yazılım ekibinde çalışan geliştiricidir. Ekibi yeni bir sipariş sistemi tasarlamaktadır. Toplantılarda “Modüler Monolit”, “Event Sourcing”, “mikroservis”, “Yerel Öncelikli”, “ADR” gibi kavramlar geçer; fakat aynı sözcükler farklı kişiler için farklı anlamlara gelmektedir.
 
-Deniz’in ihtiyacı yalnızca kısa bir tanım okumak değildir. Şunları bilmek ister:
+Ömer’in ihtiyacı yalnızca kısa bir tanım okumak değildir. Şunları bilmek ister:
 
 - Bir mimari yaklaşım hangi problemi çözer?
 - Hangi varsayımlar altında işe yarar?
@@ -39,7 +39,7 @@ Deniz’in ihtiyacı yalnızca kısa bir tanım okumak değildir. Şunları bilm
 
 **Software Architecture Atlas**, tam olarak bu yolculuk için geliştirilmiş Yerel Öncelikli bir bilgi ve karar destek platformudur. Atlas, hazır cevap veren bir otorite gibi davranmaz. Kaynağı, iddiayı, kişisel notu, teknik sentezi ve kararı birbirinden ayırarak düşünme sürecini görünür kılar.
 
-Bu kılavuz boyunca Deniz’le birlikte sistemi ilk kez açacak, bir konuyu araştıracak, not alacak, kanıtları inceleyecek, mimarileri karşılaştıracak ve sonunda bir Mimari Karar Kaydı oluşturacağız.
+Bu kılavuz boyunca Ömer’le birlikte sistemi ilk kez açacak, bir konuyu araştıracak, not alacak, kanıtları inceleyecek, mimarileri karşılaştıracak ve sonunda bir Mimari Karar Kaydı oluşturacağız.
 
 ## Atlas nedir, ne değildir?
 
@@ -63,7 +63,7 @@ Bir belgede `draft` veya `review-required` görüyorsanız içerik henüz doğru
 
 ### Uygulamayı başlatmak
 
-Deniz projeyi bilgisayarına aldıktan sonra terminali proje klasöründe açar.
+Ömer projeyi bilgisayarına aldıktan sonra terminali proje klasöründe açar.
 
 macOS veya Linux’ta:
 
@@ -108,7 +108,7 @@ npm run preview
 
 ### İlk ekran
 
-Deniz tarayıcıda uygulamayı açtığında tarayıcı dili algılanır ve uygun rotaya yönlendirilir:
+Ömer tarayıcıda uygulamayı açtığında tarayıcı dili algılanır ve uygun rotaya yönlendirilir:
 
 - Türkçe: `/tr/`
 - İngilizce: `/en/`
@@ -118,9 +118,9 @@ Sağ üstteki `TR`, `EN` ve `ES` bağlantıları aynı ekranın diğer dildeki k
 
 Ana sayfadaki sayılar, o dilde kaç belge bulunduğunu, kaçının incelendiğini ve kaç kategorinin temsil edildiğini gösterir. Bu sayaçlar içerik kapsamı ile içerik güvenilirliğinin aynı şey olmadığını hatırlatır.
 
-## İkinci bölüm: Deniz bir kavramın izini sürüyor
+## İkinci bölüm: Ömer bir kavramın izini sürüyor
 
-Toplantıda “Modüler Monolit” önerilmiştir. Deniz önce **Katalog** ekranını açar:
+Toplantıda “Modüler Monolit” önerilmiştir. Ömer önce **Katalog** ekranını açar:
 
 ```text
 /tr/catalog/
@@ -148,7 +148,7 @@ Bu ayrım önemlidir. Örneğin tarihsel bir teknoloji hakkında yeni ve doğrul
 
 ### Teknik terimlerle karşılaşmak
 
-Deniz metinde “cohesion”, “coupling” veya “architecture description” gibi bir terime geldiğinde terimin üzerine gelir, klavyeyle odaklanır veya dokunur. Atlas terimi merkezi sözlükte bulursa açıklama penceresi açar.
+Ömer metinde “cohesion”, “coupling” veya “architecture description” gibi bir terime geldiğinde terimin üzerine gelir, klavyeyle odaklanır veya dokunur. Atlas terimi merkezi sözlükte bulursa açıklama penceresi açar.
 
 Pencerede şunlar görülebilir:
 
@@ -164,7 +164,7 @@ Pencerede şunlar görülebilir:
 
 ## Üçüncü bölüm: Kaynak okumak ile kaynak göstermek arasındaki fark
 
-Deniz bir mimariyi öğrenirken blog yazılarının tek başına yeterli olmadığını bilir. **Araştırma** ekranını açar:
+Ömer bir mimariyi öğrenirken blog yazılarının tek başına yeterli olmadığını bilir. **Araştırma** ekranını açar:
 
 ```text
 /tr/research/
@@ -184,7 +184,7 @@ Her kaynak için kişisel okuma durumu seçilebilir:
 - `read`: Okundu
 - `synthesized`: Bulguları teknik içeriğe dönüştürüldü
 
-Bu durum tarayıcının `localStorage` alanında saklanır. Git ile sürümlenen ortak kaynak kaydını değiştirmez. Böylece “ekibin kanonik kaynağı” ile “Deniz’in bu kaynağı okuma durumu” birbirine karışmaz.
+Bu durum tarayıcının `localStorage` alanında saklanır. Git ile sürümlenen ortak kaynak kaydını değiştirmez. Böylece “ekibin kanonik kaynağı” ile “Ömer’in bu kaynağı okuma durumu” birbirine karışmaz.
 
 ### Kaynak türleri
 
@@ -224,7 +224,7 @@ Bu kayıt örnek biçimi göstermek içindir; gerçek içerik eklerken DOI ve bi
 
 ## Dördüncü bölüm: Atomik notlarla düşünmek
 
-Deniz Modüler Monolit belgesinin altındaki **Kişisel Notlar** alanına gelir. Buradaki notlar kanonik dokümana yazılmaz; yalnızca mevcut tarayıcının IndexedDB veritabanında saklanır.
+Ömer Modüler Monolit belgesinin altındaki **Kişisel Notlar** alanına gelir. Buradaki notlar kanonik dokümana yazılmaz; yalnızca mevcut tarayıcının IndexedDB veritabanında saklanır.
 
 ### Neden IndexedDB?
 
@@ -232,7 +232,7 @@ IndexedDB, tarayıcının yapılandırılmış ve görece büyük yerel veriler 
 
 ### Not türleri
 
-Deniz her notun amacını seçer:
+Ömer her notun amacını seçer:
 
 - `observation`: Kaynaktan veya belgeden çıkarılan gözlem
 - `question`: Daha sonra araştırılacak soru
@@ -288,7 +288,7 @@ Bir not kartındaki **Düzenle** düğmesi notu forma geri yükler. Kaydettikten
 
 ## Beşinci bölüm: Not, iddia ve kanıt aynı şey değildir
 
-Deniz’in “Modüler Monolit her zaman mikroservisten daha ucuzdur” şeklinde bir notu olduğunu düşünelim. Bu henüz kanonik bilgi değildir. Çok geniş, bağlama bağlı ve kanıtsızdır.
+Ömer’in “Modüler Monolit her zaman mikroservisten daha ucuzdur” şeklinde bir notu olduğunu düşünelim. Bu henüz kanonik bilgi değildir. Çok geniş, bağlama bağlı ve kanıtsızdır.
 
 Atlas’ta doğrulanabilir bir iddia şu parçaları taşır:
 
@@ -333,7 +333,7 @@ Kanıt rolleri:
 
 ## Altıncı bölüm: Bilgiyi bir graf olarak görmek
 
-Deniz, bir standardın hangi kavramı tanımladığını ve bir RFC’nin hangisini geçersiz kıldığını görmek için **Graf** ekranına gider:
+Ömer, bir standardın hangi kavramı tanımladığını ve bir RFC’nin hangisini geçersiz kıldığını görmek için **Graf** ekranına gider:
 
 ```text
 /tr/graph/
@@ -370,7 +370,7 @@ Grafın amacı güzel bir şekil üretmek değil, **kanıt zincirini gezilebilir
 
 ## Yedinci bölüm: Teknik bir belge yazmak
 
-Deniz artık okuduklarını sentezlemeye hazırdır. **Yaz** ekranını açar:
+Ömer artık okuduklarını sentezlemeye hazırdır. **Yaz** ekranını açar:
 
 ```text
 /tr/author/
@@ -389,7 +389,7 @@ Bu ekran sunucuya içerik göndermez. Taslağı tarayıcıda saklar ve indirileb
 - `Summary`: Kısa açıklama
 - `Technical content`: Markdown gövdesi
 
-Deniz Event Sourcing için şu başlangıcı yapabilir:
+Ömer Event Sourcing için şu başlangıcı yapabilir:
 
 ```text
 Canonical ID: architecture.event-sourcing
@@ -448,7 +448,7 @@ Her kapsamlı mimari profilde şu sorular cevaplanmalıdır:
 
 ## Sekizinci bölüm: İki yaklaşımı karşılaştırmak
 
-Deniz, Modüler Monolit ile başka bir mimari profili yan yana görmek için **Karşılaştır** ekranını açar:
+Ömer, Modüler Monolit ile başka bir mimari profili yan yana görmek için **Karşılaştır** ekranını açar:
 
 ```text
 /tr/compare/
@@ -473,7 +473,7 @@ Karşılaştırma “hangisi daha iyi?” sorusunu tek başına cevaplamaz. Doğ
 
 ## Dokuzuncu bölüm: Karar desteğinden ADR’ye
 
-Deniz’in ekibi gerçek bir seçim yapmak üzeredir. **Karar Desteği** ekranında proje bağlamını tanımlar:
+Ömer’in ekibi gerçek bir seçim yapmak üzeredir. **Karar Desteği** ekranında proje bağlamını tanımlar:
 
 ```text
 /tr/decision/
@@ -561,7 +561,7 @@ Bu ekran geliştirici olmayan kullanıcı için şeffaflık, geliştirici için 
 
 ## On birinci bölüm: Atlas’ın mimarisi
 
-Deniz artık yalnızca içeriği değil, uygulamanın nasıl çalıştığını da merak eder.
+Ömer artık yalnızca içeriği değil, uygulamanın nasıl çalıştığını da merak eder.
 
 ### İçerik odaklı modüler monolit
 
@@ -623,7 +623,7 @@ Pagefind statik HTML dosyalarını derleme sonrasında indeksler. Arama için ay
 
 ## On ikinci bölüm: İçerik geliştirme ve yayın akışı
 
-Deniz’in taslağı artık ortak Atlas’a girmeye hazırdır. Önerilen süreç:
+Ömer’in taslağı artık ortak Atlas’a girmeye hazırdır. Önerilen süreç:
 
 ```text
 Kaynak kuyruğu
@@ -763,9 +763,9 @@ npm run preview
 
 Uygulamayı ağ bağlantısıyla bir kez açın ve yenileyin. Service Worker yeni cache sürümünü etkinleştirdikten sonra eski Atlas cache’lerini temizler.
 
-## Deniz’in yolculuğunun sonu değil, başlangıcı
+## Ömer’in yolculuğunun sonu değil, başlangıcı
 
-Deniz günün sonunda tek bir “en iyi mimari” bulmadı. Bunun yerine daha değerli bir şey elde etti:
+Ömer günün sonunda tek bir “en iyi mimari” bulmadı. Bunun yerine daha değerli bir şey elde etti:
 
 - Kavramları ortak bir sözlükle ifade edebiliyor.
 - Kaynak ile kişisel yorum arasındaki sınırı biliyor.
@@ -805,7 +805,7 @@ Ana Sayfa, Atlas’ın giriş ve yönlendirme ekranıdır. Platformdaki bütün 
 
 ### Örnek
 
-Atlas’ı ilk kez açan Deniz, kaç Türkçe belge bulunduğunu ve bunların kaçının incelendiğini görür. Amacı araştırma yapmak olduğu için “Atlası keşfet” düğmesiyle Katalog’a geçer.
+Atlas’ı ilk kez açan Ömer, kaç Türkçe belge bulunduğunu ve bunların kaçının incelendiğini görür. Amacı araştırma yapmak olduğu için “Atlası keşfet” düğmesiyle Katalog’a geçer.
 
 ### Dikkat edilmesi gerekenler
 
@@ -865,6 +865,23 @@ Bir teknik konunun açıklamasını, metadata’sını, kaynaklarını, iddia–
 ### Dikkat edilmesi gerekenler
 
 Belge kaynak listesi genel bibliyografyayı, iddia–kanıt matrisi ise belirli teknik ifadelerin kanıtını gösterir. Bunlar aynı şey değildir.
+
+## Programlama Dili & Mimari Rehberleri
+
+**Örnek adres:** `/tr/docs/guide.python-architecture-guide/`, `/tr/docs/guide.typescript-architecture-guide/`, `/tr/docs/guide.java-architecture-guide/`
+
+### Amacı
+
+Atlas, 10 temel programlama dili (**Python, TypeScript, Go, Rust, C#, Java, C++, Kotlin, Swift, C**) için uçtan uca mimarlık rehberleri, framework dizin şablonları matrisi ve çapraz platform (Windows, macOS, Linux) CLI proje jeneratör kılavuzları sunar.
+
+### Nasıl kullanılır?
+
+1. Katalog veya Dil Profili ekranından ilgilendiğiniz dilin mimarlık rehberini açın (Örn: `guide.python-architecture-guide`).
+2. **Mimari Seçim Ölçütleri:** Uygulama türünüze göre (Web API, Masaüstü GUI, Veri ETL, CLI, Bulut-Yerel) en uygun mimari stili belirleyin.
+3. **Framework ve Özgün Dizin Şablonları:** Seçtiğiniz framework'ün (Django MVT, FastAPI Clean API, PySide6 MVVM, Next.js App Router, NestJS, Spring Boot 3, ASP.NET Core vb.) hazır klasör ağacını inceleyin.
+4. **Çapraz Platform CLI Kurulumu:** Windows (`PowerShell`/`winget`), macOS (`Homebrew`) veya Linux (`apt`/`dnf`) için verilmiş resmî CLI terminal komutlarını kopyalayarak projeyi saniyeler içinde otomatik olarak başlatın.
+
+---
 
 ## Sözlük menüsü
 
@@ -926,23 +943,23 @@ Karşılaştırma ekranındaki boş alan, verinin ilgili belge profilinde henüz
 
 ### Amacı
 
-Karar Desteği, proje koşullarını yapılandırılmış girdilere dönüştürür ve dil/mimari adaylarını ağırlıklı puanlarla açıklayan bir ön değerlendirme üretir.
+Karar Desteği, proje koşullarını yapılandırılmış girdilere dönüştürür; dil, mimari ve **teknoloji/framework** adaylarını (FastAPI, Django, Spring Boot 3, ASP.NET Core 8/9, Next.js, NestJS, Jetpack Compose, SwiftUI, HAL Drivers vb.) ağırlıklı puanlarla açıklayan bir ön değerlendirme ve hazır terminal başlatma komutları üretir.
 
 ### Nasıl kullanılır?
 
-1. Uygulama alanını seçin.
+1. Uygulama alanını seçin (Web, Mobil, Masaüstü, Veri/ETL, CLI, Gömülü/IoT).
 2. Kullanıcı veya işlem ölçeğini belirleyin.
 3. Ekip deneyimini ve veri hacmini seçin.
 4. Gecikme, dağıtım, güvenlik ve lisans kısıtlarını girin.
 5. Çevrimdışı, gerçek zamanlı, güvenlik kritik, AI/ML ve donanım gereksinimlerini işaretleyin.
 6. Performans, güvenlik, bakım, ölçeklenebilirlik ve maliyet ağırlıklarını ayarlayın.
 7. **Adayları değerlendir** düğmesini seçin.
-8. Puanları, gerekçeleri, alternatifleri, riskleri ve test stratejisini inceleyin.
+8. Puanları, gerekçeleri, framework önerilerini, özgün klasör dizin şablonlarını, çapraz platform CLI komutlarını, riskleri ve test stratejisini inceleyin.
 9. **ADR indir** ile sonucu Markdown taslağı olarak dışa aktarın.
 
 ### Örnek
 
-Bir hastane sistemi için güvenlik ve bakım ağırlıklarını yükseltmek, sistemin bu nitelikleri puanlamada daha etkili kullanmasını sağlar. Ancak mevzuata uygunluk ayrıca uzman tarafından doğrulanmalıdır.
+Bir hastane sistemi veya kurumsal API için güvenlik ve bakım ağırlıklarını yükseltmek; Python'da FastAPI (Clean API) veya Django (MVT), Java'da Spring Boot 3 veya C#'ta ASP.NET Core 8/9 kurumsal framework önerilerini ve kopyalanabilir CLI başlatma komutlarını dinamik olarak listeler.
 
 ### Dikkat edilmesi gerekenler
 
@@ -998,7 +1015,7 @@ Araştırma ekranı resmî ve akademik kaynakların okuma durumunu yönetir, ayr
 
 ### Örnek
 
-Deniz ISO 42010 kaynağını okumaya başladığında durumu `reading`, notlarını belgeye dönüştürdüğünde `synthesized` yapar.
+Ömer ISO 42010 kaynağını okumaya başladığında durumu `reading`, notlarını belgeye dönüştürdüğünde `synthesized` yapar.
 
 ### Dikkat edilmesi gerekenler
 
@@ -1204,7 +1221,7 @@ Ağ bağlantısı olmadığında ve istenen içerik cache içinde bulunmadığı
 
 ## Menüleri birlikte kullanan örnek çalışma
 
-Deniz’in Event Sourcing araştırmasında menüler şu sırayla kullanılır:
+Ömer’in Event Sourcing araştırmasında menüler şu sırayla kullanılır:
 
 ```text
 Ana Sayfa

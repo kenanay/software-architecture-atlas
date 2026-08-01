@@ -71,4 +71,5 @@ export interface DecisionResult {
   confidence: "low" | "medium" | "high";
   scoredLanguages: ScoredCandidate[];
   scoredArchitectures: ScoredCandidate[];
+  frameworkRecommendations?: ScoredCandidate[];
 }

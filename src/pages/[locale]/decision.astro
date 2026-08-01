@@ -279,6 +279,7 @@ const selectOptions = {
       const lblConfidence = locale === "tr" ? "Güven" : locale === "es" ? "Confianza" : "Confidence";
       const lblScoredLangs = locale === "tr" ? "Puanlı dil adayları" : locale === "es" ? "Lenguajes candidatos puntuados" : "Scored language candidates";
       const lblScoredArchs = locale === "tr" ? "Puanlı mimari adayları" : locale === "es" ? "Arquitecturas candidatas puntuadas" : "Scored architecture candidates";
+      const lblFrameworks = locale === "tr" ? "Önerilen Framework & Teknolojiler" : locale === "es" ? "Frameworks y Tecnologías Recomendadas" : "Recommended Frameworks & Technologies";
       const lblAltConditions = locale === "tr" ? "Alternatif koşulları" : locale === "es" ? "Condiciones alternativas" : "Alternative conditions";
       const lblDataDeploy = locale === "tr" ? "Veri ve dağıtım" : locale === "es" ? "Datos y despliegue" : "Data and deployment";
       const lblTestStrategy = locale === "tr" ? "Test stratejisi" : locale === "es" ? "Estrategia de pruebas" : "Testing strategy";
@@ -301,6 +302,7 @@ const selectOptions = {
         ${ranked(o.scoredLanguages)}
         <h2>${lblScoredArchs}</h2>
         ${ranked(o.scoredArchitectures)}
+        ${o.frameworkRecommendations ? `<h2>${lblFrameworks}</h2>${ranked(o.frameworkRecommendations)}` : ""}
         <h3>${lblAltConditions}</h3>
         <ul>${o.alternatives.map((x: any) => `<li><strong>${x.option}:</strong> ${x.preferWhen}</li>`).join("")}</ul>
         <h3>${lblDataDeploy}</h3>

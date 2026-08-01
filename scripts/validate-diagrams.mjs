@@ -1,6 +1,9 @@
 import { readFile } from "node:fs/promises";
 import { getAllMarkdownFiles } from "./lib/resolve-changed-content.mjs";
 
+const args = process.argv.slice(2);
+const isStrict = args.includes("--strict") || args.includes("--changed");
+
 const files = await getAllMarkdownFiles();
 let totalDiagrams = 0;
 const errors = [];
@@ -32,13 +35,23 @@ for (const file of files) {
       const isValidType = supportedTypes.some((type) => firstLine.startsWith(type));
 
       if (!isValidType) {
-        warnings.push(`File ${file}: Mermaid diagram #${i + 1} uses unsupported or custom type in '${firstLine}'.`);
+        const msg = `File ${file}: Mermaid diagram #${i + 1} uses unsupported or custom type in '${firstLine}'.`;
+        if (isStrict) {
+          errors.push(msg);
+        } else {
+          warnings.push(msg);
+        }
       }
 
       // Check accessibility fallback annotation in content nearby
       const hasFallback = content.includes("accessible-fallback") || content.includes("fallback") || content.includes("aria-label");
       if (!hasFallback) {
-        warnings.push(`File ${file}: Mermaid diagram #${i + 1} lacks explicit accessible fallback annotation.`);
+        const msg = `File ${file}: Mermaid diagram #${i + 1} lacks explicit accessible fallback annotation.`;
+        if (isStrict) {
+          errors.push(msg);
+        } else {
+          warnings.push(msg);
+        }
       }
     }
   }

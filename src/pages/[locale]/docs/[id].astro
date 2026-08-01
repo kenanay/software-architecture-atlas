@@ -450,46 +450,45 @@ const copy = {
     }
   </script>
 
-  <script is:inline>
-    // PR-4: Dynamic client-side Mermaid rendering and theme synchronization
+  <script>
+    import mermaid from "mermaid";
+
+    // Dynamic client-side Mermaid rendering, offline bundling, and theme synchronization
     const mermaidBlocks = document.querySelectorAll("pre code.language-mermaid, pre.mermaid");
     if (mermaidBlocks.length > 0) {
-      const dynamicImport = new Function('url', 'return import(url)');
-      dynamicImport("https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs").then((mermaid) => {
-        const isDark = document.documentElement.dataset.theme === "dark";
-        mermaid.default.initialize({
-          startOnLoad: false,
-          theme: isDark ? "dark" : "default",
-          securityLevel: "loose",
-        });
+      const isDark = document.documentElement.dataset.theme === "dark";
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: isDark ? "dark" : "default",
+        securityLevel: "strict",
+      });
 
-        mermaidBlocks.forEach(async (block, index) => {
-          const container = document.createElement("div");
-          container.className = "mermaid-diagram-container card";
-          container.style.transform = "none";
-          container.style.margin = "1.5rem 0";
-          container.style.overflowX = "auto";
-          container.setAttribute("role", "region");
-          container.setAttribute("aria-label", "Mimari Şema / Architecture Diagram");
+      mermaidBlocks.forEach(async (block, index) => {
+        const container = document.createElement("div");
+        container.className = "mermaid-diagram-container card";
+        container.style.transform = "none";
+        container.style.margin = "1.5rem 0";
+        container.style.overflowX = "auto";
+        container.setAttribute("role", "region");
+        container.setAttribute("aria-label", "Mimari Şema / Architecture Diagram");
 
-          const codeText = block.textContent?.trim() || "";
-          const parent = block.closest("pre") || block;
+        const codeText = block.textContent?.trim() || "";
+        const parent = block.closest("pre") || block;
 
-          try {
-            const { svg } = await mermaid.default.render(`mermaid-svg-${index}`, codeText);
-            container.innerHTML = svg;
+        try {
+          const { svg } = await mermaid.render(`mermaid-svg-${index}`, codeText);
+          container.innerHTML = svg;
 
-            // Accessible fallback annotation
-            const fallback = document.createElement("details");
-            fallback.className = "mermaid-accessible-fallback";
-            fallback.innerHTML = `<summary style="cursor:pointer;font-size:0.8rem;color:var(--muted);margin-top:0.5rem;">Metin Alternatifi (Text Alternative)</summary><pre style="font-size:0.75rem;padding:0.5rem;background:var(--panel2);overflow-x:auto;">${codeText}</pre>`;
-            container.appendChild(fallback);
+          // Accessible fallback annotation
+          const fallback = document.createElement("details");
+          fallback.className = "mermaid-accessible-fallback";
+          fallback.innerHTML = `<summary style="cursor:pointer;font-size:0.8rem;color:var(--muted);margin-top:0.5rem;">Metin Alternatifi (Text Alternative)</summary><pre style="font-size:0.75rem;padding:0.5rem;background:var(--panel2);overflow-x:auto;">${codeText}</pre>`;
+          container.appendChild(fallback);
 
-            parent.replaceWith(container);
-          } catch (err) {
-            console.warn("Mermaid render error:", err);
-          }
-        });
+          parent.replaceWith(container);
+        } catch (err) {
+          console.warn("Mermaid render error:", err);
+        }
       });
     }
   </script>

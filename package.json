@@ -19,18 +19,21 @@
     "validate:translations:strict": "node scripts/validate-translations.mjs --strict",
     "validate:terminology": "node scripts/check-terminology.mjs",
     "validate:diagrams": "node scripts/validate-diagrams.mjs",
+    "validate:diagrams:changed": "node scripts/validate-diagrams.mjs --changed",
+    "validate:diagrams:strict": "node scripts/validate-diagrams.mjs --strict",
     "validate:profiles": "node scripts/validate-content-profiles.mjs --report",
     "validate:profiles:changed": "node scripts/validate-content-profiles.mjs --strict --changed",
     "validate:profiles:strict": "node scripts/validate-content-profiles.mjs --strict",
     "verify": "npm run validate:data && npm run validate:links && npm run validate:frontmatter && npm run validate:translations && npm run validate:terminology && npm run validate:diagrams && npm run validate:profiles && npm test && npm run build",
-    "verify:changed": "npm run validate:data && npm run validate:links && npm run validate:frontmatter:changed && npm run validate:translations:changed && npm run validate:terminology && npm run validate:diagrams && npm run validate:profiles:changed && npm test && npm run build",
-    "verify:strict": "npm run validate:data && npm run validate:links && npm run validate:frontmatter:strict && npm run validate:translations:strict && npm run validate:terminology && npm run validate:diagrams && npm run validate:profiles:strict && npm test && npm run build"
+    "verify:changed": "npm run validate:data && npm run validate:links && npm run validate:frontmatter:changed && npm run validate:translations:changed && npm run validate:terminology && npm run validate:diagrams:changed && npm run validate:profiles:changed && npm test && npm run build",
+    "verify:strict": "npm run validate:data && npm run validate:links && npm run validate:frontmatter:strict && npm run validate:translations:strict && npm run validate:terminology && npm run validate:diagrams:strict && npm run validate:profiles:strict && npm test && npm run build"
   },
   "dependencies": {
     "@astrojs/mdx": "^7.0.3",
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.1.1",
     "marked": "^16.1.1",
+    "mermaid": "^11.16.0",
     "zod": "^3.25.76"
   },
   "devDependencies": {

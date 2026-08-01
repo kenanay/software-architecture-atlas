@@ -1,4 +1,4 @@
-import { execSync } from "node:child_process";
+import { execFileSync } from "node:child_process";
 import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -45,8 +45,8 @@ export function extractFrontmatterField(content, fieldName) {
 }
 
 /**
- * Resolves the Git diff base reference and returns the full set of markdown files
- * belonging to all changed translationKey groups.
+ * Resolves the Git diff base reference safely using execFileSync array parameters
+ * and returns the full set of markdown files belonging to all changed translationKey groups.
  */
 export async function resolveChangedTranslationGroups(args = process.argv.slice(2)) {
   let baseRef = process.env.BASE_SHA;
@@ -66,13 +66,13 @@ export async function resolveChangedTranslationGroups(args = process.argv.slice(
 
   let diffOutput = "";
   try {
-    diffOutput = execSync(`git diff --name-only "${baseRef}...HEAD"`, {
+    diffOutput = execFileSync("git", ["diff", "--name-only", `${baseRef}...HEAD`], {
       encoding: "utf8",
       stdio: ["pipe", "pipe", "pipe"],
     });
   } catch (_err) {
     try {
-      diffOutput = execSync(`git diff --name-only "${baseRef}"`, {
+      diffOutput = execFileSync("git", ["diff", "--name-only", baseRef], {
         encoding: "utf8",
         stdio: ["pipe", "pipe", "pipe"],
       });
